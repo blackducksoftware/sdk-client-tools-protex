@@ -1,0 +1,106 @@
+apply plugin: 'java'
+
+println "Protex Version: $protexVersion"
+version = protexVersion
+
+ext.uploadDefs = new File("${rootDir}/uploadArtifacts.gradle")
+
+subprojects {
+    apply plugin: 'java'
+	apply plugin: 'maven'
+	apply plugin: 'eclipse'
+	
+	group = 'com.blackducksoftware.protex.sdkclient'
+	version = protexVersion
+
+	sourceCompatibility = 1.6
+	targetCompatibility = 1.6
+	
+	ext.wsdlUriVersion = protexWsdlVersion
+	
+	apply from: "$rootDir/dependencies/core.gradle"
+
+	repositories {
+		maven { url "http://jcenter.bintray.com" }
+	}
+
+	task sourcesJar(type:Jar){
+		from sourceSets.main.allSource
+		classifier = 'sources'
+	}
+	
+	task javadocJar(type: Jar, dependsOn: javadoc) {
+        from javadoc.destinationDir
+        classifier = 'javadoc'
+    }
+    
+    jar {
+    	from "${rootDir}/LICENSE.txt"
+    }
+
+	artifacts {
+		archives sourcesJar
+		archives javadocJar
+	}
+
+	eclipse {
+		classpath {
+			defaultOutputDir = file('build/classes/main')
+			containers = [ 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6' ]
+		}
+	}
+
+	if (uploadDefs.exists()){
+		apply from: uploadDefs.canonicalPath
+	}else{
+		uploadArchives {
+			repositories{
+				mavenDeployer {
+					repository(url: mavenLocal().url)
+					pom.project {
+						organization {
+							name 'Black Duck Software'
+							url 'http://www.blackducksoftware.com/'
+						}
+						licenses {
+							license {
+	 							name 'GNU Lesser General Public License v2.1 only'
+	                            url 'http://www.gnu.org/licenses/old-licenses/lgpl-2.1-standalone.html'
+	                        }
+	                    }
+	                }
+	            }
+	        }
+	    }
+    }
+}
+
+configurations{
+	distribution
+}
+
+task distributionZip(type: Zip){
+	baseName = 'Protex-SDK-Client-Tools'
+	
+	into("lib"){
+		from project(':sdk-client-tools-protex:protex-sdk-examples').configurations.runtime
+		from project(':sdk-client-tools-protex:protex-sdk-utilities').sourcesJar
+		from project(':sdk-client-tools-protex:protex-sdk-client').sourcesJar
+	}
+
+	into("examples"){
+		from project(':sdk-client-tools-protex:protex-sdk-examples').sourceSets.main.java
+	}
+
+	into("wsdl"){
+		from project(':sdk-client-tools-protex:protex-sdk-client').file("src/main/config/wsdl")
+		//TODO for some reason this fails to find WSDL files - using manual method for now
+		//from project(':sdk-client-tools-protex:protex-sdk-client').sourceSets.main.java.srcDirs
+	}
+}
+
+artifacts{
+	distribution distributionZip
+}
+
+task wrapper(type: Wrapper) { gradleVersion = '2.5' }

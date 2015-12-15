@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="TemplateApiService" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:template" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:template" xmlns:ns1="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:template" elementFormDefault="unqualified" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:template" version="1.0">
+<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:common"/>
+<xs:element name="getTemplateInfos" type="tns:getTemplateInfos"/>
+<xs:element name="getTemplateInfosResponse" type="tns:getTemplateInfosResponse"/>
+<xs:complexType name="getTemplateInfos">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="pageFilter" type="tns:templateInfoPageFilter"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="templateInfoPageFilter">
+    <xs:complexContent>
+      <xs:extension base="ns1:pageFilter">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sortedColumn" type="tns:templateInfoColumn"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="getTemplateInfosResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:templateInfo"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="templateInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" name="templateId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:simpleType name="templateInfoColumn">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TEMPLATE_NAME"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:common" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:common" version="1.0">
+<xs:complexType abstract="true" name="pageFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="firstRowIndex" type="xs:int"/>
+      <xs:element minOccurs="0" name="lastRowIndex" type="xs:int"/>
+      <xs:element minOccurs="0" name="sortAscending" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="sortType" type="tns:sortType"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:simpleType name="sortType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ALPHABETICAL_CASE_INSENSITIVE"/>
+      <xs:enumeration value="NUMERIC"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:blackducksoftware.com:sdk:v7.0:fault" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="urn:blackducksoftware.com:sdk:v7.0:fault">
+  <xs:element name="sdkFaultDetails" type="tns:sdkFaultDetails"/>
+  <xs:complexType name="sdkFaultDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="errorCode" type="tns:errorCode"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="errorCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SERVER_REGISTRATION_ERROR"/>
+      <xs:enumeration value="SERVER_PERFORMING_UPDATE"/>
+      <xs:enumeration value="NO_ANALYSIS_RUNNING"/>
+      <xs:enumeration value="ANALYSIS_ALREADY_RUNNING"/>
+      <xs:enumeration value="INVALID_SOURCE_LOCATION_FOR_SCAN"/>
+      <xs:enumeration value="PROJECT_COULD_NOT_BE_LOCKED"/>
+      <xs:enumeration value="LICENSE_NAME_TOO_LONG"/>
+      <xs:enumeration value="LICENSE_TYPE_STANDARD_CANT_CHANGE_NAME"/>
+      <xs:enumeration value="TAG_NOT_FOUND"/>
+      <xs:enumeration value="OBLIGATION_IS_REFERENCED"/>
+      <xs:enumeration value="OBLIGATION_NOT_ASSIGNED"/>
+      <xs:enumeration value="DUPLICATE_LICENSE_NAME"/>
+      <xs:enumeration value="LICENSE_NOT_FOUND"/>
+      <xs:enumeration value="LICENSE_IN_USE"/>
+      <xs:enumeration value="CAN_NOT_RESET_CUSTOM_LICENSE"/>
+      <xs:enumeration value="DUPLICATE_OBLIGATION_CATEGORY"/>
+      <xs:enumeration value="OBLIGATION_CATEGORY_NOT_FOUND"/>
+      <xs:enumeration value="OBLIGATION_CATEGORY_IN_USE"/>
+      <xs:enumeration value="OBLIGATION_CATEGORY_CAN_NOT_BE_DELETED"/>
+      <xs:enumeration value="DUPLICATE_OBLIGATION_NAME"/>
+      <xs:enumeration value="DUPLICATE_OBLIGATION_ASSIGNMENT"/>
+      <xs:enumeration value="INVALID_OBLIGATION_NAME"/>
+      <xs:enumeration value="OBLIGATION_NOT_FOUND"/>
+      <xs:enumeration value="OBLIGATION_IN_USE_BY_PROJECTS"/>
+      <xs:enumeration value="OBLIGATION_IN_USE_BY_LICENSES"/>
+      <xs:enumeration value="RAPID_ID_CONFIGURATION_NOT_FOUND"/>
+      <xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_NAME"/>
+      <xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_ASSOCIATION"/>
+      <xs:enumeration value="RAPID_ID_OPERATION_TYPE_DUPLICATE"/>
+      <xs:enumeration value="LEARNED_IDENTIFICATION_NOT_FOUND"/>
+      <xs:enumeration value="USER_NOT_ASSIGNED_TO_PROJECT"/>
+      <xs:enumeration value="UNKNOWN_ANALYSIS_DATABASE_OPTION"/>
+      <xs:enumeration value="STRING_SEARCH_PATTERN_UPDATE_OF_STANDARD_PATTERN_NOT_ALLOWED"/>
+      <xs:enumeration value="CUSTOM_COMPONENT_IN_USE"/>
+      <xs:enumeration value="CUSTOM_COMPONENT_HAS_NO_SOURCE"/>
+      <xs:enumeration value="DUPLICATE_TEMPLATE_TITLE"/>
+      <xs:enumeration value="REPORT_TEMPLATE_NOT_FOUND"/>
+      <xs:enumeration value="DEFAULT_REPORT_TEMPLATE_NOT_SET"/>
+      <xs:enumeration value="DUPLICATE_PROJECT_NAME"/>
+      <xs:enumeration value="PROJECT_ANALYSIS_LOCAL_SOURCE_NOT_SUPPORTED"/>
+      <xs:enumeration value="OPTIONS_SETTING_NOT_ALLOWED"/>
+      <xs:enumeration value="OPTIONS_CANNOT_BE_FORCED_FOR_LOCAL_SEARCH_SETTINGS"/>
+      <xs:enumeration value="DUPLICATE_STRING_SEARCH_PATTERN_NAME"/>
+      <xs:enumeration value="DUPLICATE_FILE_DISCOVERY_PATTERN_NAME"/>
+      <xs:enumeration value="LINKING_PROJECTS_FORCES_CLONING_OF_WORK_RESULTS"/>
+      <xs:enumeration value="PROJECT_NOT_YET_ANALYZED"/>
+      <xs:enumeration value="DUPLICATE_USER_ASSIGNMENT"/>
+      <xs:enumeration value="PROJECT_NAME_TOO_LONG"/>
+      <xs:enumeration value="INVALID_PROJECT_NAME"/>
+      <xs:enumeration value="PROJECT_NOT_FOUND"/>
+      <xs:enumeration value="PROJECT_SYNCID_INVALID"/>
+      <xs:enumeration value="LINKING_GLOBALLY_DISABLED"/>
+      <xs:enumeration value="PROJECT_IN_USE"/>
+      <xs:enumeration value="STRING_SEARCH_PATTERN_NAME_TOO_LONG"/>
+      <xs:enumeration value="ROLE_NOT_FOUND"/>
+      <xs:enumeration value="MINIMUM_ONE_ADMIN_USER"/>
+      <xs:enumeration value="REMOVE_SELF_AS_ADMIN_USER"/>
+      <xs:enumeration value="DUPLICATE_EMAIL_ADDRESS"/>
+      <xs:enumeration value="EMAIL_TOO_LONG"/>
+      <xs:enumeration value="FIRST_NAME_TOO_LONG"/>
+      <xs:enumeration value="LAST_NAME_TOO_LONG"/>
+      <xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_TOO_LONG"/>
+      <xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_DUPLICATE"/>
+      <xs:enumeration value="INVALID_EMAIL_ADDRESS"/>
+      <xs:enumeration value="USER_NOT_FOUND"/>
+      <xs:enumeration value="PASSWORD_TOO_SHORT"/>
+      <xs:enumeration value="PASSWORD_TOO_LONG"/>
+      <xs:enumeration value="STRING_SEARCH_DISCOVERY_NOT_FOUND"/>
+      <xs:enumeration value="STRING_SEARCH_REQUIRES_UPLOADED_SOURCE"/>
+      <xs:enumeration value="USAGE_LEVEL_INVALID_FOR_GIVEN_ID"/>
+      <xs:enumeration value="CANNOT_COPY_ID_PROJECT_SYNCHRONIZED"/>
+      <xs:enumeration value="CODE_TREE_PATH_NOT_FOUND"/>
+      <xs:enumeration value="CODE_TREE_GUARANTEED_EMPTY_RESULT"/>
+      <xs:enumeration value="NO_FILE_CONTENT"/>
+      <xs:enumeration value="CODE_TREE_PARENT_PATH_NOT_FOUND"/>
+      <xs:enumeration value="DUPLICATE_COMPONENT_NAME"/>
+      <xs:enumeration value="COMPONENT_NAME_TOO_LONG"/>
+      <xs:enumeration value="INVALID_COMPONENT_NAME"/>
+      <xs:enumeration value="COMPONENT_NOT_FOUND"/>
+      <xs:enumeration value="COMPONENT_VERSION_NOT_FOUND"/>
+      <xs:enumeration value="OPTION_IS_FORCED"/>
+      <xs:enumeration value="FILE_DISCOVERY_PATTERN_NOT_FOUND"/>
+      <xs:enumeration value="STRING_SEARCH_PATTERN_NOT_FOUND"/>
+      <xs:enumeration value="UNEXPECTED_EXCEPTION_ERROR"/>
+      <xs:enumeration value="UNKNOWN_REPORT_SECTION_ERROR"/>
+      <xs:enumeration value="PROTEX_FILE_SOURCE_NOT_AVAILABLE"/>
+      <xs:enumeration value="NOT_A_FILE_PATH"/>
+      <xs:enumeration value="ARGUMENT_VALUE_INVALID"/>
+      <xs:enumeration value="METHOD_NOT_YET_IMPLEMENTED"/>
+      <xs:enumeration value="ARGUMENT_NOT_YET_IMPLEMENTED"/>
+      <xs:enumeration value="ARGUMENT_VALUE_NOT_YET_IMPLEMENTED"/>
+      <xs:enumeration value="INVALID_CREDENTIALS"/>
+      <xs:enumeration value="INSUFFICIENT_PERMISSION"/>
+      <xs:enumeration value="UNKNOWN_ERROR"/>
+      <xs:enumeration value="BOM_REFRESH_NOT_FINISHED"/>
+      <xs:enumeration value="BOM_COMPONENT_PROJECT_CANT_UPDATE"/>
+      <xs:enumeration value="UPDATE_BOM_COMPONENT_VERSION_NAME_OF_COMPONENT_VERSION_PROHIBITED"/>
+      <xs:enumeration value="TODO_CONVERT_EXCEPTION"/>
+      <xs:enumeration value="UNEXPECTED_RETURN_VALUE_ERROR"/>
+      <xs:enumeration value="OUT_OF_MEMORY_ERROR"/>
+      <xs:enumeration value="NO_SESSION_ID"/>
+      <xs:enumeration value="INVALID_SORT_KEY"/>
+      <xs:enumeration value="CAN_NOT_OPEN_TEMP_FILE"/>
+      <xs:enumeration value="CODEMATCH_SELF_IDENTIFICATION_MUST_MATCH_DECLARED_LICENSE"/>
+      <xs:enumeration value="IDENTIFICATION_NOT_FOUND"/>
+      <xs:enumeration value="IDENTIFICATION_LEARNING_CONFLICT"/>
+      <xs:enumeration value="EXTERNAL_NAMESPACE_NAME_TOO_LONG"/>
+      <xs:enumeration value="DUPLICATE_EXTERNAL_NAMESPACE_KEY"/>
+      <xs:enumeration value="EXTERNAL_NAMESPACE_NOT_FOUND"/>
+      <xs:enumeration value="EXTERNAL_ID_MAPPING_NOT_FOUND"/>
+      <xs:enumeration value="DUPLICATE_EXTERNAL_ID_MAPPING"/>
+      <xs:enumeration value="TEMPLATE_NOT_FOUND"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SdkFault" nillable="true" type="tns:sdkFaultDetails"/>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="SdkFault">
+    <wsdl:part name="SdkFault" element="ns1:SdkFault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTemplateInfosResponse">
+    <wsdl:part name="parameters" element="tns:getTemplateInfosResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTemplateInfos">
+    <wsdl:part name="parameters" element="tns:getTemplateInfos">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="TemplateApi">
+    <wsdl:operation name="getTemplateInfos">
+      <wsdl:input name="getTemplateInfos" message="tns:getTemplateInfos">
+    </wsdl:input>
+      <wsdl:output name="getTemplateInfosResponse" message="tns:getTemplateInfosResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="TemplateApiServiceSoapBinding" type="tns:TemplateApi">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getTemplateInfos">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTemplateInfos">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTemplateInfosResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="TemplateApiService">
+    <wsdl:port name="TemplateApiPort" binding="tns:TemplateApiServiceSoapBinding">
+      <soap:address location="http://localhost:9090/TemplateApiPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

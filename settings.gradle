@@ -1,0 +1,11 @@
+def sdk_client_tools_protex_projects = [
+	'protex-sdk-client',
+	'protex-sdk-utilities',
+	'protex-sdk-examples',
+]
+
+sdk_client_tools_protex_projects.each{
+	String projectFolderName ->
+	include ":sdk-client-tools-protex:${projectFolderName}"
+	project(":sdk-client-tools-protex:${projectFolderName}").projectDir = new File("$rootDir/${projectFolderName}")
+}

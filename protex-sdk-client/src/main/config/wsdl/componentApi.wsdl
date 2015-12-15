@@ -1,0 +1,1184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="ComponentApiService" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:component" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:component" xmlns:ns1="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" version="1.0">
+<xs:complexType name="assignedObligationRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:obligationRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="fulfilled" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="reviewAndReport" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="obligationRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="description" type="xs:string"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" name="obligationCategoryId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="assignedObligation">
+    <xs:complexContent>
+      <xs:extension base="tns:assignedObligationRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="fulfillmentInherited" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="obligationId" type="xs:string"/>
+          <xs:element minOccurs="0" name="originObjectId" type="xs:string"/>
+          <xs:element minOccurs="0" name="originType" type="tns:obligationOriginType"/>
+          <xs:element minOccurs="0" name="reviewAndReportInherited" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:simpleType name="obligationOriginType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PROJECT"/>
+      <xs:enumeration value="LICENSE"/>
+      <xs:enumeration value="GLOBAL"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:license" version="1.0">
+<xs:complexType name="licenseInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:ns2="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:component" elementFormDefault="unqualified" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:component" version="1.0">
+<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:common"/>
+<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:obligation"/>
+<xs:element name="addComponentObligation" type="tns:addComponentObligation"/>
+<xs:element name="addComponentObligationResponse" type="tns:addComponentObligationResponse"/>
+<xs:element name="addComponentObligationUsingReference" type="tns:addComponentObligationUsingReference"/>
+<xs:element name="addComponentObligationUsingReferenceResponse" type="tns:addComponentObligationUsingReferenceResponse"/>
+<xs:element name="addTag" type="tns:addTag"/>
+<xs:element name="addTagResponse" type="tns:addTagResponse"/>
+<xs:element name="checkComponentsExist" type="tns:checkComponentsExist"/>
+<xs:element name="checkComponentsExistResponse" type="tns:checkComponentsExistResponse"/>
+<xs:element name="createComponent" type="tns:createComponent"/>
+<xs:element name="createComponentResponse" type="tns:createComponentResponse"/>
+<xs:element name="deleteComponent" type="tns:deleteComponent"/>
+<xs:element name="deleteComponentResponse" type="tns:deleteComponentResponse"/>
+<xs:element name="getComponentByKey" type="tns:getComponentByKey"/>
+<xs:element name="getComponentByKeyResponse" type="tns:getComponentByKeyResponse"/>
+<xs:element name="getComponentObligations" type="tns:getComponentObligations"/>
+<xs:element name="getComponentObligationsResponse" type="tns:getComponentObligationsResponse"/>
+<xs:element name="getComponentVersions" type="tns:getComponentVersions"/>
+<xs:element name="getComponentVersionsResponse" type="tns:getComponentVersionsResponse"/>
+<xs:element name="getComponents" type="tns:getComponents"/>
+<xs:element name="getComponentsByHash" type="tns:getComponentsByHash"/>
+<xs:element name="getComponentsByHashResponse" type="tns:getComponentsByHashResponse"/>
+<xs:element name="getComponentsByKey" type="tns:getComponentsByKey"/>
+<xs:element name="getComponentsByKeyResponse" type="tns:getComponentsByKeyResponse"/>
+<xs:element name="getComponentsByName" type="tns:getComponentsByName"/>
+<xs:element name="getComponentsByNameResponse" type="tns:getComponentsByNameResponse"/>
+<xs:element name="getComponentsResponse" type="tns:getComponentsResponse"/>
+<xs:element name="getHashesByComponent" type="tns:getHashesByComponent"/>
+<xs:element name="getHashesByComponentResponse" type="tns:getHashesByComponentResponse"/>
+<xs:element name="getTaggedComponents" type="tns:getTaggedComponents"/>
+<xs:element name="getTaggedComponentsResponse" type="tns:getTaggedComponentsResponse"/>
+<xs:element name="getTags" type="tns:getTags"/>
+<xs:element name="getTagsResponse" type="tns:getTagsResponse"/>
+<xs:element name="removeComponentObligation" type="tns:removeComponentObligation"/>
+<xs:element name="removeComponentObligationResponse" type="tns:removeComponentObligationResponse"/>
+<xs:element name="removeTag" type="tns:removeTag"/>
+<xs:element name="removeTagResponse" type="tns:removeTagResponse"/>
+<xs:element name="resetComponent" type="tns:resetComponent"/>
+<xs:element name="resetComponentResponse" type="tns:resetComponentResponse"/>
+<xs:element name="suggestComponents" type="tns:suggestComponents"/>
+<xs:element name="suggestComponentsResponse" type="tns:suggestComponentsResponse"/>
+<xs:element name="updateComponent" type="tns:updateComponent"/>
+<xs:element name="updateComponentObligation" type="tns:updateComponentObligation"/>
+<xs:element name="updateComponentObligationResponse" type="tns:updateComponentObligationResponse"/>
+<xs:element name="updateComponentResponse" type="tns:updateComponentResponse"/>
+<xs:complexType name="deleteComponent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="customComponentKey" type="ns1:componentKey"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteComponentResponse">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="updateComponent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentKey" type="ns1:componentKey"/>
+      <xs:element minOccurs="0" name="componentUpdateRequest" type="tns:componentRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="componentRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="approvalState" type="ns1:approvalState"/>
+      <xs:element minOccurs="0" name="componentName" type="xs:string"/>
+      <xs:element minOccurs="0" name="description" type="xs:string"/>
+      <xs:element minOccurs="0" name="homePage" type="xs:string"/>
+      <xs:element minOccurs="0" name="licenseCitation" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="licenseIds" nillable="true" type="xs:string"/>
+      <xs:element minOccurs="0" name="primaryLicenseId" type="xs:string"/>
+      <xs:element minOccurs="0" name="releaseDate" type="xs:dateTime"/>
+      <xs:element minOccurs="0" name="startDate" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="updateComponentResponse">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="addComponentObligationUsingReference">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentId" type="xs:string"/>
+      <xs:element minOccurs="0" name="arg1" type="xs:string"/>
+      <xs:element minOccurs="0" name="fulfilled" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="reviewAndReport" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="addComponentObligationUsingReferenceResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createComponent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentRequest" type="tns:componentRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createComponentResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:componentKey"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentsByName">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentName" type="xs:string"/>
+      <xs:element minOccurs="0" name="versionName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentsByNameResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:component"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="component">
+    <xs:complexContent>
+      <xs:extension base="ns1:componentInfo">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="approvalDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="approvedBy" type="xs:string"/>
+          <xs:element minOccurs="0" name="deprecated" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="description" type="xs:string"/>
+          <xs:element minOccurs="0" name="disabled" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="lastUpdatedDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="licenseCitation" type="xs:string"/>
+          <xs:element minOccurs="0" name="releaseDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="startDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="suffix" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="getComponents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="pageFilter" type="ns1:componentPageFilter"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:component"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="removeTag">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="protexUserId" type="xs:string"/>
+      <xs:element minOccurs="0" name="componentId" type="xs:string"/>
+      <xs:element minOccurs="0" name="tag" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="removeTagResponse">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="suggestComponents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="searchTerm" type="xs:string"/>
+      <xs:element minOccurs="0" name="pageFilter" type="ns1:componentPageFilter"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="suggestComponentsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:component"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="updateComponentObligation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentId" type="xs:string"/>
+      <xs:element minOccurs="0" name="obligationId" type="xs:string"/>
+      <xs:element minOccurs="0" name="obligationUpdateRequest" type="ns2:assignedObligationRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="updateComponentObligationResponse">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="removeComponentObligation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentId" type="xs:string"/>
+      <xs:element minOccurs="0" name="obligationId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="removeComponentObligationResponse">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="checkComponentsExist">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="componentKeys" type="ns1:componentKey"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="checkComponentsExistResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="ns1:componentKey"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentVersions">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentVersionsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:component"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentsByKey">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="componentKeys" type="ns1:componentKey"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentsByKeyResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:component"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentByKey">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentKey" type="ns1:componentKey"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentByKeyResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:component"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="addTag">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="protexUserId" type="xs:string"/>
+      <xs:element minOccurs="0" name="componentId" type="xs:string"/>
+      <xs:element minOccurs="0" name="tag" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="addTagResponse">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="getTags">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="protexUserId" type="xs:string"/>
+      <xs:element minOccurs="0" name="componentId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getTagsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="addComponentObligation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentId" type="xs:string"/>
+      <xs:element minOccurs="0" name="obligationRequest" type="ns2:assignedObligationRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="addComponentObligationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="resetComponent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="standardComponentKey" type="ns1:componentKey"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="resetComponentResponse">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="getHashesByComponent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="hashType" type="ns1:downloadHashType"/>
+      <xs:element minOccurs="0" name="componentKey" type="ns1:componentKey"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getHashesByComponentResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentObligations">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentObligationsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="ns2:assignedObligation"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getTaggedComponents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="protexUserId" type="xs:string"/>
+      <xs:element minOccurs="0" name="tag" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getTaggedComponentsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:component"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentsByHash">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="hashType" type="ns1:downloadHashType"/>
+      <xs:element minOccurs="0" name="hash" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentsByHashResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:component"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:common" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:common" version="1.0">
+<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:license"/>
+<xs:complexType name="componentKey">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentId" type="xs:string"/>
+      <xs:element minOccurs="0" name="versionId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="componentInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="approvalState" type="tns:approvalState"/>
+      <xs:element minOccurs="0" name="componentKey" type="tns:componentKey"/>
+      <xs:element minOccurs="0" name="componentName" type="xs:string"/>
+      <xs:element minOccurs="0" name="componentType" type="tns:componentType"/>
+      <xs:element minOccurs="0" name="homePage" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="licenses" nillable="true" type="ns1:licenseInfo"/>
+      <xs:element minOccurs="0" name="primaryLicenseId" type="xs:string"/>
+      <xs:element minOccurs="0" name="versionName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="componentPageFilter">
+    <xs:complexContent>
+      <xs:extension base="tns:pageFilter">
+        <xs:sequence>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="componentTypes" nillable="true" type="tns:componentType"/>
+          <xs:element minOccurs="0" name="includeDeprecated" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="sortedColumn" type="tns:componentColumn"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType abstract="true" name="pageFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="firstRowIndex" type="xs:int"/>
+      <xs:element minOccurs="0" name="lastRowIndex" type="xs:int"/>
+      <xs:element minOccurs="0" name="sortAscending" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="sortType" type="tns:sortType"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:simpleType name="approvalState">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="APPROVED"/>
+      <xs:enumeration value="DIS_APPROVED"/>
+      <xs:enumeration value="NOT_REVIEWED"/>
+    </xs:restriction>
+  </xs:simpleType>
+<xs:simpleType name="componentType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="STANDARD"/>
+      <xs:enumeration value="STANDARD_MODIFIED"/>
+      <xs:enumeration value="CUSTOM"/>
+      <xs:enumeration value="PROJECT"/>
+      <xs:enumeration value="LOCAL"/>
+    </xs:restriction>
+  </xs:simpleType>
+<xs:simpleType name="componentColumn">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NAME"/>
+    </xs:restriction>
+  </xs:simpleType>
+<xs:simpleType name="sortType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ALPHABETICAL_CASE_INSENSITIVE"/>
+      <xs:enumeration value="NUMERIC"/>
+    </xs:restriction>
+  </xs:simpleType>
+<xs:simpleType name="downloadHashType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MD5"/>
+      <xs:enumeration value="SHA1"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:blackducksoftware.com:sdk:v7.0:fault" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="urn:blackducksoftware.com:sdk:v7.0:fault">
+  <xs:element name="sdkFaultDetails" type="tns:sdkFaultDetails"/>
+  <xs:complexType name="sdkFaultDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="errorCode" type="tns:errorCode"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="errorCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SERVER_REGISTRATION_ERROR"/>
+      <xs:enumeration value="SERVER_PERFORMING_UPDATE"/>
+      <xs:enumeration value="NO_ANALYSIS_RUNNING"/>
+      <xs:enumeration value="ANALYSIS_ALREADY_RUNNING"/>
+      <xs:enumeration value="INVALID_SOURCE_LOCATION_FOR_SCAN"/>
+      <xs:enumeration value="PROJECT_COULD_NOT_BE_LOCKED"/>
+      <xs:enumeration value="LICENSE_NAME_TOO_LONG"/>
+      <xs:enumeration value="LICENSE_TYPE_STANDARD_CANT_CHANGE_NAME"/>
+      <xs:enumeration value="TAG_NOT_FOUND"/>
+      <xs:enumeration value="OBLIGATION_IS_REFERENCED"/>
+      <xs:enumeration value="OBLIGATION_NOT_ASSIGNED"/>
+      <xs:enumeration value="DUPLICATE_LICENSE_NAME"/>
+      <xs:enumeration value="LICENSE_NOT_FOUND"/>
+      <xs:enumeration value="LICENSE_IN_USE"/>
+      <xs:enumeration value="CAN_NOT_RESET_CUSTOM_LICENSE"/>
+      <xs:enumeration value="DUPLICATE_OBLIGATION_CATEGORY"/>
+      <xs:enumeration value="OBLIGATION_CATEGORY_NOT_FOUND"/>
+      <xs:enumeration value="OBLIGATION_CATEGORY_IN_USE"/>
+      <xs:enumeration value="OBLIGATION_CATEGORY_CAN_NOT_BE_DELETED"/>
+      <xs:enumeration value="DUPLICATE_OBLIGATION_NAME"/>
+      <xs:enumeration value="DUPLICATE_OBLIGATION_ASSIGNMENT"/>
+      <xs:enumeration value="INVALID_OBLIGATION_NAME"/>
+      <xs:enumeration value="OBLIGATION_NOT_FOUND"/>
+      <xs:enumeration value="OBLIGATION_IN_USE_BY_PROJECTS"/>
+      <xs:enumeration value="OBLIGATION_IN_USE_BY_LICENSES"/>
+      <xs:enumeration value="RAPID_ID_CONFIGURATION_NOT_FOUND"/>
+      <xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_NAME"/>
+      <xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_ASSOCIATION"/>
+      <xs:enumeration value="RAPID_ID_OPERATION_TYPE_DUPLICATE"/>
+      <xs:enumeration value="LEARNED_IDENTIFICATION_NOT_FOUND"/>
+      <xs:enumeration value="USER_NOT_ASSIGNED_TO_PROJECT"/>
+      <xs:enumeration value="UNKNOWN_ANALYSIS_DATABASE_OPTION"/>
+      <xs:enumeration value="STRING_SEARCH_PATTERN_UPDATE_OF_STANDARD_PATTERN_NOT_ALLOWED"/>
+      <xs:enumeration value="CUSTOM_COMPONENT_IN_USE"/>
+      <xs:enumeration value="CUSTOM_COMPONENT_HAS_NO_SOURCE"/>
+      <xs:enumeration value="DUPLICATE_TEMPLATE_TITLE"/>
+      <xs:enumeration value="REPORT_TEMPLATE_NOT_FOUND"/>
+      <xs:enumeration value="DEFAULT_REPORT_TEMPLATE_NOT_SET"/>
+      <xs:enumeration value="DUPLICATE_PROJECT_NAME"/>
+      <xs:enumeration value="PROJECT_ANALYSIS_LOCAL_SOURCE_NOT_SUPPORTED"/>
+      <xs:enumeration value="OPTIONS_SETTING_NOT_ALLOWED"/>
+      <xs:enumeration value="OPTIONS_CANNOT_BE_FORCED_FOR_LOCAL_SEARCH_SETTINGS"/>
+      <xs:enumeration value="DUPLICATE_STRING_SEARCH_PATTERN_NAME"/>
+      <xs:enumeration value="DUPLICATE_FILE_DISCOVERY_PATTERN_NAME"/>
+      <xs:enumeration value="LINKING_PROJECTS_FORCES_CLONING_OF_WORK_RESULTS"/>
+      <xs:enumeration value="PROJECT_NOT_YET_ANALYZED"/>
+      <xs:enumeration value="DUPLICATE_USER_ASSIGNMENT"/>
+      <xs:enumeration value="PROJECT_NAME_TOO_LONG"/>
+      <xs:enumeration value="INVALID_PROJECT_NAME"/>
+      <xs:enumeration value="PROJECT_NOT_FOUND"/>
+      <xs:enumeration value="PROJECT_SYNCID_INVALID"/>
+      <xs:enumeration value="LINKING_GLOBALLY_DISABLED"/>
+      <xs:enumeration value="PROJECT_IN_USE"/>
+      <xs:enumeration value="STRING_SEARCH_PATTERN_NAME_TOO_LONG"/>
+      <xs:enumeration value="ROLE_NOT_FOUND"/>
+      <xs:enumeration value="MINIMUM_ONE_ADMIN_USER"/>
+      <xs:enumeration value="REMOVE_SELF_AS_ADMIN_USER"/>
+      <xs:enumeration value="DUPLICATE_EMAIL_ADDRESS"/>
+      <xs:enumeration value="EMAIL_TOO_LONG"/>
+      <xs:enumeration value="FIRST_NAME_TOO_LONG"/>
+      <xs:enumeration value="LAST_NAME_TOO_LONG"/>
+      <xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_TOO_LONG"/>
+      <xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_DUPLICATE"/>
+      <xs:enumeration value="INVALID_EMAIL_ADDRESS"/>
+      <xs:enumeration value="USER_NOT_FOUND"/>
+      <xs:enumeration value="PASSWORD_TOO_SHORT"/>
+      <xs:enumeration value="PASSWORD_TOO_LONG"/>
+      <xs:enumeration value="STRING_SEARCH_DISCOVERY_NOT_FOUND"/>
+      <xs:enumeration value="STRING_SEARCH_REQUIRES_UPLOADED_SOURCE"/>
+      <xs:enumeration value="USAGE_LEVEL_INVALID_FOR_GIVEN_ID"/>
+      <xs:enumeration value="CANNOT_COPY_ID_PROJECT_SYNCHRONIZED"/>
+      <xs:enumeration value="CODE_TREE_PATH_NOT_FOUND"/>
+      <xs:enumeration value="CODE_TREE_GUARANTEED_EMPTY_RESULT"/>
+      <xs:enumeration value="NO_FILE_CONTENT"/>
+      <xs:enumeration value="CODE_TREE_PARENT_PATH_NOT_FOUND"/>
+      <xs:enumeration value="DUPLICATE_COMPONENT_NAME"/>
+      <xs:enumeration value="COMPONENT_NAME_TOO_LONG"/>
+      <xs:enumeration value="INVALID_COMPONENT_NAME"/>
+      <xs:enumeration value="COMPONENT_NOT_FOUND"/>
+      <xs:enumeration value="COMPONENT_VERSION_NOT_FOUND"/>
+      <xs:enumeration value="OPTION_IS_FORCED"/>
+      <xs:enumeration value="FILE_DISCOVERY_PATTERN_NOT_FOUND"/>
+      <xs:enumeration value="STRING_SEARCH_PATTERN_NOT_FOUND"/>
+      <xs:enumeration value="UNEXPECTED_EXCEPTION_ERROR"/>
+      <xs:enumeration value="UNKNOWN_REPORT_SECTION_ERROR"/>
+      <xs:enumeration value="PROTEX_FILE_SOURCE_NOT_AVAILABLE"/>
+      <xs:enumeration value="NOT_A_FILE_PATH"/>
+      <xs:enumeration value="ARGUMENT_VALUE_INVALID"/>
+      <xs:enumeration value="METHOD_NOT_YET_IMPLEMENTED"/>
+      <xs:enumeration value="ARGUMENT_NOT_YET_IMPLEMENTED"/>
+      <xs:enumeration value="ARGUMENT_VALUE_NOT_YET_IMPLEMENTED"/>
+      <xs:enumeration value="INVALID_CREDENTIALS"/>
+      <xs:enumeration value="INSUFFICIENT_PERMISSION"/>
+      <xs:enumeration value="UNKNOWN_ERROR"/>
+      <xs:enumeration value="BOM_REFRESH_NOT_FINISHED"/>
+      <xs:enumeration value="BOM_COMPONENT_PROJECT_CANT_UPDATE"/>
+      <xs:enumeration value="UPDATE_BOM_COMPONENT_VERSION_NAME_OF_COMPONENT_VERSION_PROHIBITED"/>
+      <xs:enumeration value="TODO_CONVERT_EXCEPTION"/>
+      <xs:enumeration value="UNEXPECTED_RETURN_VALUE_ERROR"/>
+      <xs:enumeration value="OUT_OF_MEMORY_ERROR"/>
+      <xs:enumeration value="NO_SESSION_ID"/>
+      <xs:enumeration value="INVALID_SORT_KEY"/>
+      <xs:enumeration value="CAN_NOT_OPEN_TEMP_FILE"/>
+      <xs:enumeration value="CODEMATCH_SELF_IDENTIFICATION_MUST_MATCH_DECLARED_LICENSE"/>
+      <xs:enumeration value="IDENTIFICATION_NOT_FOUND"/>
+      <xs:enumeration value="IDENTIFICATION_LEARNING_CONFLICT"/>
+      <xs:enumeration value="EXTERNAL_NAMESPACE_NAME_TOO_LONG"/>
+      <xs:enumeration value="DUPLICATE_EXTERNAL_NAMESPACE_KEY"/>
+      <xs:enumeration value="EXTERNAL_NAMESPACE_NOT_FOUND"/>
+      <xs:enumeration value="EXTERNAL_ID_MAPPING_NOT_FOUND"/>
+      <xs:enumeration value="DUPLICATE_EXTERNAL_ID_MAPPING"/>
+      <xs:enumeration value="TEMPLATE_NOT_FOUND"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SdkFault" nillable="true" type="tns:sdkFaultDetails"/>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="suggestComponentsResponse">
+    <wsdl:part name="parameters" element="tns:suggestComponentsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTaggedComponentsResponse">
+    <wsdl:part name="parameters" element="tns:getTaggedComponentsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateComponent">
+    <wsdl:part name="parameters" element="tns:updateComponent">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentsResponse">
+    <wsdl:part name="parameters" element="tns:getComponentsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentByKeyResponse">
+    <wsdl:part name="parameters" element="tns:getComponentByKeyResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addComponentObligationUsingReference">
+    <wsdl:part name="parameters" element="tns:addComponentObligationUsingReference">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentsByNameResponse">
+    <wsdl:part name="parameters" element="tns:getComponentsByNameResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getHashesByComponentResponse">
+    <wsdl:part name="parameters" element="tns:getHashesByComponentResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createComponent">
+    <wsdl:part name="parameters" element="tns:createComponent">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentsByName">
+    <wsdl:part name="parameters" element="tns:getComponentsByName">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponents">
+    <wsdl:part name="parameters" element="tns:getComponents">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeTag">
+    <wsdl:part name="parameters" element="tns:removeTag">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="resetComponentResponse">
+    <wsdl:part name="parameters" element="tns:resetComponentResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentVersions">
+    <wsdl:part name="parameters" element="tns:getComponentVersions">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentsByKey">
+    <wsdl:part name="parameters" element="tns:getComponentsByKey">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createComponentResponse">
+    <wsdl:part name="parameters" element="tns:createComponentResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addTagResponse">
+    <wsdl:part name="parameters" element="tns:addTagResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addTag">
+    <wsdl:part name="parameters" element="tns:addTag">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTags">
+    <wsdl:part name="parameters" element="tns:getTags">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addComponentObligationResponse">
+    <wsdl:part name="parameters" element="tns:addComponentObligationResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getHashesByComponent">
+    <wsdl:part name="parameters" element="tns:getHashesByComponent">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentObligations">
+    <wsdl:part name="parameters" element="tns:getComponentObligations">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTagsResponse">
+    <wsdl:part name="parameters" element="tns:getTagsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentObligationsResponse">
+    <wsdl:part name="parameters" element="tns:getComponentObligationsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTaggedComponents">
+    <wsdl:part name="parameters" element="tns:getTaggedComponents">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteComponentResponse">
+    <wsdl:part name="parameters" element="tns:deleteComponentResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentsByHash">
+    <wsdl:part name="parameters" element="tns:getComponentsByHash">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addComponentObligationUsingReferenceResponse">
+    <wsdl:part name="parameters" element="tns:addComponentObligationUsingReferenceResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateComponentResponse">
+    <wsdl:part name="parameters" element="tns:updateComponentResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteComponent">
+    <wsdl:part name="parameters" element="tns:deleteComponent">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateComponentObligationResponse">
+    <wsdl:part name="parameters" element="tns:updateComponentObligationResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkComponentsExistResponse">
+    <wsdl:part name="parameters" element="tns:checkComponentsExistResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="suggestComponents">
+    <wsdl:part name="parameters" element="tns:suggestComponents">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateComponentObligation">
+    <wsdl:part name="parameters" element="tns:updateComponentObligation">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentsByKeyResponse">
+    <wsdl:part name="parameters" element="tns:getComponentsByKeyResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeComponentObligation">
+    <wsdl:part name="parameters" element="tns:removeComponentObligation">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkComponentsExist">
+    <wsdl:part name="parameters" element="tns:checkComponentsExist">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentVersionsResponse">
+    <wsdl:part name="parameters" element="tns:getComponentVersionsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentByKey">
+    <wsdl:part name="parameters" element="tns:getComponentByKey">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeTagResponse">
+    <wsdl:part name="parameters" element="tns:removeTagResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeComponentObligationResponse">
+    <wsdl:part name="parameters" element="tns:removeComponentObligationResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addComponentObligation">
+    <wsdl:part name="parameters" element="tns:addComponentObligation">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="resetComponent">
+    <wsdl:part name="parameters" element="tns:resetComponent">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SdkFault">
+    <wsdl:part name="SdkFault" element="ns1:SdkFault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentsByHashResponse">
+    <wsdl:part name="parameters" element="tns:getComponentsByHashResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ComponentApi">
+    <wsdl:operation name="deleteComponent">
+      <wsdl:input name="deleteComponent" message="tns:deleteComponent">
+    </wsdl:input>
+      <wsdl:output name="deleteComponentResponse" message="tns:deleteComponentResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateComponent">
+      <wsdl:input name="updateComponent" message="tns:updateComponent">
+    </wsdl:input>
+      <wsdl:output name="updateComponentResponse" message="tns:updateComponentResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addComponentObligationUsingReference">
+      <wsdl:input name="addComponentObligationUsingReference" message="tns:addComponentObligationUsingReference">
+    </wsdl:input>
+      <wsdl:output name="addComponentObligationUsingReferenceResponse" message="tns:addComponentObligationUsingReferenceResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createComponent">
+      <wsdl:input name="createComponent" message="tns:createComponent">
+    </wsdl:input>
+      <wsdl:output name="createComponentResponse" message="tns:createComponentResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentsByName">
+      <wsdl:input name="getComponentsByName" message="tns:getComponentsByName">
+    </wsdl:input>
+      <wsdl:output name="getComponentsByNameResponse" message="tns:getComponentsByNameResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponents">
+      <wsdl:input name="getComponents" message="tns:getComponents">
+    </wsdl:input>
+      <wsdl:output name="getComponentsResponse" message="tns:getComponentsResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeTag">
+      <wsdl:input name="removeTag" message="tns:removeTag">
+    </wsdl:input>
+      <wsdl:output name="removeTagResponse" message="tns:removeTagResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="suggestComponents">
+      <wsdl:input name="suggestComponents" message="tns:suggestComponents">
+    </wsdl:input>
+      <wsdl:output name="suggestComponentsResponse" message="tns:suggestComponentsResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateComponentObligation">
+      <wsdl:input name="updateComponentObligation" message="tns:updateComponentObligation">
+    </wsdl:input>
+      <wsdl:output name="updateComponentObligationResponse" message="tns:updateComponentObligationResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeComponentObligation">
+      <wsdl:input name="removeComponentObligation" message="tns:removeComponentObligation">
+    </wsdl:input>
+      <wsdl:output name="removeComponentObligationResponse" message="tns:removeComponentObligationResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkComponentsExist">
+      <wsdl:input name="checkComponentsExist" message="tns:checkComponentsExist">
+    </wsdl:input>
+      <wsdl:output name="checkComponentsExistResponse" message="tns:checkComponentsExistResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentVersions">
+      <wsdl:input name="getComponentVersions" message="tns:getComponentVersions">
+    </wsdl:input>
+      <wsdl:output name="getComponentVersionsResponse" message="tns:getComponentVersionsResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentsByKey">
+      <wsdl:input name="getComponentsByKey" message="tns:getComponentsByKey">
+    </wsdl:input>
+      <wsdl:output name="getComponentsByKeyResponse" message="tns:getComponentsByKeyResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentByKey">
+      <wsdl:input name="getComponentByKey" message="tns:getComponentByKey">
+    </wsdl:input>
+      <wsdl:output name="getComponentByKeyResponse" message="tns:getComponentByKeyResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addTag">
+      <wsdl:input name="addTag" message="tns:addTag">
+    </wsdl:input>
+      <wsdl:output name="addTagResponse" message="tns:addTagResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTags">
+      <wsdl:input name="getTags" message="tns:getTags">
+    </wsdl:input>
+      <wsdl:output name="getTagsResponse" message="tns:getTagsResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addComponentObligation">
+      <wsdl:input name="addComponentObligation" message="tns:addComponentObligation">
+    </wsdl:input>
+      <wsdl:output name="addComponentObligationResponse" message="tns:addComponentObligationResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="resetComponent">
+      <wsdl:input name="resetComponent" message="tns:resetComponent">
+    </wsdl:input>
+      <wsdl:output name="resetComponentResponse" message="tns:resetComponentResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getHashesByComponent">
+      <wsdl:input name="getHashesByComponent" message="tns:getHashesByComponent">
+    </wsdl:input>
+      <wsdl:output name="getHashesByComponentResponse" message="tns:getHashesByComponentResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentObligations">
+      <wsdl:input name="getComponentObligations" message="tns:getComponentObligations">
+    </wsdl:input>
+      <wsdl:output name="getComponentObligationsResponse" message="tns:getComponentObligationsResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTaggedComponents">
+      <wsdl:input name="getTaggedComponents" message="tns:getTaggedComponents">
+    </wsdl:input>
+      <wsdl:output name="getTaggedComponentsResponse" message="tns:getTaggedComponentsResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentsByHash">
+      <wsdl:input name="getComponentsByHash" message="tns:getComponentsByHash">
+    </wsdl:input>
+      <wsdl:output name="getComponentsByHashResponse" message="tns:getComponentsByHashResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ComponentApiServiceSoapBinding" type="tns:ComponentApi">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="deleteComponent">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteComponent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteComponentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateComponent">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateComponent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateComponentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addComponentObligationUsingReference">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addComponentObligationUsingReference">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addComponentObligationUsingReferenceResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createComponent">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createComponent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createComponentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentsByName">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getComponentsByName">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getComponentsByNameResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponents">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getComponents">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getComponentsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeTag">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="removeTag">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="removeTagResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="suggestComponents">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="suggestComponents">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="suggestComponentsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateComponentObligation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateComponentObligation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateComponentObligationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeComponentObligation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="removeComponentObligation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="removeComponentObligationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkComponentsExist">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="checkComponentsExist">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="checkComponentsExistResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentVersions">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getComponentVersions">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getComponentVersionsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentsByKey">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getComponentsByKey">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getComponentsByKeyResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentByKey">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getComponentByKey">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getComponentByKeyResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addTag">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addTag">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addTagResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTags">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTags">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTagsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addComponentObligation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addComponentObligation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addComponentObligationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="resetComponent">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="resetComponent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="resetComponentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getHashesByComponent">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getHashesByComponent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getHashesByComponentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentObligations">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getComponentObligations">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getComponentObligationsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getTaggedComponents">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getTaggedComponents">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getTaggedComponentsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentsByHash">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getComponentsByHash">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getComponentsByHashResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ComponentApiService">
+    <wsdl:port name="ComponentApiPort" binding="tns:ComponentApiServiceSoapBinding">
+      <soap:address location="http://localhost:9090/ComponentApiPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

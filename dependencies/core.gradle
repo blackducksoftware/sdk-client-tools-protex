@@ -1,0 +1,5 @@
+ext.cxfVersion = '2.7.6'
+ext.cxfXjcRuntimeVersion = '2.7.0'
+ext.slf4jVersion = '1.7.5'
+ext.testngVersion = '6.8.5'
+ext.testSlf4jSimpleVersion = '1.7.7'

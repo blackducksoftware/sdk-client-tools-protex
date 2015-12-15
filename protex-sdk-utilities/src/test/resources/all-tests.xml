@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="1" skipfailedinvocationcounts="false" verbose="1" name="Test Protex SDK Utilities" junit="false" annotations="JDK">
+	<test name="Protex SDK Utilities Tests" junit="false" annotations="JDK">
+		<packages>
+			<package name="com.blackducksoftware.sdk.protex.util.test"/>
+		</packages>
+	</test>
+</suite>
+
+ 
+ 

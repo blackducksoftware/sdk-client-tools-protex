@@ -1,0 +1,33 @@
+sourceSets{
+	main{
+		java{ srcDirs = ['src/main/java']}
+		resources{
+			srcDirs = [
+				'src/main/java',
+				'src/main/resources'
+			]
+		}
+	}
+	test{
+		java{ srcDirs = ['src/test/java']}
+		resources{
+			srcDirs = [
+				'src/test/java',
+				'src/test/resources'
+			]
+		}
+	}
+}
+
+dependencies {
+	compile project(':sdk-client-tools-protex:protex-sdk-client')
+	compile group: 'org.apache.cxf', name: 'cxf-rt-ws-security', version: cxfVersion
+	compile group: 'org.apache.cxf', name: 'cxf-rt-frontend-jaxws', version: cxfVersion
+	compile group: 'org.apache.cxf', name: 'cxf-rt-transports-http', version: cxfVersion
+	compile group: 'org.slf4j', name: 'slf4j-api', version: slf4jVersion
+
+	testCompile group: 'org.slf4j', name: 'slf4j-simple', version: testSlf4jSimpleVersion
+	testCompile group: 'org.testng', name: 'testng', version: testngVersion
+}
+
+test { useTestNG { suites 'src/test/resources/all-tests.xml' } }

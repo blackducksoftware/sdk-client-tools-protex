@@ -1,0 +1,84 @@
+	def wsdlSources = fileTree('src/main/config/wsdl').include('*.wsdl')
+def wsdlBindings = fileTree('src/main/config').include('*bindings*')
+def generatedWsdlSources = file("${buildDir}/generated-sources/wsdl")
+
+//This project specifically includes generated code/javadoc which cannot be altered to conform to the doclint standards
+if (JavaVersion.current().isJava8Compatible()) {
+	tasks.withType(Javadoc) {
+		options.addStringOption('Xdoclint:none', '-quiet')
+	}
+}
+
+sourceSets {
+	main { java { srcDir generatedWsdlSources } }
+}
+
+dependencies {
+	// The generated code references the CXF XJC runtime for date/time mapping
+	compile group: 'org.apache.cxf.xjc-utils', name: 'cxf-xjc-runtime', version: cxfXjcRuntimeVersion
+}
+
+// WSDL to Java ====================================================================================
+
+configurations { wsdl2Java }
+
+dependencies {
+	wsdl2Java group: 'org.apache.cxf', name: 'cxf-tools-wsdlto-core', version: cxfVersion
+	wsdl2Java group: 'org.apache.cxf', name: 'cxf-tools-wsdlto-frontend-jaxws', version: cxfVersion
+	wsdl2Java group: 'org.apache.cxf', name: 'cxf-tools-wsdlto-databinding-jaxb', version: cxfVersion
+}
+
+task generateClient {
+	description 'Generates Java sources from WSDL'
+	inputs.files(wsdlSources.files + wsdlBindings.files)
+	outputs.dir(generatedWsdlSources)
+}
+
+generateClient << {
+	// Define the namespace URI and Java Package bases
+	def baseUri = "urn:protex.blackducksoftware.com:sdk:v${project.ext.wsdlUriVersion - '-SNAPSHOT'}"
+	def basePackage = 'com.blackducksoftware.sdk.protex'
+
+	// Changing these package names will break backwards compatibility - leave as-is
+	// Package names are usually based on the WSDL name, except when they are not
+	def packageNames = [
+		'common':                            "${basePackage}.common",
+		'customcomponentmanagementApi.wsdl': "${basePackage}.component.custom",
+		'localcomponentApi.wsdl':            "${basePackage}.project.localcomponent",
+		'filecomparisonApi.wsdl':            "${basePackage}.comparison",
+		'codetreeApi.wsdl':                  "${basePackage}.project.codetree",
+		'discoveryApi.wsdl':                 "${basePackage}.project.codetree.discovery",
+		'identificationApi.wsdl':            "${basePackage}.project.codetree.identification",
+		'templateApi.wsdl':                  "${basePackage}.project.template",
+		'bomApi.wsdl':                       "${basePackage}.project.bom",
+		'externalidApi.wsdl':                "${basePackage}.policy.externalid",
+	].withDefault { key -> "${basePackage}.${key - 'Api.wsdl'}" }
+
+	// Execute WSDL2Java on every WSDL file
+	// The -frontend jaxws21 argument set is required for Java 6 support - remove only once Java 6 support is discontinued
+	wsdlSources.each { wsdlFile ->
+		project.javaexec {
+			main = 'org.apache.cxf.tools.wsdlto.WSDLToJava'
+			classpath = configurations.wsdl2Java
+			args('-verbose', '-xjc-verbose')
+			args('-frontend', 'jaxws21')
+			args('-validate=basic')
+			args('-client')
+			args('-allowElementReferences')
+			args(wsdlBindings.collect{['-b', it]}.flatten())
+			args(wsdlSources.collect{
+				[
+					'-p',
+					"${baseUri}:${it.name - 'Api.wsdl'}=${packageNames[it.name]}"
+				]}.flatten())
+			args('-p', "${baseUri}:common=${packageNames['common']}")
+			args('-p', "${baseUri}:message=${packageNames[wsdlFile.name]}.message")
+			args('-p', "urn:blackducksoftware.com:sdk:v${project.ext.wsdlUriVersion - '-SNAPSHOT'}:fault=com.blackducksoftware.sdk.fault")
+			args('-p', "${packageNames[wsdlFile.name]}")
+			args('-d', generatedWsdlSources)
+			args(wsdlFile)
+		}
+	}
+}
+
+compileJava.dependsOn generateClient

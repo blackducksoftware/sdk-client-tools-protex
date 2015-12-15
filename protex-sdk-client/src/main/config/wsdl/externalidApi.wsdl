@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="ExternalIdApiService" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:externalid" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:externalid" xmlns:ns1="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:externalid" elementFormDefault="unqualified" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:externalid" version="1.0">
+<xs:element name="createExternalIdMapping" type="tns:createExternalIdMapping"/>
+<xs:element name="createExternalIdMappingResponse" type="tns:createExternalIdMappingResponse"/>
+<xs:element name="createExternalNamespace" type="tns:createExternalNamespace"/>
+<xs:element name="createExternalNamespaceResponse" type="tns:createExternalNamespaceResponse"/>
+<xs:element name="deleteExternalIdMapping" type="tns:deleteExternalIdMapping"/>
+<xs:element name="deleteExternalIdMappingResponse" type="tns:deleteExternalIdMappingResponse"/>
+<xs:element name="deleteExternalNamespace" type="tns:deleteExternalNamespace"/>
+<xs:element name="deleteExternalNamespaceResponse" type="tns:deleteExternalNamespaceResponse"/>
+<xs:element name="getExternalNamespace" type="tns:getExternalNamespace"/>
+<xs:element name="getExternalNamespaceResponse" type="tns:getExternalNamespaceResponse"/>
+<xs:element name="getObjectAndVersionIdByExternalId" type="tns:getObjectAndVersionIdByExternalId"/>
+<xs:element name="getObjectAndVersionIdByExternalIdResponse" type="tns:getObjectAndVersionIdByExternalIdResponse"/>
+<xs:element name="getObjectIdByExternalId" type="tns:getObjectIdByExternalId"/>
+<xs:element name="getObjectIdByExternalIdResponse" type="tns:getObjectIdByExternalIdResponse"/>
+<xs:element name="updateExternalNamespace" type="tns:updateExternalNamespace"/>
+<xs:element name="updateExternalNamespaceResponse" type="tns:updateExternalNamespaceResponse"/>
+<xs:complexType name="getObjectIdByExternalId">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="externalNamespaceKey" type="xs:string"/>
+      <xs:element minOccurs="0" name="externalObjectId" type="xs:string"/>
+      <xs:element minOccurs="0" name="objectType" type="tns:protexObjectType"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getObjectIdByExternalIdResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:protexObjectKey"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType abstract="true" name="protexObjectKey">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="objectId" type="xs:string"/>
+      <xs:element minOccurs="0" name="objectType" type="tns:protexObjectType"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="projectObjectKey">
+    <xs:complexContent>
+      <xs:extension base="tns:protexObjectKey">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="componentObjectKey">
+    <xs:complexContent>
+      <xs:extension base="tns:protexObjectKey">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="componentVersionObjectKey">
+    <xs:complexContent>
+      <xs:extension base="tns:componentObjectKey">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="objectVersionId" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="updateExternalNamespace">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="namespaceUpdateRequest" type="tns:externalNamespaceRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="externalNamespaceRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="description" type="xs:string"/>
+      <xs:element minOccurs="0" name="externalNamespaceKey" type="xs:string"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="updateExternalNamespaceResponse">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="getObjectAndVersionIdByExternalId">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="externalNamespaceKey" type="xs:string"/>
+      <xs:element minOccurs="0" name="externalObjectId" type="xs:string"/>
+      <xs:element minOccurs="0" name="objectType" type="tns:protexObjectType"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getObjectAndVersionIdByExternalIdResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:protexObjectKey"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createExternalIdMapping">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="externalNamespaceKey" type="xs:string"/>
+      <xs:element minOccurs="0" name="externalIdMapping" type="tns:externalIdMapping"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="externalIdMapping">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="externalObjectId" type="xs:string"/>
+      <xs:element minOccurs="0" name="protexObjectKey" type="tns:protexObjectKey"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createExternalIdMappingResponse">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="createExternalNamespace">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="namespaceRequest" type="tns:externalNamespaceRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createExternalNamespaceResponse">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="getExternalNamespace">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="namespaceKey" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getExternalNamespaceResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:externalNamespace"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="externalNamespace">
+    <xs:complexContent>
+      <xs:extension base="tns:externalNamespaceRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="createdBy" type="xs:string"/>
+          <xs:element minOccurs="0" name="createdDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="lastUpdatedDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="updatedBy" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+<xs:complexType name="deleteExternalIdMapping">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="externalNamespaceKey" type="xs:string"/>
+      <xs:element minOccurs="0" name="externalObjectId" type="xs:string"/>
+      <xs:element minOccurs="0" name="objectType" type="tns:protexObjectType"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteExternalIdMappingResponse">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="deleteExternalNamespace">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="externalNamespaceKey" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteExternalNamespaceResponse">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:simpleType name="protexObjectType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PROJECT"/>
+      <xs:enumeration value="COMPONENT"/>
+    </xs:restriction>
+  </xs:simpleType>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:blackducksoftware.com:sdk:v7.0:fault" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="urn:blackducksoftware.com:sdk:v7.0:fault">
+  <xs:element name="sdkFaultDetails" type="tns:sdkFaultDetails"/>
+  <xs:complexType name="sdkFaultDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="errorCode" type="tns:errorCode"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="errorCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SERVER_REGISTRATION_ERROR"/>
+      <xs:enumeration value="SERVER_PERFORMING_UPDATE"/>
+      <xs:enumeration value="NO_ANALYSIS_RUNNING"/>
+      <xs:enumeration value="ANALYSIS_ALREADY_RUNNING"/>
+      <xs:enumeration value="INVALID_SOURCE_LOCATION_FOR_SCAN"/>
+      <xs:enumeration value="PROJECT_COULD_NOT_BE_LOCKED"/>
+      <xs:enumeration value="LICENSE_NAME_TOO_LONG"/>
+      <xs:enumeration value="LICENSE_TYPE_STANDARD_CANT_CHANGE_NAME"/>
+      <xs:enumeration value="TAG_NOT_FOUND"/>
+      <xs:enumeration value="OBLIGATION_IS_REFERENCED"/>
+      <xs:enumeration value="OBLIGATION_NOT_ASSIGNED"/>
+      <xs:enumeration value="DUPLICATE_LICENSE_NAME"/>
+      <xs:enumeration value="LICENSE_NOT_FOUND"/>
+      <xs:enumeration value="LICENSE_IN_USE"/>
+      <xs:enumeration value="CAN_NOT_RESET_CUSTOM_LICENSE"/>
+      <xs:enumeration value="DUPLICATE_OBLIGATION_CATEGORY"/>
+      <xs:enumeration value="OBLIGATION_CATEGORY_NOT_FOUND"/>
+      <xs:enumeration value="OBLIGATION_CATEGORY_IN_USE"/>
+      <xs:enumeration value="OBLIGATION_CATEGORY_CAN_NOT_BE_DELETED"/>
+      <xs:enumeration value="DUPLICATE_OBLIGATION_NAME"/>
+      <xs:enumeration value="DUPLICATE_OBLIGATION_ASSIGNMENT"/>
+      <xs:enumeration value="INVALID_OBLIGATION_NAME"/>
+      <xs:enumeration value="OBLIGATION_NOT_FOUND"/>
+      <xs:enumeration value="OBLIGATION_IN_USE_BY_PROJECTS"/>
+      <xs:enumeration value="OBLIGATION_IN_USE_BY_LICENSES"/>
+      <xs:enumeration value="RAPID_ID_CONFIGURATION_NOT_FOUND"/>
+      <xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_NAME"/>
+      <xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_ASSOCIATION"/>
+      <xs:enumeration value="RAPID_ID_OPERATION_TYPE_DUPLICATE"/>
+      <xs:enumeration value="LEARNED_IDENTIFICATION_NOT_FOUND"/>
+      <xs:enumeration value="USER_NOT_ASSIGNED_TO_PROJECT"/>
+      <xs:enumeration value="UNKNOWN_ANALYSIS_DATABASE_OPTION"/>
+      <xs:enumeration value="STRING_SEARCH_PATTERN_UPDATE_OF_STANDARD_PATTERN_NOT_ALLOWED"/>
+      <xs:enumeration value="CUSTOM_COMPONENT_IN_USE"/>
+      <xs:enumeration value="CUSTOM_COMPONENT_HAS_NO_SOURCE"/>
+      <xs:enumeration value="DUPLICATE_TEMPLATE_TITLE"/>
+      <xs:enumeration value="REPORT_TEMPLATE_NOT_FOUND"/>
+      <xs:enumeration value="DEFAULT_REPORT_TEMPLATE_NOT_SET"/>
+      <xs:enumeration value="DUPLICATE_PROJECT_NAME"/>
+      <xs:enumeration value="PROJECT_ANALYSIS_LOCAL_SOURCE_NOT_SUPPORTED"/>
+      <xs:enumeration value="OPTIONS_SETTING_NOT_ALLOWED"/>
+      <xs:enumeration value="OPTIONS_CANNOT_BE_FORCED_FOR_LOCAL_SEARCH_SETTINGS"/>
+      <xs:enumeration value="DUPLICATE_STRING_SEARCH_PATTERN_NAME"/>
+      <xs:enumeration value="DUPLICATE_FILE_DISCOVERY_PATTERN_NAME"/>
+      <xs:enumeration value="LINKING_PROJECTS_FORCES_CLONING_OF_WORK_RESULTS"/>
+      <xs:enumeration value="PROJECT_NOT_YET_ANALYZED"/>
+      <xs:enumeration value="DUPLICATE_USER_ASSIGNMENT"/>
+      <xs:enumeration value="PROJECT_NAME_TOO_LONG"/>
+      <xs:enumeration value="INVALID_PROJECT_NAME"/>
+      <xs:enumeration value="PROJECT_NOT_FOUND"/>
+      <xs:enumeration value="PROJECT_SYNCID_INVALID"/>
+      <xs:enumeration value="LINKING_GLOBALLY_DISABLED"/>
+      <xs:enumeration value="PROJECT_IN_USE"/>
+      <xs:enumeration value="STRING_SEARCH_PATTERN_NAME_TOO_LONG"/>
+      <xs:enumeration value="ROLE_NOT_FOUND"/>
+      <xs:enumeration value="MINIMUM_ONE_ADMIN_USER"/>
+      <xs:enumeration value="REMOVE_SELF_AS_ADMIN_USER"/>
+      <xs:enumeration value="DUPLICATE_EMAIL_ADDRESS"/>
+      <xs:enumeration value="EMAIL_TOO_LONG"/>
+      <xs:enumeration value="FIRST_NAME_TOO_LONG"/>
+      <xs:enumeration value="LAST_NAME_TOO_LONG"/>
+      <xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_TOO_LONG"/>
+      <xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_DUPLICATE"/>
+      <xs:enumeration value="INVALID_EMAIL_ADDRESS"/>
+      <xs:enumeration value="USER_NOT_FOUND"/>
+      <xs:enumeration value="PASSWORD_TOO_SHORT"/>
+      <xs:enumeration value="PASSWORD_TOO_LONG"/>
+      <xs:enumeration value="STRING_SEARCH_DISCOVERY_NOT_FOUND"/>
+      <xs:enumeration value="STRING_SEARCH_REQUIRES_UPLOADED_SOURCE"/>
+      <xs:enumeration value="USAGE_LEVEL_INVALID_FOR_GIVEN_ID"/>
+      <xs:enumeration value="CANNOT_COPY_ID_PROJECT_SYNCHRONIZED"/>
+      <xs:enumeration value="CODE_TREE_PATH_NOT_FOUND"/>
+      <xs:enumeration value="CODE_TREE_GUARANTEED_EMPTY_RESULT"/>
+      <xs:enumeration value="NO_FILE_CONTENT"/>
+      <xs:enumeration value="CODE_TREE_PARENT_PATH_NOT_FOUND"/>
+      <xs:enumeration value="DUPLICATE_COMPONENT_NAME"/>
+      <xs:enumeration value="COMPONENT_NAME_TOO_LONG"/>
+      <xs:enumeration value="INVALID_COMPONENT_NAME"/>
+      <xs:enumeration value="COMPONENT_NOT_FOUND"/>
+      <xs:enumeration value="COMPONENT_VERSION_NOT_FOUND"/>
+      <xs:enumeration value="OPTION_IS_FORCED"/>
+      <xs:enumeration value="FILE_DISCOVERY_PATTERN_NOT_FOUND"/>
+      <xs:enumeration value="STRING_SEARCH_PATTERN_NOT_FOUND"/>
+      <xs:enumeration value="UNEXPECTED_EXCEPTION_ERROR"/>
+      <xs:enumeration value="UNKNOWN_REPORT_SECTION_ERROR"/>
+      <xs:enumeration value="PROTEX_FILE_SOURCE_NOT_AVAILABLE"/>
+      <xs:enumeration value="NOT_A_FILE_PATH"/>
+      <xs:enumeration value="ARGUMENT_VALUE_INVALID"/>
+      <xs:enumeration value="METHOD_NOT_YET_IMPLEMENTED"/>
+      <xs:enumeration value="ARGUMENT_NOT_YET_IMPLEMENTED"/>
+      <xs:enumeration value="ARGUMENT_VALUE_NOT_YET_IMPLEMENTED"/>
+      <xs:enumeration value="INVALID_CREDENTIALS"/>
+      <xs:enumeration value="INSUFFICIENT_PERMISSION"/>
+      <xs:enumeration value="UNKNOWN_ERROR"/>
+      <xs:enumeration value="BOM_REFRESH_NOT_FINISHED"/>
+      <xs:enumeration value="BOM_COMPONENT_PROJECT_CANT_UPDATE"/>
+      <xs:enumeration value="UPDATE_BOM_COMPONENT_VERSION_NAME_OF_COMPONENT_VERSION_PROHIBITED"/>
+      <xs:enumeration value="TODO_CONVERT_EXCEPTION"/>
+      <xs:enumeration value="UNEXPECTED_RETURN_VALUE_ERROR"/>
+      <xs:enumeration value="OUT_OF_MEMORY_ERROR"/>
+      <xs:enumeration value="NO_SESSION_ID"/>
+      <xs:enumeration value="INVALID_SORT_KEY"/>
+      <xs:enumeration value="CAN_NOT_OPEN_TEMP_FILE"/>
+      <xs:enumeration value="CODEMATCH_SELF_IDENTIFICATION_MUST_MATCH_DECLARED_LICENSE"/>
+      <xs:enumeration value="IDENTIFICATION_NOT_FOUND"/>
+      <xs:enumeration value="IDENTIFICATION_LEARNING_CONFLICT"/>
+      <xs:enumeration value="EXTERNAL_NAMESPACE_NAME_TOO_LONG"/>
+      <xs:enumeration value="DUPLICATE_EXTERNAL_NAMESPACE_KEY"/>
+      <xs:enumeration value="EXTERNAL_NAMESPACE_NOT_FOUND"/>
+      <xs:enumeration value="EXTERNAL_ID_MAPPING_NOT_FOUND"/>
+      <xs:enumeration value="DUPLICATE_EXTERNAL_ID_MAPPING"/>
+      <xs:enumeration value="TEMPLATE_NOT_FOUND"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SdkFault" nillable="true" type="tns:sdkFaultDetails"/>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getObjectIdByExternalId">
+    <wsdl:part name="parameters" element="tns:getObjectIdByExternalId">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getObjectAndVersionIdByExternalId">
+    <wsdl:part name="parameters" element="tns:getObjectAndVersionIdByExternalId">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getExternalNamespaceResponse">
+    <wsdl:part name="parameters" element="tns:getExternalNamespaceResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createExternalIdMapping">
+    <wsdl:part name="parameters" element="tns:createExternalIdMapping">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createExternalIdMappingResponse">
+    <wsdl:part name="parameters" element="tns:createExternalIdMappingResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SdkFault">
+    <wsdl:part name="SdkFault" element="ns1:SdkFault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteExternalNamespace">
+    <wsdl:part name="parameters" element="tns:deleteExternalNamespace">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateExternalNamespace">
+    <wsdl:part name="parameters" element="tns:updateExternalNamespace">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteExternalIdMappingResponse">
+    <wsdl:part name="parameters" element="tns:deleteExternalIdMappingResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateExternalNamespaceResponse">
+    <wsdl:part name="parameters" element="tns:updateExternalNamespaceResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteExternalNamespaceResponse">
+    <wsdl:part name="parameters" element="tns:deleteExternalNamespaceResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getObjectAndVersionIdByExternalIdResponse">
+    <wsdl:part name="parameters" element="tns:getObjectAndVersionIdByExternalIdResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createExternalNamespace">
+    <wsdl:part name="parameters" element="tns:createExternalNamespace">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getObjectIdByExternalIdResponse">
+    <wsdl:part name="parameters" element="tns:getObjectIdByExternalIdResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createExternalNamespaceResponse">
+    <wsdl:part name="parameters" element="tns:createExternalNamespaceResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getExternalNamespace">
+    <wsdl:part name="parameters" element="tns:getExternalNamespace">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteExternalIdMapping">
+    <wsdl:part name="parameters" element="tns:deleteExternalIdMapping">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ExternalIdApi">
+    <wsdl:operation name="getObjectIdByExternalId">
+      <wsdl:input name="getObjectIdByExternalId" message="tns:getObjectIdByExternalId">
+    </wsdl:input>
+      <wsdl:output name="getObjectIdByExternalIdResponse" message="tns:getObjectIdByExternalIdResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateExternalNamespace">
+      <wsdl:input name="updateExternalNamespace" message="tns:updateExternalNamespace">
+    </wsdl:input>
+      <wsdl:output name="updateExternalNamespaceResponse" message="tns:updateExternalNamespaceResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getObjectAndVersionIdByExternalId">
+      <wsdl:input name="getObjectAndVersionIdByExternalId" message="tns:getObjectAndVersionIdByExternalId">
+    </wsdl:input>
+      <wsdl:output name="getObjectAndVersionIdByExternalIdResponse" message="tns:getObjectAndVersionIdByExternalIdResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createExternalIdMapping">
+      <wsdl:input name="createExternalIdMapping" message="tns:createExternalIdMapping">
+    </wsdl:input>
+      <wsdl:output name="createExternalIdMappingResponse" message="tns:createExternalIdMappingResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createExternalNamespace">
+      <wsdl:input name="createExternalNamespace" message="tns:createExternalNamespace">
+    </wsdl:input>
+      <wsdl:output name="createExternalNamespaceResponse" message="tns:createExternalNamespaceResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getExternalNamespace">
+      <wsdl:input name="getExternalNamespace" message="tns:getExternalNamespace">
+    </wsdl:input>
+      <wsdl:output name="getExternalNamespaceResponse" message="tns:getExternalNamespaceResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteExternalIdMapping">
+      <wsdl:input name="deleteExternalIdMapping" message="tns:deleteExternalIdMapping">
+    </wsdl:input>
+      <wsdl:output name="deleteExternalIdMappingResponse" message="tns:deleteExternalIdMappingResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteExternalNamespace">
+      <wsdl:input name="deleteExternalNamespace" message="tns:deleteExternalNamespace">
+    </wsdl:input>
+      <wsdl:output name="deleteExternalNamespaceResponse" message="tns:deleteExternalNamespaceResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ExternalIdApiServiceSoapBinding" type="tns:ExternalIdApi">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getObjectIdByExternalId">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getObjectIdByExternalId">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getObjectIdByExternalIdResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateExternalNamespace">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateExternalNamespace">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateExternalNamespaceResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getObjectAndVersionIdByExternalId">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getObjectAndVersionIdByExternalId">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getObjectAndVersionIdByExternalIdResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createExternalIdMapping">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createExternalIdMapping">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createExternalIdMappingResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createExternalNamespace">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createExternalNamespace">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createExternalNamespaceResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getExternalNamespace">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getExternalNamespace">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getExternalNamespaceResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteExternalIdMapping">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteExternalIdMapping">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteExternalIdMappingResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteExternalNamespace">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteExternalNamespace">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteExternalNamespaceResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ExternalIdApiService">
+    <wsdl:port name="ExternalIdApiPort" binding="tns:ExternalIdApiServiceSoapBinding">
+      <soap:address location="http://localhost:9090/ExternalIdApiPort"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

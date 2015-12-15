@@ -1,0 +1,59 @@
+def testSources = project.hasProperty("testSources") ?  project.getProperty("testSources") : ""
+def testSourcesAllowUpload = project.hasProperty("testSourcesAllowUpload") ?  project.getProperty("testSourcesAllowUpload") : "false"
+
+sourceSets{
+	main{
+		java{ srcDirs = ['src/main/java']}
+		resources{
+			srcDirs = [
+				'src/main/java',
+				'src/main/resources'
+			]
+		}
+	}
+	test{
+		java{ srcDirs = ['src/test/java']}
+		resources{
+			srcDirs = [
+				'src/test/java',
+				'src/test/resources'
+			]
+		}
+	}
+}
+
+
+dependencies {
+	compile project(':sdk-client-tools-protex:protex-sdk-client')
+	compile project(':sdk-client-tools-protex:protex-sdk-utilities')
+
+	testCompile group: 'org.slf4j', name: 'slf4j-simple', version: testSlf4jSimpleVersion
+	testCompile group: 'org.testng', name: 'testng', version: testngVersion
+}
+
+test {
+	systemProperty "test.urlbase", testUrlbase
+	systemProperty "test.username", testUsername
+	systemProperty "test.password", testPassword
+	systemProperty "test.sources.allowupload", testSourcesAllowUpload
+
+	if(project.hasProperty("testSources")){
+		systemProperty "test.sources", testSources
+	}
+
+	useTestNG() {
+		if((project.hasProperty('skipOperationAffectingTests')) && (!testSourcesAllowUpload.toBoolean() && testSources.isEmpty())){
+			logger.warn('Skipping operation-affecting tests');
+			logger.warn('Skipping source-dependent tests - no source locations configured');
+			excludeGroups 'OPERATION_AFFECTING_TEST','SOURCE_DEPENDENT_TEST'
+		}else if(project.hasProperty('skipOperationAffectingTests')){
+			logger.warn('Skipping operation-affecting tests');
+			excludeGroups 'OPERATION_AFFECTING_TEST'
+		}else if(!testSourcesAllowUpload.toBoolean() && testSources.isEmpty()){
+			logger.warn('Skipping source-dependent tests - no source locations configured');
+			excludeGroups 'SOURCE_DEPENDENT_TEST'
+		}
+	}
+}
+
+test.onlyIf { !project.hasProperty('skipExampleTests') }
