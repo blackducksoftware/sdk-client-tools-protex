@@ -13,7 +13,7 @@ import com.blackducksoftware.sdk.protex.project.bom.BomLicenseInfo;
 
 /**
  * This sample gathers the data to generate the report section "License Texts"
- * 
+ *
  * It demonstrates:
  * - How to get the license info for a Bill of Material (BOM)
  * - How to retrieve a license by ID (including the license text)
@@ -100,7 +100,7 @@ public class SampleReportDataLicenseText extends BDProtexSample {
 
                         if (license != null) {
                             System.out.println("*** " + license.getName() + "*** ");
-                            System.out.println(license.getText());
+                            System.out.println(new String(license.getText()));
                         }
 
                     }
