@@ -280,14 +280,14 @@ public class SampleAnalyzeProjectAndGetFileComparison extends BDProtexSample {
                             System.out.println("Similarities between " + projectFile.getFilePath() + " and " + matchedFile.getComponentOrProjectId() + ":"
                                     + matchedFile.getFilePath());
                             for (RelatedSnippets similarity : similarities) {
-                                System.out.println("\t" + similarity.getLeftSnippet().getFirstLine() + " to " + similarity.getLeftSnippet().getFirstLine()
+                                System.out.println("\t" + similarity.getLeftSnippet().getFirstLine() + " to " + similarity.getLeftSnippet().getLastLine()
                                         + "\t" + similarity.getRightSnippet().getFirstLine() + " to " + similarity.getRightSnippet().getLastLine());
                             }
 
                             System.out.println("Differences between " + projectFile.getFilePath() + " and " + matchedFile.getComponentOrProjectId() + ":"
                                     + matchedFile.getFilePath());
                             for (RelatedSnippets difference : differences) {
-                                System.out.println("\t" + difference.getLeftSnippet().getFirstLine() + " to " + difference.getLeftSnippet().getFirstLine()
+                                System.out.println("\t" + difference.getLeftSnippet().getFirstLine() + " to " + difference.getLeftSnippet().getLastLine()
                                         + "\t" + difference.getRightSnippet().getFirstLine() + " to " + difference.getRightSnippet().getLastLine());
                             }
                         } catch (SdkFault fault) {
