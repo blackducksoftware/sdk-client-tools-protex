@@ -4,7 +4,7 @@ import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import com.blackducksoftware.sdk.protex.client.examples.SampleGetFilesIdentifiedWithConflicts;
+import com.blackducksoftware.sdk.protex.client.examples.report.SampleReportDataIdentifiedFiles;
 import com.blackducksoftware.sdk.protex.client.examples.test.type.AbstractSdkSampleTest;
 import com.blackducksoftware.sdk.protex.client.examples.test.type.TestSources;
 import com.blackducksoftware.sdk.protex.client.examples.test.type.Tests;
@@ -58,7 +58,7 @@ public class SampleReportDataIdentifiedFilesTest extends AbstractSdkSampleTest {
         args[2] = Tests.getServerPassword();
         args[3] = projectId;
 
-        SampleGetFilesIdentifiedWithConflicts.main(args);
+        SampleReportDataIdentifiedFiles.main(args);
     }
 
     @AfterClass(alwaysRun = true)
