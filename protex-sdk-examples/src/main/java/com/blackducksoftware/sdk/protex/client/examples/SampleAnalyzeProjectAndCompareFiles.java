@@ -271,7 +271,7 @@ public class SampleAnalyzeProjectAndCompareFiles extends BDProtexSample {
                                     + toComparisonComponentId(discovery.getDiscoveredComponentKey()) + ":"
                                     + discovery.getMatchingFileLocation().getFilePath());
                             for (RelatedSnippets similarity : similarities) {
-                                System.out.println("\t" + similarity.getLeftSnippet().getFirstLine() + " to " + similarity.getLeftSnippet().getFirstLine()
+                                System.out.println("\t" + similarity.getLeftSnippet().getFirstLine() + " to " + similarity.getLeftSnippet().getLastLine()
                                         + "\t" + similarity.getRightSnippet().getFirstLine() + " to " + similarity.getRightSnippet().getLastLine());
                             }
 
@@ -279,7 +279,7 @@ public class SampleAnalyzeProjectAndCompareFiles extends BDProtexSample {
                                     + toComparisonComponentId(discovery.getDiscoveredComponentKey()) + ":"
                                     + discovery.getMatchingFileLocation().getFilePath());
                             for (RelatedSnippets difference : differences) {
-                                System.out.println("\t" + difference.getLeftSnippet().getFirstLine() + " to " + difference.getLeftSnippet().getFirstLine()
+                                System.out.println("\t" + difference.getLeftSnippet().getFirstLine() + " to " + difference.getLeftSnippet().getLastLine()
                                         + "\t" + difference.getRightSnippet().getFirstLine() + " to " + difference.getRightSnippet().getLastLine());
                             }
                         } catch (SdkFault fault) {

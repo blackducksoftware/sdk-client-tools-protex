@@ -314,8 +314,6 @@
       <xs:element minOccurs="0" name="bdsServerLibraryVersion" type="xs:string"/>
       <xs:element minOccurs="0" name="bdsSoapProtcolVersion" type="xs:string"/>
       <xs:element minOccurs="0" name="bdsSoapVersion" type="xs:string"/>
-      <xs:element minOccurs="0" name="bdsSoftwareUpdateLevel" type="xs:string"/>
-      <xs:element minOccurs="0" name="bdsSoftwareUpdateStream" type="xs:string"/>
       <xs:element minOccurs="0" name="bdsToolProtcolVersion" type="xs:string"/>
       <xs:element minOccurs="0" name="bdsToolVersion" type="xs:string"/>
       <xs:element minOccurs="0" name="bdsUpdateProtcolVersion" type="xs:string"/>
@@ -1327,6 +1325,7 @@
       <xs:enumeration value="EXTERNAL_ID_MAPPING_NOT_FOUND"/>
       <xs:enumeration value="DUPLICATE_EXTERNAL_ID_MAPPING"/>
       <xs:enumeration value="TEMPLATE_NOT_FOUND"/>
+      <xs:enumeration value="DUPLICATE_VERSION_NAME"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="SdkFault" nillable="true" type="tns:sdkFaultDetails"/>
