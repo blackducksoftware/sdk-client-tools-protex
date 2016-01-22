@@ -24,6 +24,7 @@ import com.blackducksoftware.sdk.protex.project.codetree.identification.Dependen
 import com.blackducksoftware.sdk.protex.project.codetree.identification.Identification;
 import com.blackducksoftware.sdk.protex.project.codetree.identification.IdentificationApi;
 import com.blackducksoftware.sdk.protex.project.codetree.identification.IdentificationType;
+import com.blackducksoftware.sdk.protex.project.codetree.identification.IdentifiedStringSearchMatchLocation;
 import com.blackducksoftware.sdk.protex.project.codetree.identification.StringSearchIdentification;
 import com.blackducksoftware.sdk.protex.util.CodeTreeUtilities;
 
@@ -144,22 +145,26 @@ public class SampleReportDataIdentifiedFiles extends BDProtexSample {
                                             ""));
                                 } else if (IdentificationType.STRING_SEARCH.equals(id.getType())) {
                                     StringSearchIdentification ssId = (StringSearchIdentification) id;
+                                    StringBuilder fileLines = new StringBuilder();
+                                    StringBuilder comments = new StringBuilder();
+
+                                    for (IdentifiedStringSearchMatchLocation hit : ssId.getMatchLocations()) {
+                                        if (fileLines.length() > 0) {
+                                            fileLines.append(',');
+                                        }
+                                        if (comments.length() > 0) {
+                                            comments.append(',');
+                                        }
+                                        fileLines.append(hit.getFirstLine() != null ? hit.getFirstLine().toString() : "");
+                                        comments.append(hit.getIdentificationComment() != null ? hit.getIdentificationComment() : "");
+                                    }
+
                                     System.out.println(String.format(
                                             rowFormat,
-                                            "",
-                                            ssId.getType(),
-                                            filePath,
-                                            thisNodeFileInfo.getLength(),
-                                            "",
-                                            "<?>",
-                                            componentInfo.getComponentName(),
-                                            versionName,
-                                            id.getIdentifiedLicenseInfo() == null ? "" : id.getIdentifiedLicenseInfo()
-                                                    .getName(),
-                                                    id.getIdentifiedUsageLevel(),
-                                                    "", "",
-                                                    "Matched File Line", "Comment",
-                                                    ssId.getStringSearchId()));
+                                            "", ssId.getType(), filePath, thisNodeFileInfo.getLength(), "", "<?>",
+                                            componentInfo.getComponentName(), versionName,
+                                            id.getIdentifiedLicenseInfo() == null ? "" : id.getIdentifiedLicenseInfo().getName(),
+                                            id.getIdentifiedUsageLevel(), "", "", fileLines.toString(), comments.toString(), ssId.getStringSearchId()));
                                 } else if (IdentificationType.DEPENDENCY.equals(id.getType())) {
                                     DependencyIdentification dpId = (DependencyIdentification) id;
                                     System.out.println(String.format(
