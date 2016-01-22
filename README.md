@@ -25,3 +25,6 @@ The repository contains a `master` branch which contains tags for each release a
 This project does **not** follow semantic versioning - version numbers are kept matching to the minimum compatible product version
 
 New releases of the SDK libraries are created when a version of Protex is released. The version number of the client/utility libraries is generally the minimum version of the associated product that release supports.
+
+## SLF4j Dependency
+The Protex SDK Libraries are intended to be used within other applications. Due to this, at compile and run time, they only depend on the SLF4j APIs, not a specific implementation. This is to allow consuming applications to specify their own implementation without issue. If no implementation is specified, the APIs automatically fall back to a no-op implementation
