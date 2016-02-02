@@ -49,7 +49,7 @@ public class SampleGetFilesWithNoDiscoveries extends BDProtexSample {
 
         List<String> paramDescriptions = new ArrayList<String>(getDefaultUsageParameterDetails());
         paramDescriptions.add(formatUsageDetail("project ID",
-                "The ID of the project to get the files with conflicts for, i.e. \"c_newsampleproject\""));
+                "The ID of the project to get the list of files with no discoveries, i.e. \"c_newsampleproject\""));
 
         outputUsageDetails(className, parameters, paramDescriptions);
     }
