@@ -13,6 +13,7 @@ package com.blackducksoftware.sdk.protex.client.examples;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
@@ -99,7 +100,7 @@ public class SampleGetFilesWithNoDiscoveries extends BDProtexSample {
             }
 
             if (codeTree != null) {
-                codeTree.sort(new Comparator<CodeTreeNode>() {
+                Collections.sort(codeTree, new Comparator<CodeTreeNode>() {
                     @Override
                     public int compare(CodeTreeNode node1, CodeTreeNode node2) {
                         return node1.getName().compareTo(node2.getName());
