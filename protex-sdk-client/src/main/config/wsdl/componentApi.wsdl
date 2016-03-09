@@ -81,6 +81,8 @@
 <xs:element name="getComponentsByName" type="tns:getComponentsByName"/>
 <xs:element name="getComponentsByNameResponse" type="tns:getComponentsByNameResponse"/>
 <xs:element name="getComponentsResponse" type="tns:getComponentsResponse"/>
+<xs:element name="getComponentsVersions" type="tns:getComponentsVersions"/>
+<xs:element name="getComponentsVersionsResponse" type="tns:getComponentsVersionsResponse"/>
 <xs:element name="getHashesByComponent" type="tns:getHashesByComponent"/>
 <xs:element name="getHashesByComponentResponse" type="tns:getHashesByComponentResponse"/>
 <xs:element name="getTaggedComponents" type="tns:getTaggedComponents"/>
@@ -355,6 +357,16 @@
 <xs:complexType name="getComponentByKeyResponse">
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="tns:component"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentsVersions">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="componentIds" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentsVersionsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:component"/>
     </xs:sequence>
   </xs:complexType>
 <xs:complexType name="addComponentObligation">
@@ -701,6 +713,10 @@
     <wsdl:part name="parameters" element="tns:getComponentByKey">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="getComponentsVersions">
+    <wsdl:part name="parameters" element="tns:getComponentsVersions">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="removeComponentObligationResponse">
     <wsdl:part name="parameters" element="tns:removeComponentObligationResponse">
     </wsdl:part>
@@ -799,6 +815,10 @@
   </wsdl:message>
   <wsdl:message name="removeTagResponse">
     <wsdl:part name="parameters" element="tns:removeTagResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentsVersionsResponse">
+    <wsdl:part name="parameters" element="tns:getComponentsVersionsResponse">
     </wsdl:part>
   </wsdl:message>
   <wsdl:portType name="ComponentApi">
@@ -966,6 +986,14 @@
       <wsdl:input name="getComponentByKey" message="tns:getComponentByKey">
     </wsdl:input>
       <wsdl:output name="getComponentByKeyResponse" message="tns:getComponentByKeyResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentsVersions">
+      <wsdl:input name="getComponentsVersions" message="tns:getComponentsVersions">
+    </wsdl:input>
+      <wsdl:output name="getComponentsVersionsResponse" message="tns:getComponentsVersionsResponse">
     </wsdl:output>
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
@@ -1251,6 +1279,18 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="getComponentByKeyResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentsVersions">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getComponentsVersions">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getComponentsVersionsResponse">
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="SdkFault">
