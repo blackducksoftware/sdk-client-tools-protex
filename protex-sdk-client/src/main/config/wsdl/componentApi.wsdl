@@ -2,6 +2,19 @@
 <wsdl:definitions name="ComponentApiService" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:component" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:component" xmlns:ns1="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
   <wsdl:types>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" version="1.0">
+<xs:complexType name="assignedObligation">
+    <xs:complexContent>
+      <xs:extension base="tns:assignedObligationRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="fulfillmentInherited" type="xs:boolean"/>
+          <xs:element minOccurs="0" name="obligationId" type="xs:string"/>
+          <xs:element minOccurs="0" name="originObjectId" type="xs:string"/>
+          <xs:element minOccurs="0" name="originType" type="tns:obligationOriginType"/>
+          <xs:element minOccurs="0" name="reviewAndReportInherited" type="xs:boolean"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
 <xs:complexType name="assignedObligationRequest">
     <xs:complexContent>
       <xs:extension base="tns:obligationRequest">
@@ -18,19 +31,6 @@
       <xs:element minOccurs="0" name="name" type="xs:string"/>
       <xs:element minOccurs="0" name="obligationCategoryId" type="xs:string"/>
     </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="assignedObligation">
-    <xs:complexContent>
-      <xs:extension base="tns:assignedObligationRequest">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="fulfillmentInherited" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="obligationId" type="xs:string"/>
-          <xs:element minOccurs="0" name="originObjectId" type="xs:string"/>
-          <xs:element minOccurs="0" name="originType" type="tns:obligationOriginType"/>
-          <xs:element minOccurs="0" name="reviewAndReportInherited" type="xs:boolean"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
   </xs:complexType>
 <xs:simpleType name="obligationOriginType">
     <xs:restriction base="xs:string">
@@ -61,6 +61,10 @@
 <xs:element name="checkComponentsExistResponse" type="tns:checkComponentsExistResponse"/>
 <xs:element name="createComponent" type="tns:createComponent"/>
 <xs:element name="createComponentResponse" type="tns:createComponentResponse"/>
+<xs:element name="createCustomComponent" type="tns:createCustomComponent"/>
+<xs:element name="createCustomComponentResponse" type="tns:createCustomComponentResponse"/>
+<xs:element name="createCustomComponentVersion" type="tns:createCustomComponentVersion"/>
+<xs:element name="createCustomComponentVersionResponse" type="tns:createCustomComponentVersionResponse"/>
 <xs:element name="deleteComponent" type="tns:deleteComponent"/>
 <xs:element name="deleteComponentResponse" type="tns:deleteComponentResponse"/>
 <xs:element name="getComponentByKey" type="tns:getComponentByKey"/>
@@ -77,6 +81,8 @@
 <xs:element name="getComponentsByName" type="tns:getComponentsByName"/>
 <xs:element name="getComponentsByNameResponse" type="tns:getComponentsByNameResponse"/>
 <xs:element name="getComponentsResponse" type="tns:getComponentsResponse"/>
+<xs:element name="getComponentsVersions" type="tns:getComponentsVersions"/>
+<xs:element name="getComponentsVersionsResponse" type="tns:getComponentsVersionsResponse"/>
 <xs:element name="getHashesByComponent" type="tns:getHashesByComponent"/>
 <xs:element name="getHashesByComponentResponse" type="tns:getHashesByComponentResponse"/>
 <xs:element name="getTaggedComponents" type="tns:getTaggedComponents"/>
@@ -95,14 +101,8 @@
 <xs:element name="updateComponentObligation" type="tns:updateComponentObligation"/>
 <xs:element name="updateComponentObligationResponse" type="tns:updateComponentObligationResponse"/>
 <xs:element name="updateComponentResponse" type="tns:updateComponentResponse"/>
-<xs:complexType name="deleteComponent">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="customComponentKey" type="ns1:componentKey"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="deleteComponentResponse">
-    <xs:sequence/>
-  </xs:complexType>
+<xs:element name="updateCustomComponent" type="tns:updateCustomComponent"/>
+<xs:element name="updateCustomComponentResponse" type="tns:updateCustomComponentResponse"/>
 <xs:complexType name="updateComponent">
     <xs:sequence>
       <xs:element minOccurs="0" name="componentKey" type="ns1:componentKey"/>
@@ -121,6 +121,15 @@
       <xs:element minOccurs="0" name="releaseDate" type="xs:dateTime"/>
       <xs:element minOccurs="0" name="startDate" type="xs:dateTime"/>
     </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="customComponentRequest">
+    <xs:complexContent>
+      <xs:extension base="tns:componentRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="versionName" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
   </xs:complexType>
 <xs:complexType name="updateComponentResponse">
     <xs:sequence/>
@@ -177,16 +186,6 @@
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
-<xs:complexType name="getComponents">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="pageFilter" type="ns1:componentPageFilter"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getComponentsResponse">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:component"/>
-    </xs:sequence>
-  </xs:complexType>
 <xs:complexType name="removeTag">
     <xs:sequence>
       <xs:element minOccurs="0" name="protexUserId" type="xs:string"/>
@@ -197,44 +196,14 @@
 <xs:complexType name="removeTagResponse">
     <xs:sequence/>
   </xs:complexType>
-<xs:complexType name="suggestComponents">
+<xs:complexType name="getComponents">
     <xs:sequence>
-      <xs:element minOccurs="0" name="searchTerm" type="xs:string"/>
       <xs:element minOccurs="0" name="pageFilter" type="ns1:componentPageFilter"/>
     </xs:sequence>
   </xs:complexType>
-<xs:complexType name="suggestComponentsResponse">
+<xs:complexType name="getComponentsResponse">
     <xs:sequence>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:component"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="updateComponentObligation">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="componentId" type="xs:string"/>
-      <xs:element minOccurs="0" name="obligationId" type="xs:string"/>
-      <xs:element minOccurs="0" name="obligationUpdateRequest" type="ns2:assignedObligationRequest"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="updateComponentObligationResponse">
-    <xs:sequence/>
-  </xs:complexType>
-<xs:complexType name="removeComponentObligation">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="componentId" type="xs:string"/>
-      <xs:element minOccurs="0" name="obligationId" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="removeComponentObligationResponse">
-    <xs:sequence/>
-  </xs:complexType>
-<xs:complexType name="checkComponentsExist">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="componentKeys" type="ns1:componentKey"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="checkComponentsExistResponse">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="ns1:componentKey"/>
     </xs:sequence>
   </xs:complexType>
 <xs:complexType name="getComponentVersions">
@@ -257,14 +226,15 @@
       <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:component"/>
     </xs:sequence>
   </xs:complexType>
-<xs:complexType name="getComponentByKey">
+<xs:complexType name="createCustomComponentVersion">
     <xs:sequence>
-      <xs:element minOccurs="0" name="componentKey" type="ns1:componentKey"/>
+      <xs:element minOccurs="0" name="componentId" type="xs:string"/>
+      <xs:element minOccurs="0" name="componentRequest" type="tns:customComponentRequest"/>
     </xs:sequence>
   </xs:complexType>
-<xs:complexType name="getComponentByKeyResponse">
+<xs:complexType name="createCustomComponentVersionResponse">
     <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="tns:component"/>
+      <xs:element minOccurs="0" name="return" type="ns1:componentKey"/>
     </xs:sequence>
   </xs:complexType>
 <xs:complexType name="addTag">
@@ -287,25 +257,6 @@
     <xs:sequence>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string"/>
     </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="addComponentObligation">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="componentId" type="xs:string"/>
-      <xs:element minOccurs="0" name="obligationRequest" type="ns2:assignedObligationRequest"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="addComponentObligationResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="resetComponent">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="standardComponentKey" type="ns1:componentKey"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="resetComponentResponse">
-    <xs:sequence/>
   </xs:complexType>
 <xs:complexType name="getHashesByComponent">
     <xs:sequence>
@@ -348,6 +299,112 @@
 <xs:complexType name="getComponentsByHashResponse">
     <xs:sequence>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:component"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteComponent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="customComponentKey" type="ns1:componentKey"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="deleteComponentResponse">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="suggestComponents">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="searchTerm" type="xs:string"/>
+      <xs:element minOccurs="0" name="pageFilter" type="ns1:componentPageFilter"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="suggestComponentsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:component"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="updateComponentObligation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentId" type="xs:string"/>
+      <xs:element minOccurs="0" name="obligationId" type="xs:string"/>
+      <xs:element minOccurs="0" name="obligationUpdateRequest" type="ns2:assignedObligationRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="updateComponentObligationResponse">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="removeComponentObligation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentId" type="xs:string"/>
+      <xs:element minOccurs="0" name="obligationId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="removeComponentObligationResponse">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="checkComponentsExist">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="componentKeys" type="ns1:componentKey"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="checkComponentsExistResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="ns1:componentKey"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentByKey">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentKey" type="ns1:componentKey"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentByKeyResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:component"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentsVersions">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="componentIds" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="getComponentsVersionsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:component"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="addComponentObligation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentId" type="xs:string"/>
+      <xs:element minOccurs="0" name="obligationRequest" type="ns2:assignedObligationRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="addComponentObligationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="resetComponent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="standardComponentKey" type="ns1:componentKey"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="resetComponentResponse">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="updateCustomComponent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentKey" type="ns1:componentKey"/>
+      <xs:element minOccurs="0" name="componentUpdateRequest" type="tns:customComponentRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="updateCustomComponentResponse">
+    <xs:sequence/>
+  </xs:complexType>
+<xs:complexType name="createCustomComponent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentRequest" type="tns:customComponentRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="createCustomComponentResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns1:componentKey"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>
@@ -546,23 +603,12 @@
       <xs:enumeration value="EXTERNAL_ID_MAPPING_NOT_FOUND"/>
       <xs:enumeration value="DUPLICATE_EXTERNAL_ID_MAPPING"/>
       <xs:enumeration value="TEMPLATE_NOT_FOUND"/>
+      <xs:enumeration value="DUPLICATE_VERSION_NAME"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="SdkFault" nillable="true" type="tns:sdkFaultDetails"/>
 </xs:schema>
   </wsdl:types>
-  <wsdl:message name="suggestComponentsResponse">
-    <wsdl:part name="parameters" element="tns:suggestComponentsResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getTaggedComponentsResponse">
-    <wsdl:part name="parameters" element="tns:getTaggedComponentsResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="updateComponent">
-    <wsdl:part name="parameters" element="tns:updateComponent">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="getComponentsResponse">
     <wsdl:part name="parameters" element="tns:getComponentsResponse">
     </wsdl:part>
@@ -575,32 +621,16 @@
     <wsdl:part name="parameters" element="tns:addComponentObligationUsingReference">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="getComponentsByNameResponse">
-    <wsdl:part name="parameters" element="tns:getComponentsByNameResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getHashesByComponentResponse">
-    <wsdl:part name="parameters" element="tns:getHashesByComponentResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="createComponent">
-    <wsdl:part name="parameters" element="tns:createComponent">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="getComponentsByName">
     <wsdl:part name="parameters" element="tns:getComponentsByName">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getComponents">
-    <wsdl:part name="parameters" element="tns:getComponents">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="removeTag">
     <wsdl:part name="parameters" element="tns:removeTag">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="resetComponentResponse">
-    <wsdl:part name="parameters" element="tns:resetComponentResponse">
+  <wsdl:message name="getComponents">
+    <wsdl:part name="parameters" element="tns:getComponents">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="getComponentVersions">
@@ -627,16 +657,8 @@
     <wsdl:part name="parameters" element="tns:getTags">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="addComponentObligationResponse">
-    <wsdl:part name="parameters" element="tns:addComponentObligationResponse">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="getHashesByComponent">
     <wsdl:part name="parameters" element="tns:getHashesByComponent">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getComponentObligations">
-    <wsdl:part name="parameters" element="tns:getComponentObligations">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="getTagsResponse">
@@ -651,12 +673,12 @@
     <wsdl:part name="parameters" element="tns:getTaggedComponents">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="deleteComponentResponse">
-    <wsdl:part name="parameters" element="tns:deleteComponentResponse">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="getComponentsByHash">
     <wsdl:part name="parameters" element="tns:getComponentsByHash">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteComponentResponse">
+    <wsdl:part name="parameters" element="tns:deleteComponentResponse">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="addComponentObligationUsingReferenceResponse">
@@ -679,24 +701,8 @@
     <wsdl:part name="parameters" element="tns:checkComponentsExistResponse">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="suggestComponents">
-    <wsdl:part name="parameters" element="tns:suggestComponents">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="updateComponentObligation">
-    <wsdl:part name="parameters" element="tns:updateComponentObligation">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="getComponentsByKeyResponse">
     <wsdl:part name="parameters" element="tns:getComponentsByKeyResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="removeComponentObligation">
-    <wsdl:part name="parameters" element="tns:removeComponentObligation">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="checkComponentsExist">
-    <wsdl:part name="parameters" element="tns:checkComponentsExist">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="getComponentVersionsResponse">
@@ -707,8 +713,8 @@
     <wsdl:part name="parameters" element="tns:getComponentByKey">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="removeTagResponse">
-    <wsdl:part name="parameters" element="tns:removeTagResponse">
+  <wsdl:message name="getComponentsVersions">
+    <wsdl:part name="parameters" element="tns:getComponentsVersions">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="removeComponentObligationResponse">
@@ -727,19 +733,95 @@
     <wsdl:part name="SdkFault" element="ns1:SdkFault">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="updateCustomComponent">
+    <wsdl:part name="parameters" element="tns:updateCustomComponent">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateCustomComponentResponse">
+    <wsdl:part name="parameters" element="tns:updateCustomComponentResponse">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="getComponentsByHashResponse">
     <wsdl:part name="parameters" element="tns:getComponentsByHashResponse">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="createCustomComponent">
+    <wsdl:part name="parameters" element="tns:createCustomComponent">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="suggestComponentsResponse">
+    <wsdl:part name="parameters" element="tns:suggestComponentsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getTaggedComponentsResponse">
+    <wsdl:part name="parameters" element="tns:getTaggedComponentsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateComponent">
+    <wsdl:part name="parameters" element="tns:updateComponent">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentsByNameResponse">
+    <wsdl:part name="parameters" element="tns:getComponentsByNameResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getHashesByComponentResponse">
+    <wsdl:part name="parameters" element="tns:getHashesByComponentResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createComponent">
+    <wsdl:part name="parameters" element="tns:createComponent">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="resetComponentResponse">
+    <wsdl:part name="parameters" element="tns:resetComponentResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createCustomComponentVersion">
+    <wsdl:part name="parameters" element="tns:createCustomComponentVersion">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createCustomComponentResponse">
+    <wsdl:part name="parameters" element="tns:createCustomComponentResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addComponentObligationResponse">
+    <wsdl:part name="parameters" element="tns:addComponentObligationResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentObligations">
+    <wsdl:part name="parameters" element="tns:getComponentObligations">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="suggestComponents">
+    <wsdl:part name="parameters" element="tns:suggestComponents">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateComponentObligation">
+    <wsdl:part name="parameters" element="tns:updateComponentObligation">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeComponentObligation">
+    <wsdl:part name="parameters" element="tns:removeComponentObligation">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createCustomComponentVersionResponse">
+    <wsdl:part name="parameters" element="tns:createCustomComponentVersionResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="checkComponentsExist">
+    <wsdl:part name="parameters" element="tns:checkComponentsExist">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeTagResponse">
+    <wsdl:part name="parameters" element="tns:removeTagResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentsVersionsResponse">
+    <wsdl:part name="parameters" element="tns:getComponentsVersionsResponse">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:portType name="ComponentApi">
-    <wsdl:operation name="deleteComponent">
-      <wsdl:input name="deleteComponent" message="tns:deleteComponent">
-    </wsdl:input>
-      <wsdl:output name="deleteComponentResponse" message="tns:deleteComponentResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
     <wsdl:operation name="updateComponent">
       <wsdl:input name="updateComponent" message="tns:updateComponent">
     </wsdl:input>
@@ -772,14 +854,6 @@
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="getComponents">
-      <wsdl:input name="getComponents" message="tns:getComponents">
-    </wsdl:input>
-      <wsdl:output name="getComponentsResponse" message="tns:getComponentsResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
     <wsdl:operation name="removeTag">
       <wsdl:input name="removeTag" message="tns:removeTag">
     </wsdl:input>
@@ -788,34 +862,10 @@
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="suggestComponents">
-      <wsdl:input name="suggestComponents" message="tns:suggestComponents">
+    <wsdl:operation name="getComponents">
+      <wsdl:input name="getComponents" message="tns:getComponents">
     </wsdl:input>
-      <wsdl:output name="suggestComponentsResponse" message="tns:suggestComponentsResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="updateComponentObligation">
-      <wsdl:input name="updateComponentObligation" message="tns:updateComponentObligation">
-    </wsdl:input>
-      <wsdl:output name="updateComponentObligationResponse" message="tns:updateComponentObligationResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="removeComponentObligation">
-      <wsdl:input name="removeComponentObligation" message="tns:removeComponentObligation">
-    </wsdl:input>
-      <wsdl:output name="removeComponentObligationResponse" message="tns:removeComponentObligationResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="checkComponentsExist">
-      <wsdl:input name="checkComponentsExist" message="tns:checkComponentsExist">
-    </wsdl:input>
-      <wsdl:output name="checkComponentsExistResponse" message="tns:checkComponentsExistResponse">
+      <wsdl:output name="getComponentsResponse" message="tns:getComponentsResponse">
     </wsdl:output>
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
@@ -836,10 +886,10 @@
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="getComponentByKey">
-      <wsdl:input name="getComponentByKey" message="tns:getComponentByKey">
+    <wsdl:operation name="createCustomComponentVersion">
+      <wsdl:input name="createCustomComponentVersion" message="tns:createCustomComponentVersion">
     </wsdl:input>
-      <wsdl:output name="getComponentByKeyResponse" message="tns:getComponentByKeyResponse">
+      <wsdl:output name="createCustomComponentVersionResponse" message="tns:createCustomComponentVersionResponse">
     </wsdl:output>
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
@@ -856,22 +906,6 @@
       <wsdl:input name="getTags" message="tns:getTags">
     </wsdl:input>
       <wsdl:output name="getTagsResponse" message="tns:getTagsResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="addComponentObligation">
-      <wsdl:input name="addComponentObligation" message="tns:addComponentObligation">
-    </wsdl:input>
-      <wsdl:output name="addComponentObligationResponse" message="tns:addComponentObligationResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="resetComponent">
-      <wsdl:input name="resetComponent" message="tns:resetComponent">
-    </wsdl:input>
-      <wsdl:output name="resetComponentResponse" message="tns:resetComponentResponse">
     </wsdl:output>
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
@@ -908,21 +942,97 @@
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="deleteComponent">
+      <wsdl:input name="deleteComponent" message="tns:deleteComponent">
+    </wsdl:input>
+      <wsdl:output name="deleteComponentResponse" message="tns:deleteComponentResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="suggestComponents">
+      <wsdl:input name="suggestComponents" message="tns:suggestComponents">
+    </wsdl:input>
+      <wsdl:output name="suggestComponentsResponse" message="tns:suggestComponentsResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateComponentObligation">
+      <wsdl:input name="updateComponentObligation" message="tns:updateComponentObligation">
+    </wsdl:input>
+      <wsdl:output name="updateComponentObligationResponse" message="tns:updateComponentObligationResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeComponentObligation">
+      <wsdl:input name="removeComponentObligation" message="tns:removeComponentObligation">
+    </wsdl:input>
+      <wsdl:output name="removeComponentObligationResponse" message="tns:removeComponentObligationResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkComponentsExist">
+      <wsdl:input name="checkComponentsExist" message="tns:checkComponentsExist">
+    </wsdl:input>
+      <wsdl:output name="checkComponentsExistResponse" message="tns:checkComponentsExistResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentByKey">
+      <wsdl:input name="getComponentByKey" message="tns:getComponentByKey">
+    </wsdl:input>
+      <wsdl:output name="getComponentByKeyResponse" message="tns:getComponentByKeyResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentsVersions">
+      <wsdl:input name="getComponentsVersions" message="tns:getComponentsVersions">
+    </wsdl:input>
+      <wsdl:output name="getComponentsVersionsResponse" message="tns:getComponentsVersionsResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addComponentObligation">
+      <wsdl:input name="addComponentObligation" message="tns:addComponentObligation">
+    </wsdl:input>
+      <wsdl:output name="addComponentObligationResponse" message="tns:addComponentObligationResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="resetComponent">
+      <wsdl:input name="resetComponent" message="tns:resetComponent">
+    </wsdl:input>
+      <wsdl:output name="resetComponentResponse" message="tns:resetComponentResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateCustomComponent">
+      <wsdl:input name="updateCustomComponent" message="tns:updateCustomComponent">
+    </wsdl:input>
+      <wsdl:output name="updateCustomComponentResponse" message="tns:updateCustomComponentResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createCustomComponent">
+      <wsdl:input name="createCustomComponent" message="tns:createCustomComponent">
+    </wsdl:input>
+      <wsdl:output name="createCustomComponentResponse" message="tns:createCustomComponentResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="ComponentApiServiceSoapBinding" type="tns:ComponentApi">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <wsdl:operation name="deleteComponent">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="deleteComponent">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="deleteComponentResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
     <wsdl:operation name="updateComponent">
       <soap:operation soapAction="" style="document"/>
       <wsdl:input name="updateComponent">
@@ -995,54 +1105,6 @@
         <soap:fault name="SdkFault" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="suggestComponents">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="suggestComponents">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="suggestComponentsResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="updateComponentObligation">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="updateComponentObligation">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="updateComponentObligationResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="removeComponentObligation">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="removeComponentObligation">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="removeComponentObligationResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="checkComponentsExist">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="checkComponentsExist">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="checkComponentsExistResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
     <wsdl:operation name="getComponentVersions">
       <soap:operation soapAction="" style="document"/>
       <wsdl:input name="getComponentVersions">
@@ -1067,12 +1129,12 @@
         <soap:fault name="SdkFault" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="getComponentByKey">
+    <wsdl:operation name="createCustomComponentVersion">
       <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getComponentByKey">
+      <wsdl:input name="createCustomComponentVersion">
         <soap:body use="literal"/>
       </wsdl:input>
-      <wsdl:output name="getComponentByKeyResponse">
+      <wsdl:output name="createCustomComponentVersionResponse">
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="SdkFault">
@@ -1097,30 +1159,6 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="getTagsResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="addComponentObligation">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="addComponentObligation">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="addComponentObligationResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="resetComponent">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="resetComponent">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="resetComponentResponse">
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="SdkFault">
@@ -1169,6 +1207,138 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="getComponentsByHashResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteComponent">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteComponent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteComponentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="suggestComponents">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="suggestComponents">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="suggestComponentsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateComponentObligation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateComponentObligation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateComponentObligationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="removeComponentObligation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="removeComponentObligation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="removeComponentObligationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="checkComponentsExist">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="checkComponentsExist">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="checkComponentsExistResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentByKey">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getComponentByKey">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getComponentByKeyResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getComponentsVersions">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getComponentsVersions">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getComponentsVersionsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="addComponentObligation">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="addComponentObligation">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="addComponentObligationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="resetComponent">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="resetComponent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="resetComponentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateCustomComponent">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateCustomComponent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateCustomComponentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createCustomComponent">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createCustomComponent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createCustomComponentResponse">
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="SdkFault">

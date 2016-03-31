@@ -24,6 +24,8 @@
 <xs:element name="addDependencyIdentificationResponse" type="tns:addDependencyIdentificationResponse"/>
 <xs:element name="addStringSearchIdentification" type="tns:addStringSearchIdentification"/>
 <xs:element name="addStringSearchIdentificationResponse" type="tns:addStringSearchIdentificationResponse"/>
+<xs:element name="copyEffectiveIdentifications" type="tns:copyEffectiveIdentifications"/>
+<xs:element name="copyEffectiveIdentificationsResponse" type="tns:copyEffectiveIdentificationsResponse"/>
 <xs:element name="copyIdentifications" type="tns:copyIdentifications"/>
 <xs:element name="copyIdentificationsResponse" type="tns:copyIdentificationsResponse"/>
 <xs:element name="getAppliedIdentifications" type="tns:getAppliedIdentifications"/>
@@ -268,6 +270,20 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="return" type="xs:long"/>
     </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="copyEffectiveIdentifications">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="sourceProjectId" type="xs:string"/>
+      <xs:element minOccurs="0" name="sourcePath" type="xs:string"/>
+      <xs:element minOccurs="0" name="targetProjectId" type="xs:string"/>
+      <xs:element minOccurs="0" name="targetPath" type="xs:string"/>
+      <xs:element minOccurs="0" name="recursive" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="overwriteTarget" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="bomRefreshMode" type="common:bomRefreshMode"/>
+    </xs:sequence>
+  </xs:complexType>
+<xs:complexType name="copyEffectiveIdentificationsResponse">
+    <xs:sequence/>
   </xs:complexType>
 <xs:complexType name="addDeclaredIdentification">
     <xs:sequence>
@@ -838,6 +854,7 @@
       <xs:enumeration value="EXTERNAL_ID_MAPPING_NOT_FOUND"/>
       <xs:enumeration value="DUPLICATE_EXTERNAL_ID_MAPPING"/>
       <xs:enumeration value="TEMPLATE_NOT_FOUND"/>
+      <xs:enumeration value="DUPLICATE_VERSION_NAME"/>
     </xs:restriction>
   </xs:simpleType>
   <xs:element name="SdkFault" nillable="true" type="tns:sdkFaultDetails"/>
@@ -877,6 +894,10 @@
   </wsdl:message>
   <wsdl:message name="removeDeclaredIdentificationResponse">
     <wsdl:part name="parameters" element="tns:removeDeclaredIdentificationResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="copyEffectiveIdentificationsResponse">
+    <wsdl:part name="parameters" element="tns:copyEffectiveIdentificationsResponse">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="SdkFault">
@@ -937,6 +958,10 @@
   </wsdl:message>
   <wsdl:message name="getIdentifyStringSearchesURLResponse">
     <wsdl:part name="parameters" element="tns:getIdentifyStringSearchesURLResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="copyEffectiveIdentifications">
+    <wsdl:part name="parameters" element="tns:copyEffectiveIdentifications">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="getAppliedIdentificationsResponse">
@@ -1084,6 +1109,14 @@
       <wsdl:input name="learnIdentification" message="tns:learnIdentification">
     </wsdl:input>
       <wsdl:output name="learnIdentificationResponse" message="tns:learnIdentificationResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="copyEffectiveIdentifications">
+      <wsdl:input name="copyEffectiveIdentifications" message="tns:copyEffectiveIdentifications">
+    </wsdl:input>
+      <wsdl:output name="copyEffectiveIdentificationsResponse" message="tns:copyEffectiveIdentificationsResponse">
     </wsdl:output>
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
@@ -1289,6 +1322,18 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="learnIdentificationResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="copyEffectiveIdentifications">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="copyEffectiveIdentifications">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="copyEffectiveIdentificationsResponse">
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="SdkFault">
