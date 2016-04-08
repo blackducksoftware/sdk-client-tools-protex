@@ -1,612 +1,645 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="CodeTreeApiService" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:codetree" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:codetree" xmlns:ns1="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
-  <wsdl:types>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:codetree" elementFormDefault="unqualified" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:codetree" version="1.0">
-<xs:element name="getCodeTreeNodes" type="tns:getCodeTreeNodes"/>
-<xs:element name="getCodeTreeNodesResponse" type="tns:getCodeTreeNodesResponse"/>
-<xs:element name="getFileContent" type="tns:getFileContent"/>
-<xs:element name="getFileContentResponse" type="tns:getFileContentResponse"/>
-<xs:element name="getFileInfo" type="tns:getFileInfo"/>
-<xs:element name="getFileInfoResponse" type="tns:getFileInfoResponse"/>
-<xs:element name="getFileOrFolderComment" type="tns:getFileOrFolderComment"/>
-<xs:element name="getFileOrFolderCommentResponse" type="tns:getFileOrFolderCommentResponse"/>
-<xs:element name="getFileOrFolderComments" type="tns:getFileOrFolderComments"/>
-<xs:element name="getFileOrFolderCommentsResponse" type="tns:getFileOrFolderCommentsResponse"/>
-<xs:element name="getSkippedFileCount" type="tns:getSkippedFileCount"/>
-<xs:element name="getSkippedFileCountResponse" type="tns:getSkippedFileCountResponse"/>
-<xs:element name="isCodeTreePathValid" type="tns:isCodeTreePathValid"/>
-<xs:element name="isCodeTreePathValidResponse" type="tns:isCodeTreePathValidResponse"/>
-<xs:element name="updateFileOrFolderComment" type="tns:updateFileOrFolderComment"/>
-<xs:element name="updateFileOrFolderCommentResponse" type="tns:updateFileOrFolderCommentResponse"/>
-<xs:element name="updateFileOrFolderComments" type="tns:updateFileOrFolderComments"/>
-<xs:element name="updateFileOrFolderCommentsResponse" type="tns:updateFileOrFolderCommentsResponse"/>
-<xs:complexType name="getFileOrFolderComment">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
-      <xs:element minOccurs="0" name="fileOrFolderPath" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getFileOrFolderCommentResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="isCodeTreePathValid">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
-      <xs:element minOccurs="0" name="parentPath" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="isCodeTreePathValidResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getFileContent">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
-      <xs:element minOccurs="0" name="filePath" type="xs:string"/>
-      <xs:element minOccurs="0" name="charEncoding" type="tns:charEncoding"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getFileContentResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="fileContent" type="xs:base64Binary"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getFileInfo">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
-      <xs:element minOccurs="0" name="parentPath" type="xs:string"/>
-      <xs:element minOccurs="0" name="depth" type="xs:int"/>
-      <xs:element minOccurs="0" name="includeParentPathNode" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="charEncoding" type="tns:charEncoding"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getFileInfoResponse">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:sourceFileInfoNode"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="sourceFileInfoNode">
-    <xs:complexContent>
-      <xs:extension base="tns:sourceNode">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="exactChecksum" type="xs:string"/>
-          <xs:element minOccurs="0" name="exactSha1Checksum" type="xs:string"/>
-          <xs:element minOccurs="0" name="fileSystemDate" type="xs:dateTime"/>
-          <xs:element minOccurs="0" name="hash" type="xs:string"/>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="lastContributions" nillable="true" type="xs:string"/>
-          <xs:element minOccurs="0" name="length" type="xs:long"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:complexType name="sourceNode">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="name" type="xs:string"/>
-      <xs:element minOccurs="0" name="nodeType" type="tns:codeTreeNodeType"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getSkippedFileCount">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getSkippedFileCountResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:long"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getCodeTreeNodes">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
-      <xs:element minOccurs="0" name="parentPath" type="xs:string"/>
-      <xs:element minOccurs="0" name="codeTreeNodeRequest" type="tns:codeTreeNodeRequest"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="codeTreeNodeRequest">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="counts" nillable="true" type="tns:nodeCountType"/>
-      <xs:element minOccurs="0" name="depth" type="xs:int"/>
-      <xs:element minOccurs="0" name="includeParentNode" type="xs:boolean"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="includedNodeTypes" nillable="true" type="tns:codeTreeNodeType"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getCodeTreeNodesResponse">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeTreeNode"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="codeTreeNode">
-    <xs:complexContent>
-      <xs:extension base="tns:sourceNode">
-        <xs:sequence>
-          <xs:element maxOccurs="unbounded" minOccurs="0" name="nodeCounts" nillable="true" type="tns:nodeCount"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:complexType name="nodeCount">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="count" type="xs:long"/>
-      <xs:element minOccurs="0" name="countType" type="tns:nodeCountType"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="updateFileOrFolderComment">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
-      <xs:element minOccurs="0" name="fileOrFolderPath" type="xs:string"/>
-      <xs:element minOccurs="0" name="comment" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="updateFileOrFolderCommentResponse">
-    <xs:sequence/>
-  </xs:complexType>
-<xs:complexType name="getFileOrFolderComments">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
-      <xs:element minOccurs="0" name="parentPath" type="xs:string"/>
-      <xs:element minOccurs="0" name="codeTreeNodeRequest" type="tns:codeTreeNodeRequest"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getFileOrFolderCommentsResponse">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeTreeNodeCommentInfo"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="codeTreeNodeCommentInfo">
-    <xs:complexContent>
-      <xs:extension base="tns:sourceNode">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="comment" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:complexType name="updateFileOrFolderComments">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="updatedCodeTreeNodesCommentInfo" type="tns:codeTreeNodeCommentInfo"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="updateFileOrFolderCommentsResponse">
-    <xs:sequence/>
-  </xs:complexType>
-<xs:simpleType name="charEncoding">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="NONE"/>
-      <xs:enumeration value="BASE64"/>
-    </xs:restriction>
-  </xs:simpleType>
-<xs:simpleType name="codeTreeNodeType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="FILE"/>
-      <xs:enumeration value="EXPANDED_ARCHIVE"/>
-      <xs:enumeration value="FOLDER"/>
-    </xs:restriction>
-  </xs:simpleType>
-<xs:simpleType name="nodeCountType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="VIOLATIONS"/>
-      <xs:enumeration value="LICENSE_CONFLICTS"/>
-      <xs:enumeration value="DECLARED"/>
-      <xs:enumeration value="NO_ISSUES"/>
-      <xs:enumeration value="PENDING_REVIEW"/>
-      <xs:enumeration value="APPROVED"/>
-      <xs:enumeration value="DISAPPROVED"/>
-      <xs:enumeration value="CODE_MATCH_IDENTIFIED"/>
-      <xs:enumeration value="DEPENDENCY_IDENTIFIED"/>
-      <xs:enumeration value="STRING_SEARCH_IDENTIFIED"/>
-      <xs:enumeration value="FILES"/>
-      <xs:enumeration value="FOLDERS"/>
-      <xs:enumeration value="DISCOVERIES"/>
-      <xs:enumeration value="PENDING_ID_ALL"/>
-      <xs:enumeration value="PENDING_ID_CODE_MATCH"/>
-      <xs:enumeration value="PENDING_ID_STRING_SEARCH"/>
-      <xs:enumeration value="PENDING_ID_DEPENDENCY"/>
-      <xs:enumeration value="NO_DISCOVERIES"/>
-      <xs:enumeration value="PENDING_ID_FILE_PATTERN"/>
-      <xs:enumeration value="DISCOVERED_COMPONENTS"/>
-      <xs:enumeration value="DISCOVERED_LICENSES"/>
-      <xs:enumeration value="MANUALLY_IDENTIFIED_FILES"/>
-      <xs:enumeration value="RAPID_IDENTIFIED_FILES"/>
-      <xs:enumeration value="ANALYZED_FILE_BYTES"/>
-    </xs:restriction>
-  </xs:simpleType>
-</xs:schema>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:blackducksoftware.com:sdk:v7.0:fault" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="urn:blackducksoftware.com:sdk:v7.0:fault">
-  <xs:element name="sdkFaultDetails" type="tns:sdkFaultDetails"/>
-  <xs:complexType name="sdkFaultDetails">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="errorCode" type="tns:errorCode"/>
-      <xs:element minOccurs="0" name="message" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:simpleType name="errorCode">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="SERVER_REGISTRATION_ERROR"/>
-      <xs:enumeration value="SERVER_PERFORMING_UPDATE"/>
-      <xs:enumeration value="NO_ANALYSIS_RUNNING"/>
-      <xs:enumeration value="ANALYSIS_ALREADY_RUNNING"/>
-      <xs:enumeration value="INVALID_SOURCE_LOCATION_FOR_SCAN"/>
-      <xs:enumeration value="PROJECT_COULD_NOT_BE_LOCKED"/>
-      <xs:enumeration value="LICENSE_NAME_TOO_LONG"/>
-      <xs:enumeration value="LICENSE_TYPE_STANDARD_CANT_CHANGE_NAME"/>
-      <xs:enumeration value="TAG_NOT_FOUND"/>
-      <xs:enumeration value="OBLIGATION_IS_REFERENCED"/>
-      <xs:enumeration value="OBLIGATION_NOT_ASSIGNED"/>
-      <xs:enumeration value="DUPLICATE_LICENSE_NAME"/>
-      <xs:enumeration value="LICENSE_NOT_FOUND"/>
-      <xs:enumeration value="LICENSE_IN_USE"/>
-      <xs:enumeration value="CAN_NOT_RESET_CUSTOM_LICENSE"/>
-      <xs:enumeration value="DUPLICATE_OBLIGATION_CATEGORY"/>
-      <xs:enumeration value="OBLIGATION_CATEGORY_NOT_FOUND"/>
-      <xs:enumeration value="OBLIGATION_CATEGORY_IN_USE"/>
-      <xs:enumeration value="OBLIGATION_CATEGORY_CAN_NOT_BE_DELETED"/>
-      <xs:enumeration value="DUPLICATE_OBLIGATION_NAME"/>
-      <xs:enumeration value="DUPLICATE_OBLIGATION_ASSIGNMENT"/>
-      <xs:enumeration value="INVALID_OBLIGATION_NAME"/>
-      <xs:enumeration value="OBLIGATION_NOT_FOUND"/>
-      <xs:enumeration value="OBLIGATION_IN_USE_BY_PROJECTS"/>
-      <xs:enumeration value="OBLIGATION_IN_USE_BY_LICENSES"/>
-      <xs:enumeration value="RAPID_ID_CONFIGURATION_NOT_FOUND"/>
-      <xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_NAME"/>
-      <xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_ASSOCIATION"/>
-      <xs:enumeration value="RAPID_ID_OPERATION_TYPE_DUPLICATE"/>
-      <xs:enumeration value="LEARNED_IDENTIFICATION_NOT_FOUND"/>
-      <xs:enumeration value="USER_NOT_ASSIGNED_TO_PROJECT"/>
-      <xs:enumeration value="UNKNOWN_ANALYSIS_DATABASE_OPTION"/>
-      <xs:enumeration value="STRING_SEARCH_PATTERN_UPDATE_OF_STANDARD_PATTERN_NOT_ALLOWED"/>
-      <xs:enumeration value="CUSTOM_COMPONENT_IN_USE"/>
-      <xs:enumeration value="CUSTOM_COMPONENT_HAS_NO_SOURCE"/>
-      <xs:enumeration value="DUPLICATE_TEMPLATE_TITLE"/>
-      <xs:enumeration value="REPORT_TEMPLATE_NOT_FOUND"/>
-      <xs:enumeration value="DEFAULT_REPORT_TEMPLATE_NOT_SET"/>
-      <xs:enumeration value="DUPLICATE_PROJECT_NAME"/>
-      <xs:enumeration value="PROJECT_ANALYSIS_LOCAL_SOURCE_NOT_SUPPORTED"/>
-      <xs:enumeration value="OPTIONS_SETTING_NOT_ALLOWED"/>
-      <xs:enumeration value="OPTIONS_CANNOT_BE_FORCED_FOR_LOCAL_SEARCH_SETTINGS"/>
-      <xs:enumeration value="DUPLICATE_STRING_SEARCH_PATTERN_NAME"/>
-      <xs:enumeration value="DUPLICATE_FILE_DISCOVERY_PATTERN_NAME"/>
-      <xs:enumeration value="LINKING_PROJECTS_FORCES_CLONING_OF_WORK_RESULTS"/>
-      <xs:enumeration value="PROJECT_NOT_YET_ANALYZED"/>
-      <xs:enumeration value="DUPLICATE_USER_ASSIGNMENT"/>
-      <xs:enumeration value="PROJECT_NAME_TOO_LONG"/>
-      <xs:enumeration value="INVALID_PROJECT_NAME"/>
-      <xs:enumeration value="PROJECT_NOT_FOUND"/>
-      <xs:enumeration value="PROJECT_SYNCID_INVALID"/>
-      <xs:enumeration value="LINKING_GLOBALLY_DISABLED"/>
-      <xs:enumeration value="PROJECT_IN_USE"/>
-      <xs:enumeration value="STRING_SEARCH_PATTERN_NAME_TOO_LONG"/>
-      <xs:enumeration value="ROLE_NOT_FOUND"/>
-      <xs:enumeration value="MINIMUM_ONE_ADMIN_USER"/>
-      <xs:enumeration value="REMOVE_SELF_AS_ADMIN_USER"/>
-      <xs:enumeration value="DUPLICATE_EMAIL_ADDRESS"/>
-      <xs:enumeration value="EMAIL_TOO_LONG"/>
-      <xs:enumeration value="FIRST_NAME_TOO_LONG"/>
-      <xs:enumeration value="LAST_NAME_TOO_LONG"/>
-      <xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_TOO_LONG"/>
-      <xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_DUPLICATE"/>
-      <xs:enumeration value="INVALID_EMAIL_ADDRESS"/>
-      <xs:enumeration value="USER_NOT_FOUND"/>
-      <xs:enumeration value="PASSWORD_TOO_SHORT"/>
-      <xs:enumeration value="PASSWORD_TOO_LONG"/>
-      <xs:enumeration value="STRING_SEARCH_DISCOVERY_NOT_FOUND"/>
-      <xs:enumeration value="STRING_SEARCH_REQUIRES_UPLOADED_SOURCE"/>
-      <xs:enumeration value="USAGE_LEVEL_INVALID_FOR_GIVEN_ID"/>
-      <xs:enumeration value="CANNOT_COPY_ID_PROJECT_SYNCHRONIZED"/>
-      <xs:enumeration value="CODE_TREE_PATH_NOT_FOUND"/>
-      <xs:enumeration value="CODE_TREE_GUARANTEED_EMPTY_RESULT"/>
-      <xs:enumeration value="NO_FILE_CONTENT"/>
-      <xs:enumeration value="CODE_TREE_PARENT_PATH_NOT_FOUND"/>
-      <xs:enumeration value="DUPLICATE_COMPONENT_NAME"/>
-      <xs:enumeration value="COMPONENT_NAME_TOO_LONG"/>
-      <xs:enumeration value="INVALID_COMPONENT_NAME"/>
-      <xs:enumeration value="COMPONENT_NOT_FOUND"/>
-      <xs:enumeration value="COMPONENT_VERSION_NOT_FOUND"/>
-      <xs:enumeration value="OPTION_IS_FORCED"/>
-      <xs:enumeration value="FILE_DISCOVERY_PATTERN_NOT_FOUND"/>
-      <xs:enumeration value="STRING_SEARCH_PATTERN_NOT_FOUND"/>
-      <xs:enumeration value="UNEXPECTED_EXCEPTION_ERROR"/>
-      <xs:enumeration value="UNKNOWN_REPORT_SECTION_ERROR"/>
-      <xs:enumeration value="PROTEX_FILE_SOURCE_NOT_AVAILABLE"/>
-      <xs:enumeration value="NOT_A_FILE_PATH"/>
-      <xs:enumeration value="ARGUMENT_VALUE_INVALID"/>
-      <xs:enumeration value="METHOD_NOT_YET_IMPLEMENTED"/>
-      <xs:enumeration value="ARGUMENT_NOT_YET_IMPLEMENTED"/>
-      <xs:enumeration value="ARGUMENT_VALUE_NOT_YET_IMPLEMENTED"/>
-      <xs:enumeration value="INVALID_CREDENTIALS"/>
-      <xs:enumeration value="INSUFFICIENT_PERMISSION"/>
-      <xs:enumeration value="UNKNOWN_ERROR"/>
-      <xs:enumeration value="BOM_REFRESH_NOT_FINISHED"/>
-      <xs:enumeration value="BOM_COMPONENT_PROJECT_CANT_UPDATE"/>
-      <xs:enumeration value="UPDATE_BOM_COMPONENT_VERSION_NAME_OF_COMPONENT_VERSION_PROHIBITED"/>
-      <xs:enumeration value="TODO_CONVERT_EXCEPTION"/>
-      <xs:enumeration value="UNEXPECTED_RETURN_VALUE_ERROR"/>
-      <xs:enumeration value="OUT_OF_MEMORY_ERROR"/>
-      <xs:enumeration value="NO_SESSION_ID"/>
-      <xs:enumeration value="INVALID_SORT_KEY"/>
-      <xs:enumeration value="CAN_NOT_OPEN_TEMP_FILE"/>
-      <xs:enumeration value="CODEMATCH_SELF_IDENTIFICATION_MUST_MATCH_DECLARED_LICENSE"/>
-      <xs:enumeration value="IDENTIFICATION_NOT_FOUND"/>
-      <xs:enumeration value="IDENTIFICATION_LEARNING_CONFLICT"/>
-      <xs:enumeration value="EXTERNAL_NAMESPACE_NAME_TOO_LONG"/>
-      <xs:enumeration value="DUPLICATE_EXTERNAL_NAMESPACE_KEY"/>
-      <xs:enumeration value="EXTERNAL_NAMESPACE_NOT_FOUND"/>
-      <xs:enumeration value="EXTERNAL_ID_MAPPING_NOT_FOUND"/>
-      <xs:enumeration value="DUPLICATE_EXTERNAL_ID_MAPPING"/>
-      <xs:enumeration value="TEMPLATE_NOT_FOUND"/>
-      <xs:enumeration value="DUPLICATE_VERSION_NAME"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="SdkFault" nillable="true" type="tns:sdkFaultDetails"/>
-</xs:schema>
-  </wsdl:types>
-  <wsdl:message name="getFileOrFolderComment">
-    <wsdl:part name="parameters" element="tns:getFileOrFolderComment">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getCodeTreeNodesResponse">
-    <wsdl:part name="parameters" element="tns:getCodeTreeNodesResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getFileContent">
-    <wsdl:part name="parameters" element="tns:getFileContent">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getFileInfo">
-    <wsdl:part name="parameters" element="tns:getFileInfo">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="isCodeTreePathValidResponse">
-    <wsdl:part name="parameters" element="tns:isCodeTreePathValidResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getCodeTreeNodes">
-    <wsdl:part name="parameters" element="tns:getCodeTreeNodes">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="updateFileOrFolderCommentsResponse">
-    <wsdl:part name="parameters" element="tns:updateFileOrFolderCommentsResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getFileContentResponse">
-    <wsdl:part name="parameters" element="tns:getFileContentResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="updateFileOrFolderComment">
-    <wsdl:part name="parameters" element="tns:updateFileOrFolderComment">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="updateFileOrFolderCommentResponse">
-    <wsdl:part name="parameters" element="tns:updateFileOrFolderCommentResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="updateFileOrFolderComments">
-    <wsdl:part name="parameters" element="tns:updateFileOrFolderComments">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getFileOrFolderCommentResponse">
-    <wsdl:part name="parameters" element="tns:getFileOrFolderCommentResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="isCodeTreePathValid">
-    <wsdl:part name="parameters" element="tns:isCodeTreePathValid">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getSkippedFileCount">
-    <wsdl:part name="parameters" element="tns:getSkippedFileCount">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getSkippedFileCountResponse">
-    <wsdl:part name="parameters" element="tns:getSkippedFileCountResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="SdkFault">
-    <wsdl:part name="SdkFault" element="ns1:SdkFault">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getFileInfoResponse">
-    <wsdl:part name="parameters" element="tns:getFileInfoResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getFileOrFolderComments">
-    <wsdl:part name="parameters" element="tns:getFileOrFolderComments">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getFileOrFolderCommentsResponse">
-    <wsdl:part name="parameters" element="tns:getFileOrFolderCommentsResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:portType name="CodeTreeApi">
-    <wsdl:operation name="getFileOrFolderComment">
-      <wsdl:input name="getFileOrFolderComment" message="tns:getFileOrFolderComment">
-    </wsdl:input>
-      <wsdl:output name="getFileOrFolderCommentResponse" message="tns:getFileOrFolderCommentResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="isCodeTreePathValid">
-      <wsdl:input name="isCodeTreePathValid" message="tns:isCodeTreePathValid">
-    </wsdl:input>
-      <wsdl:output name="isCodeTreePathValidResponse" message="tns:isCodeTreePathValidResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getFileContent">
-      <wsdl:input name="getFileContent" message="tns:getFileContent">
-    </wsdl:input>
-      <wsdl:output name="getFileContentResponse" message="tns:getFileContentResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getFileInfo">
-      <wsdl:input name="getFileInfo" message="tns:getFileInfo">
-    </wsdl:input>
-      <wsdl:output name="getFileInfoResponse" message="tns:getFileInfoResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getSkippedFileCount">
-      <wsdl:input name="getSkippedFileCount" message="tns:getSkippedFileCount">
-    </wsdl:input>
-      <wsdl:output name="getSkippedFileCountResponse" message="tns:getSkippedFileCountResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getCodeTreeNodes">
-      <wsdl:input name="getCodeTreeNodes" message="tns:getCodeTreeNodes">
-    </wsdl:input>
-      <wsdl:output name="getCodeTreeNodesResponse" message="tns:getCodeTreeNodesResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="updateFileOrFolderComment">
-      <wsdl:input name="updateFileOrFolderComment" message="tns:updateFileOrFolderComment">
-    </wsdl:input>
-      <wsdl:output name="updateFileOrFolderCommentResponse" message="tns:updateFileOrFolderCommentResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getFileOrFolderComments">
-      <wsdl:input name="getFileOrFolderComments" message="tns:getFileOrFolderComments">
-    </wsdl:input>
-      <wsdl:output name="getFileOrFolderCommentsResponse" message="tns:getFileOrFolderCommentsResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="updateFileOrFolderComments">
-      <wsdl:input name="updateFileOrFolderComments" message="tns:updateFileOrFolderComments">
-    </wsdl:input>
-      <wsdl:output name="updateFileOrFolderCommentsResponse" message="tns:updateFileOrFolderCommentsResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-  </wsdl:portType>
-  <wsdl:binding name="CodeTreeApiServiceSoapBinding" type="tns:CodeTreeApi">
-    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <wsdl:operation name="getFileOrFolderComment">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getFileOrFolderComment">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getFileOrFolderCommentResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="isCodeTreePathValid">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="isCodeTreePathValid">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="isCodeTreePathValidResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getFileContent">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getFileContent">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getFileContentResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getFileInfo">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getFileInfo">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getFileInfoResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getSkippedFileCount">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getSkippedFileCount">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getSkippedFileCountResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getCodeTreeNodes">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getCodeTreeNodes">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getCodeTreeNodesResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="updateFileOrFolderComment">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="updateFileOrFolderComment">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="updateFileOrFolderCommentResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getFileOrFolderComments">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getFileOrFolderComments">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getFileOrFolderCommentsResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="updateFileOrFolderComments">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="updateFileOrFolderComments">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="updateFileOrFolderCommentsResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-  </wsdl:binding>
-  <wsdl:service name="CodeTreeApiService">
-    <wsdl:port name="CodeTreeApiPort" binding="tns:CodeTreeApiServiceSoapBinding">
-      <soap:address location="http://localhost:9090/CodeTreeApiPort"/>
-    </wsdl:port>
-  </wsdl:service>
+<wsdl:definitions name="CodeTreeApiService"
+	targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:codetree"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:codetree"
+	xmlns:ns1="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:codetree"
+			elementFormDefault="unqualified"
+			targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:codetree"
+			version="1.0">
+			<xs:element name="getCodeTreeNodes" type="tns:getCodeTreeNodes" />
+			<xs:element name="getCodeTreeNodesResponse" type="tns:getCodeTreeNodesResponse" />
+			<xs:element name="getFileContent" type="tns:getFileContent" />
+			<xs:element name="getFileContentResponse" type="tns:getFileContentResponse" />
+			<xs:element name="getFileInfo" type="tns:getFileInfo" />
+			<xs:element name="getFileInfoResponse" type="tns:getFileInfoResponse" />
+			<xs:element name="getFileOrFolderComment" type="tns:getFileOrFolderComment" />
+			<xs:element name="getFileOrFolderCommentResponse" type="tns:getFileOrFolderCommentResponse" />
+			<xs:element name="getFileOrFolderComments" type="tns:getFileOrFolderComments" />
+			<xs:element name="getFileOrFolderCommentsResponse" type="tns:getFileOrFolderCommentsResponse" />
+			<xs:element name="getSkippedFileCount" type="tns:getSkippedFileCount" />
+			<xs:element name="getSkippedFileCountResponse" type="tns:getSkippedFileCountResponse" />
+			<xs:element name="isCodeTreePathValid" type="tns:isCodeTreePathValid" />
+			<xs:element name="isCodeTreePathValidResponse" type="tns:isCodeTreePathValidResponse" />
+			<xs:element name="updateFileOrFolderComment" type="tns:updateFileOrFolderComment" />
+			<xs:element name="updateFileOrFolderCommentResponse" type="tns:updateFileOrFolderCommentResponse" />
+			<xs:element name="updateFileOrFolderComments" type="tns:updateFileOrFolderComments" />
+			<xs:element name="updateFileOrFolderCommentsResponse"
+				type="tns:updateFileOrFolderCommentsResponse" />
+			<xs:complexType name="getFileOrFolderComment">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="projectId" type="xs:string" />
+					<xs:element minOccurs="0" name="fileOrFolderPath" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getFileOrFolderCommentResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="isCodeTreePathValid">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="projectId" type="xs:string" />
+					<xs:element minOccurs="0" name="parentPath" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="isCodeTreePathValidResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="xs:boolean" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getFileContent">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="projectId" type="xs:string" />
+					<xs:element minOccurs="0" name="filePath" type="xs:string" />
+					<xs:element minOccurs="0" name="charEncoding" type="tns:charEncoding" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getFileContentResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="fileContent" type="xs:base64Binary" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getFileInfo">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="projectId" type="xs:string" />
+					<xs:element minOccurs="0" name="parentPath" type="xs:string" />
+					<xs:element minOccurs="0" name="depth" type="xs:int" />
+					<xs:element minOccurs="0" name="includeParentPathNode"
+						type="xs:boolean" />
+					<xs:element minOccurs="0" name="charEncoding" type="tns:charEncoding" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getFileInfoResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+						type="tns:sourceFileInfoNode" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="sourceFileInfoNode">
+				<xs:complexContent>
+					<xs:extension base="tns:sourceNode">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="exactChecksum" type="xs:string" />
+							<xs:element minOccurs="0" name="exactSha1Checksum"
+								type="xs:string" />
+							<xs:element minOccurs="0" name="fileSystemDate" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="hash" type="xs:string" />
+							<xs:element maxOccurs="unbounded" minOccurs="0"
+								name="lastContributions" nillable="true" type="xs:string" />
+							<xs:element minOccurs="0" name="length" type="xs:long" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="sourceNode">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="name" type="xs:string" />
+					<xs:element minOccurs="0" name="nodeType" type="tns:codeTreeNodeType" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getSkippedFileCount">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="projectId" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getSkippedFileCountResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="xs:long" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getCodeTreeNodes">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="projectId" type="xs:string" />
+					<xs:element minOccurs="0" name="parentPath" type="xs:string" />
+					<xs:element minOccurs="0" name="codeTreeNodeRequest"
+						type="tns:codeTreeNodeRequest" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="codeTreeNodeRequest">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="counts"
+						nillable="true" type="tns:nodeCountType" />
+					<xs:element minOccurs="0" name="depth" type="xs:int" />
+					<xs:element minOccurs="0" name="includeParentNode" type="xs:boolean" />
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="includedNodeTypes" nillable="true" type="tns:codeTreeNodeType" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getCodeTreeNodesResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+						type="tns:codeTreeNode" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="codeTreeNode">
+				<xs:complexContent>
+					<xs:extension base="tns:sourceNode">
+						<xs:sequence>
+							<xs:element maxOccurs="unbounded" minOccurs="0"
+								name="nodeCounts" nillable="true" type="tns:nodeCount" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="nodeCount">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="count" type="xs:long" />
+					<xs:element minOccurs="0" name="countType" type="tns:nodeCountType" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="updateFileOrFolderComment">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="projectId" type="xs:string" />
+					<xs:element minOccurs="0" name="fileOrFolderPath" type="xs:string" />
+					<xs:element minOccurs="0" name="comment" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="updateFileOrFolderCommentResponse">
+				<xs:sequence />
+			</xs:complexType>
+			<xs:complexType name="getFileOrFolderComments">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="projectId" type="xs:string" />
+					<xs:element minOccurs="0" name="parentPath" type="xs:string" />
+					<xs:element minOccurs="0" name="codeTreeNodeRequest"
+						type="tns:codeTreeNodeRequest" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getFileOrFolderCommentsResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+						type="tns:codeTreeNodeCommentInfo" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="codeTreeNodeCommentInfo">
+				<xs:complexContent>
+					<xs:extension base="tns:sourceNode">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="comment" type="xs:string" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="updateFileOrFolderComments">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="projectId" type="xs:string" />
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="updatedCodeTreeNodesCommentInfo" type="tns:codeTreeNodeCommentInfo" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="updateFileOrFolderCommentsResponse">
+				<xs:sequence />
+			</xs:complexType>
+			<xs:simpleType name="charEncoding">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="NONE" />
+					<xs:enumeration value="BASE64" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="codeTreeNodeType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="FILE" />
+					<xs:enumeration value="EXPANDED_ARCHIVE" />
+					<xs:enumeration value="FOLDER" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="nodeCountType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="VIOLATIONS" />
+					<xs:enumeration value="LICENSE_CONFLICTS" />
+					<xs:enumeration value="DECLARED" />
+					<xs:enumeration value="NO_ISSUES" />
+					<xs:enumeration value="PENDING_REVIEW" />
+					<xs:enumeration value="APPROVED" />
+					<xs:enumeration value="DISAPPROVED" />
+					<xs:enumeration value="CODE_MATCH_IDENTIFIED" />
+					<xs:enumeration value="DEPENDENCY_IDENTIFIED" />
+					<xs:enumeration value="STRING_SEARCH_IDENTIFIED" />
+					<xs:enumeration value="FILES" />
+					<xs:enumeration value="FOLDERS" />
+					<xs:enumeration value="DISCOVERIES" />
+					<xs:enumeration value="PENDING_ID_ALL" />
+					<xs:enumeration value="PENDING_ID_CODE_MATCH" />
+					<xs:enumeration value="PENDING_ID_STRING_SEARCH" />
+					<xs:enumeration value="PENDING_ID_DEPENDENCY" />
+					<xs:enumeration value="NO_DISCOVERIES" />
+					<xs:enumeration value="PENDING_ID_FILE_PATTERN" />
+					<xs:enumeration value="DISCOVERED_COMPONENTS" />
+					<xs:enumeration value="DISCOVERED_LICENSES" />
+					<xs:enumeration value="MANUALLY_IDENTIFIED_FILES" />
+					<xs:enumeration value="RAPID_IDENTIFIED_FILES" />
+					<xs:enumeration value="ANALYZED_FILE_BYTES" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:schema>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:blackducksoftware.com:sdk:v7.0:fault"
+			attributeFormDefault="unqualified" elementFormDefault="unqualified"
+			targetNamespace="urn:blackducksoftware.com:sdk:v7.0:fault">
+			<xs:element name="sdkFaultDetails" type="tns:sdkFaultDetails" />
+			<xs:complexType name="sdkFaultDetails">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorCode" type="tns:errorCode" />
+					<xs:element minOccurs="0" name="message" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="errorCode">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="SERVER_REGISTRATION_ERROR" />
+					<xs:enumeration value="SERVER_PERFORMING_UPDATE" />
+					<xs:enumeration value="NO_ANALYSIS_RUNNING" />
+					<xs:enumeration value="ANALYSIS_ALREADY_RUNNING" />
+					<xs:enumeration value="INVALID_SOURCE_LOCATION_FOR_SCAN" />
+					<xs:enumeration value="PROJECT_COULD_NOT_BE_LOCKED" />
+					<xs:enumeration value="LICENSE_NAME_TOO_LONG" />
+					<xs:enumeration value="LICENSE_TYPE_STANDARD_CANT_CHANGE_NAME" />
+					<xs:enumeration value="TAG_NOT_FOUND" />
+					<xs:enumeration value="OBLIGATION_IS_REFERENCED" />
+					<xs:enumeration value="OBLIGATION_NOT_ASSIGNED" />
+					<xs:enumeration value="DUPLICATE_LICENSE_NAME" />
+					<xs:enumeration value="LICENSE_NOT_FOUND" />
+					<xs:enumeration value="LICENSE_IN_USE" />
+					<xs:enumeration value="CAN_NOT_RESET_CUSTOM_LICENSE" />
+					<xs:enumeration value="DUPLICATE_OBLIGATION_CATEGORY" />
+					<xs:enumeration value="OBLIGATION_CATEGORY_NOT_FOUND" />
+					<xs:enumeration value="OBLIGATION_CATEGORY_IN_USE" />
+					<xs:enumeration value="OBLIGATION_CATEGORY_CAN_NOT_BE_DELETED" />
+					<xs:enumeration value="DUPLICATE_OBLIGATION_NAME" />
+					<xs:enumeration value="DUPLICATE_OBLIGATION_ASSIGNMENT" />
+					<xs:enumeration value="INVALID_OBLIGATION_NAME" />
+					<xs:enumeration value="OBLIGATION_NOT_FOUND" />
+					<xs:enumeration value="OBLIGATION_IN_USE_BY_PROJECTS" />
+					<xs:enumeration value="OBLIGATION_IN_USE_BY_LICENSES" />
+					<xs:enumeration value="RAPID_ID_CONFIGURATION_NOT_FOUND" />
+					<xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_NAME" />
+					<xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_ASSOCIATION" />
+					<xs:enumeration value="RAPID_ID_OPERATION_TYPE_DUPLICATE" />
+					<xs:enumeration value="LEARNED_IDENTIFICATION_NOT_FOUND" />
+					<xs:enumeration value="USER_NOT_ASSIGNED_TO_PROJECT" />
+					<xs:enumeration value="UNKNOWN_ANALYSIS_DATABASE_OPTION" />
+					<xs:enumeration
+						value="STRING_SEARCH_PATTERN_UPDATE_OF_STANDARD_PATTERN_NOT_ALLOWED" />
+					<xs:enumeration value="CUSTOM_COMPONENT_IN_USE" />
+					<xs:enumeration value="CUSTOM_COMPONENT_HAS_NO_SOURCE" />
+					<xs:enumeration value="DUPLICATE_TEMPLATE_TITLE" />
+					<xs:enumeration value="REPORT_TEMPLATE_NOT_FOUND" />
+					<xs:enumeration value="DEFAULT_REPORT_TEMPLATE_NOT_SET" />
+					<xs:enumeration value="DUPLICATE_PROJECT_NAME" />
+					<xs:enumeration value="PROJECT_ANALYSIS_LOCAL_SOURCE_NOT_SUPPORTED" />
+					<xs:enumeration value="OPTIONS_SETTING_NOT_ALLOWED" />
+					<xs:enumeration
+						value="OPTIONS_CANNOT_BE_FORCED_FOR_LOCAL_SEARCH_SETTINGS" />
+					<xs:enumeration value="DUPLICATE_STRING_SEARCH_PATTERN_NAME" />
+					<xs:enumeration value="DUPLICATE_FILE_DISCOVERY_PATTERN_NAME" />
+					<xs:enumeration value="LINKING_PROJECTS_FORCES_CLONING_OF_WORK_RESULTS" />
+					<xs:enumeration value="PROJECT_NOT_YET_ANALYZED" />
+					<xs:enumeration value="DUPLICATE_USER_ASSIGNMENT" />
+					<xs:enumeration value="PROJECT_NAME_TOO_LONG" />
+					<xs:enumeration value="INVALID_PROJECT_NAME" />
+					<xs:enumeration value="PROJECT_NOT_FOUND" />
+					<xs:enumeration value="PROJECT_SYNCID_INVALID" />
+					<xs:enumeration value="LINKING_GLOBALLY_DISABLED" />
+					<xs:enumeration value="PROJECT_IN_USE" />
+					<xs:enumeration value="STRING_SEARCH_PATTERN_NAME_TOO_LONG" />
+					<xs:enumeration value="ROLE_NOT_FOUND" />
+					<xs:enumeration value="MINIMUM_ONE_ADMIN_USER" />
+					<xs:enumeration value="REMOVE_SELF_AS_ADMIN_USER" />
+					<xs:enumeration value="DUPLICATE_EMAIL_ADDRESS" />
+					<xs:enumeration value="EMAIL_TOO_LONG" />
+					<xs:enumeration value="FIRST_NAME_TOO_LONG" />
+					<xs:enumeration value="LAST_NAME_TOO_LONG" />
+					<xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_TOO_LONG" />
+					<xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_DUPLICATE" />
+					<xs:enumeration value="INVALID_EMAIL_ADDRESS" />
+					<xs:enumeration value="USER_NOT_FOUND" />
+					<xs:enumeration value="PASSWORD_TOO_SHORT" />
+					<xs:enumeration value="PASSWORD_TOO_LONG" />
+					<xs:enumeration value="STRING_SEARCH_DISCOVERY_NOT_FOUND" />
+					<xs:enumeration value="STRING_SEARCH_REQUIRES_UPLOADED_SOURCE" />
+					<xs:enumeration value="USAGE_LEVEL_INVALID_FOR_GIVEN_ID" />
+					<xs:enumeration value="CANNOT_COPY_ID_PROJECT_SYNCHRONIZED" />
+					<xs:enumeration value="CODE_TREE_PATH_NOT_FOUND" />
+					<xs:enumeration value="CODE_TREE_GUARANTEED_EMPTY_RESULT" />
+					<xs:enumeration value="NO_FILE_CONTENT" />
+					<xs:enumeration value="CODE_TREE_PARENT_PATH_NOT_FOUND" />
+					<xs:enumeration value="DUPLICATE_COMPONENT_NAME" />
+					<xs:enumeration value="COMPONENT_NAME_TOO_LONG" />
+					<xs:enumeration value="INVALID_COMPONENT_NAME" />
+					<xs:enumeration value="COMPONENT_NOT_FOUND" />
+					<xs:enumeration value="COMPONENT_VERSION_NOT_FOUND" />
+					<xs:enumeration value="OPTION_IS_FORCED" />
+					<xs:enumeration value="FILE_DISCOVERY_PATTERN_NOT_FOUND" />
+					<xs:enumeration value="STRING_SEARCH_PATTERN_NOT_FOUND" />
+					<xs:enumeration value="UNEXPECTED_EXCEPTION_ERROR" />
+					<xs:enumeration value="UNKNOWN_REPORT_SECTION_ERROR" />
+					<xs:enumeration value="PROTEX_FILE_SOURCE_NOT_AVAILABLE" />
+					<xs:enumeration value="NOT_A_FILE_PATH" />
+					<xs:enumeration value="ARGUMENT_VALUE_INVALID" />
+					<xs:enumeration value="METHOD_NOT_YET_IMPLEMENTED" />
+					<xs:enumeration value="ARGUMENT_NOT_YET_IMPLEMENTED" />
+					<xs:enumeration value="ARGUMENT_VALUE_NOT_YET_IMPLEMENTED" />
+					<xs:enumeration value="INVALID_CREDENTIALS" />
+					<xs:enumeration value="INSUFFICIENT_PERMISSION" />
+					<xs:enumeration value="UNKNOWN_ERROR" />
+					<xs:enumeration value="BOM_REFRESH_NOT_FINISHED" />
+					<xs:enumeration value="BOM_COMPONENT_PROJECT_CANT_UPDATE" />
+					<xs:enumeration
+						value="UPDATE_BOM_COMPONENT_VERSION_NAME_OF_COMPONENT_VERSION_PROHIBITED" />
+					<xs:enumeration value="TODO_CONVERT_EXCEPTION" />
+					<xs:enumeration value="UNEXPECTED_RETURN_VALUE_ERROR" />
+					<xs:enumeration value="OUT_OF_MEMORY_ERROR" />
+					<xs:enumeration value="NO_SESSION_ID" />
+					<xs:enumeration value="INVALID_SORT_KEY" />
+					<xs:enumeration value="CAN_NOT_OPEN_TEMP_FILE" />
+					<xs:enumeration
+						value="CODEMATCH_SELF_IDENTIFICATION_MUST_MATCH_DECLARED_LICENSE" />
+					<xs:enumeration value="IDENTIFICATION_NOT_FOUND" />
+					<xs:enumeration value="IDENTIFICATION_LEARNING_CONFLICT" />
+					<xs:enumeration value="EXTERNAL_NAMESPACE_NAME_TOO_LONG" />
+					<xs:enumeration value="DUPLICATE_EXTERNAL_NAMESPACE_KEY" />
+					<xs:enumeration value="EXTERNAL_NAMESPACE_NOT_FOUND" />
+					<xs:enumeration value="EXTERNAL_ID_MAPPING_NOT_FOUND" />
+					<xs:enumeration value="DUPLICATE_EXTERNAL_ID_MAPPING" />
+					<xs:enumeration value="TEMPLATE_NOT_FOUND" />
+					<xs:enumeration value="DUPLICATE_VERSION_NAME" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="SdkFault" nillable="true" type="tns:sdkFaultDetails" />
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getFileOrFolderComment">
+		<wsdl:part name="parameters" element="tns:getFileOrFolderComment">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getCodeTreeNodesResponse">
+		<wsdl:part name="parameters" element="tns:getCodeTreeNodesResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getFileContent">
+		<wsdl:part name="parameters" element="tns:getFileContent">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getFileInfo">
+		<wsdl:part name="parameters" element="tns:getFileInfo">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="isCodeTreePathValidResponse">
+		<wsdl:part name="parameters" element="tns:isCodeTreePathValidResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getCodeTreeNodes">
+		<wsdl:part name="parameters" element="tns:getCodeTreeNodes">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateFileOrFolderCommentsResponse">
+		<wsdl:part name="parameters" element="tns:updateFileOrFolderCommentsResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getFileContentResponse">
+		<wsdl:part name="parameters" element="tns:getFileContentResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateFileOrFolderComment">
+		<wsdl:part name="parameters" element="tns:updateFileOrFolderComment">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateFileOrFolderCommentResponse">
+		<wsdl:part name="parameters" element="tns:updateFileOrFolderCommentResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateFileOrFolderComments">
+		<wsdl:part name="parameters" element="tns:updateFileOrFolderComments">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getFileOrFolderCommentResponse">
+		<wsdl:part name="parameters" element="tns:getFileOrFolderCommentResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="isCodeTreePathValid">
+		<wsdl:part name="parameters" element="tns:isCodeTreePathValid">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getSkippedFileCount">
+		<wsdl:part name="parameters" element="tns:getSkippedFileCount">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getSkippedFileCountResponse">
+		<wsdl:part name="parameters" element="tns:getSkippedFileCountResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="SdkFault">
+		<wsdl:part name="SdkFault" element="ns1:SdkFault">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getFileInfoResponse">
+		<wsdl:part name="parameters" element="tns:getFileInfoResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getFileOrFolderComments">
+		<wsdl:part name="parameters" element="tns:getFileOrFolderComments">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getFileOrFolderCommentsResponse">
+		<wsdl:part name="parameters" element="tns:getFileOrFolderCommentsResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="CodeTreeApi">
+		<wsdl:operation name="getFileOrFolderComment">
+			<wsdl:input name="getFileOrFolderComment" message="tns:getFileOrFolderComment">
+			</wsdl:input>
+			<wsdl:output name="getFileOrFolderCommentResponse"
+				message="tns:getFileOrFolderCommentResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="isCodeTreePathValid">
+			<wsdl:input name="isCodeTreePathValid" message="tns:isCodeTreePathValid">
+			</wsdl:input>
+			<wsdl:output name="isCodeTreePathValidResponse" message="tns:isCodeTreePathValidResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getFileContent">
+			<wsdl:input name="getFileContent" message="tns:getFileContent">
+			</wsdl:input>
+			<wsdl:output name="getFileContentResponse" message="tns:getFileContentResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getFileInfo">
+			<wsdl:input name="getFileInfo" message="tns:getFileInfo">
+			</wsdl:input>
+			<wsdl:output name="getFileInfoResponse" message="tns:getFileInfoResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getSkippedFileCount">
+			<wsdl:input name="getSkippedFileCount" message="tns:getSkippedFileCount">
+			</wsdl:input>
+			<wsdl:output name="getSkippedFileCountResponse" message="tns:getSkippedFileCountResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getCodeTreeNodes">
+			<wsdl:input name="getCodeTreeNodes" message="tns:getCodeTreeNodes">
+			</wsdl:input>
+			<wsdl:output name="getCodeTreeNodesResponse" message="tns:getCodeTreeNodesResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="updateFileOrFolderComment">
+			<wsdl:input name="updateFileOrFolderComment" message="tns:updateFileOrFolderComment">
+			</wsdl:input>
+			<wsdl:output name="updateFileOrFolderCommentResponse"
+				message="tns:updateFileOrFolderCommentResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getFileOrFolderComments">
+			<wsdl:input name="getFileOrFolderComments" message="tns:getFileOrFolderComments">
+			</wsdl:input>
+			<wsdl:output name="getFileOrFolderCommentsResponse"
+				message="tns:getFileOrFolderCommentsResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="updateFileOrFolderComments">
+			<wsdl:input name="updateFileOrFolderComments" message="tns:updateFileOrFolderComments">
+			</wsdl:input>
+			<wsdl:output name="updateFileOrFolderCommentsResponse"
+				message="tns:updateFileOrFolderCommentsResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="CodeTreeApiServiceSoapBinding" type="tns:CodeTreeApi">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="getFileOrFolderComment">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getFileOrFolderComment">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getFileOrFolderCommentResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="isCodeTreePathValid">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="isCodeTreePathValid">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="isCodeTreePathValidResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getFileContent">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getFileContent">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getFileContentResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getFileInfo">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getFileInfo">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getFileInfoResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getSkippedFileCount">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getSkippedFileCount">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getSkippedFileCountResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getCodeTreeNodes">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getCodeTreeNodes">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getCodeTreeNodesResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="updateFileOrFolderComment">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="updateFileOrFolderComment">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="updateFileOrFolderCommentResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getFileOrFolderComments">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getFileOrFolderComments">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getFileOrFolderCommentsResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="updateFileOrFolderComments">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="updateFileOrFolderComments">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="updateFileOrFolderCommentsResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="CodeTreeApiService">
+		<wsdl:port name="CodeTreeApiPort" binding="tns:CodeTreeApiServiceSoapBinding">
+			<soap:address location="http://localhost:9090/CodeTreeApiPort" />
+		</wsdl:port>
+	</wsdl:service>
 </wsdl:definitions>
