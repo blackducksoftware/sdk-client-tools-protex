@@ -1,1135 +1,1214 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="LicenseApiService" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:ns1="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
-  <wsdl:types>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" version="1.0">
-<xs:complexType name="assignedObligation">
-    <xs:complexContent>
-      <xs:extension base="tns:assignedObligationRequest">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="fulfillmentInherited" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="obligationId" type="xs:string"/>
-          <xs:element minOccurs="0" name="originObjectId" type="xs:string"/>
-          <xs:element minOccurs="0" name="originType" type="tns:obligationOriginType"/>
-          <xs:element minOccurs="0" name="reviewAndReportInherited" type="xs:boolean"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:complexType name="assignedObligationRequest">
-    <xs:complexContent>
-      <xs:extension base="tns:obligationRequest">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="fulfilled" type="xs:boolean"/>
-          <xs:element minOccurs="0" name="reviewAndReport" type="xs:boolean"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:complexType name="obligationRequest">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="description" type="xs:string"/>
-      <xs:element minOccurs="0" name="name" type="xs:string"/>
-      <xs:element minOccurs="0" name="obligationCategoryId" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:simpleType name="obligationOriginType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="PROJECT"/>
-      <xs:enumeration value="LICENSE"/>
-      <xs:enumeration value="GLOBAL"/>
-    </xs:restriction>
-  </xs:simpleType>
-</xs:schema>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:license" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:localcomponent" version="1.0">
-<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:license"/>
-<xs:complexType name="localLicense">
-    <xs:complexContent>
-      <xs:extension base="ns1:license">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="basedOnLicenseId" type="xs:string"/>
-          <xs:element minOccurs="0" name="contextProjectId" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-</xs:schema>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:license" elementFormDefault="unqualified" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:license" version="1.0">
-<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:common"/>
-<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:obligation"/>
-<xs:element name="addLicenseObligation" type="tns:addLicenseObligation"/>
-<xs:element name="addLicenseObligationResponse" type="tns:addLicenseObligationResponse"/>
-<xs:element name="addLicenseObligationUsingReference" type="tns:addLicenseObligationUsingReference"/>
-<xs:element name="addLicenseObligationUsingReferenceResponse" type="tns:addLicenseObligationUsingReferenceResponse"/>
-<xs:element name="addTag" type="tns:addTag"/>
-<xs:element name="addTagResponse" type="tns:addTagResponse"/>
-<xs:element name="cloneLicense" type="tns:cloneLicense"/>
-<xs:element name="cloneLicenseResponse" type="tns:cloneLicenseResponse"/>
-<xs:element name="createLicense" type="tns:createLicense"/>
-<xs:element name="createLicenseResponse" type="tns:createLicenseResponse"/>
-<xs:element name="deleteLicense" type="tns:deleteLicense"/>
-<xs:element name="deleteLicenseResponse" type="tns:deleteLicenseResponse"/>
-<xs:element name="getLicenseById" type="tns:getLicenseById"/>
-<xs:element name="getLicenseByIdResponse" type="tns:getLicenseByIdResponse"/>
-<xs:element name="getLicenseByName" type="tns:getLicenseByName"/>
-<xs:element name="getLicenseByNameResponse" type="tns:getLicenseByNameResponse"/>
-<xs:element name="getLicenseObligations" type="tns:getLicenseObligations"/>
-<xs:element name="getLicenseObligationsResponse" type="tns:getLicenseObligationsResponse"/>
-<xs:element name="getLicenses" type="tns:getLicenses"/>
-<xs:element name="getLicensesById" type="tns:getLicensesById"/>
-<xs:element name="getLicensesByIdResponse" type="tns:getLicensesByIdResponse"/>
-<xs:element name="getLicensesResponse" type="tns:getLicensesResponse"/>
-<xs:element name="getTaggedLicenses" type="tns:getTaggedLicenses"/>
-<xs:element name="getTaggedLicensesResponse" type="tns:getTaggedLicensesResponse"/>
-<xs:element name="getTags" type="tns:getTags"/>
-<xs:element name="getTagsResponse" type="tns:getTagsResponse"/>
-<xs:element name="removeLicenseObligation" type="tns:removeLicenseObligation"/>
-<xs:element name="removeLicenseObligationResponse" type="tns:removeLicenseObligationResponse"/>
-<xs:element name="removeTag" type="tns:removeTag"/>
-<xs:element name="removeTagResponse" type="tns:removeTagResponse"/>
-<xs:element name="resetLicense" type="tns:resetLicense"/>
-<xs:element name="resetLicenseResponse" type="tns:resetLicenseResponse"/>
-<xs:element name="suggestLicenses" type="tns:suggestLicenses"/>
-<xs:element name="suggestLicensesResponse" type="tns:suggestLicensesResponse"/>
-<xs:element name="updateLicense" type="tns:updateLicense"/>
-<xs:element name="updateLicenseObligation" type="tns:updateLicenseObligation"/>
-<xs:element name="updateLicenseObligationResponse" type="tns:updateLicenseObligationResponse"/>
-<xs:element name="updateLicenseResponse" type="tns:updateLicenseResponse"/>
-<xs:complexType name="resetLicense">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="resetLicenseResponse">
-    <xs:sequence/>
-  </xs:complexType>
-<xs:complexType name="createLicense">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="licenseRequest" type="tns:globalLicenseRequest"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="globalLicenseRequest">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="approvalState" type="tns:licenseApprovalState"/>
-      <xs:element minOccurs="0" name="attributes" type="tns:licenseAttributes"/>
-      <xs:element minOccurs="0" name="comment" type="xs:string"/>
-      <xs:element minOccurs="0" name="explanation" type="xs:string"/>
-      <xs:element minOccurs="0" name="name" type="xs:string"/>
-      <xs:element minOccurs="0" name="suffix" type="xs:string"/>
-      <xs:element minOccurs="0" name="text" type="xs:base64Binary"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="licenseAttributes">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="antiDrmProvision" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="carriesDistributionObligations" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="changeNoticeRequired" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="chargingFees" type="tns:permittedOrRequired"/>
-      <xs:element minOccurs="0" name="discriminatoryRestrictions" type="tns:restrictionType"/>
-      <xs:element minOccurs="0" name="expressPatentLicense" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="grantRecipientRightToCopy" type="tns:permittedOrRequired"/>
-      <xs:element minOccurs="0" name="grantRecipientRightToModify" type="tns:permittedOrRequired"/>
-      <xs:element minOccurs="0" name="grantRecipientRightToReverseEngineer" type="tns:permittedOrRequired"/>
-      <xs:element minOccurs="0" name="includeLicense" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="indemnificationRequired" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="integrationLevelForLicenseApplication" type="tns:licenseExtensionLevel"/>
-      <xs:element minOccurs="0" name="licenseBackRequired" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="limitationOfLiabilityRequired" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="notice" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="patentRetaliation" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="promotionRestriction" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="rightToDistributeBinaryForMaximumUsage" type="tns:rightToDistributeBinaryForMaximumUsage"/>
-      <xs:element minOccurs="0" name="shareAlikeReciprocity" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="sourceCodeDistribution" type="tns:permittedOrRequired"/>
-      <xs:element minOccurs="0" name="warrantyDisclaimerRequired" type="xs:boolean"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="createLicenseResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getLicenses">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="filterByLicenseTypes" type="tns:licenseOriginType"/>
-      <xs:element minOccurs="0" name="pageFilter" type="tns:licenseInfoPageFilter"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="licenseInfoPageFilter">
-    <xs:complexContent>
-      <xs:extension base="common:pageFilter">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="sortedColumn" type="tns:licenseInfoColumn"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:complexType name="getLicensesResponse">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:licenseInfo"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="licenseInfo">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
-      <xs:element minOccurs="0" name="name" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="removeLicenseObligation">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
-      <xs:element minOccurs="0" name="obligationId" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="removeLicenseObligationResponse">
-    <xs:sequence/>
-  </xs:complexType>
-<xs:complexType name="getTaggedLicenses">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="protexUserId" type="xs:string"/>
-      <xs:element minOccurs="0" name="tag" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getTaggedLicensesResponse">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:globalLicense"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="globalLicense">
-    <xs:complexContent>
-      <xs:extension base="tns:license">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="approvalDate" type="xs:dateTime"/>
-          <xs:element minOccurs="0" name="approvalState" type="tns:licenseApprovalState"/>
-          <xs:element minOccurs="0" name="approvedBy" type="xs:string"/>
-          <xs:element minOccurs="0" name="comment" type="xs:string"/>
-          <xs:element minOccurs="0" name="explanation" type="xs:string"/>
-          <xs:element minOccurs="0" name="licenseCodeSharingRequirement" type="tns:licenseCodeSharingRequirement"/>
-          <xs:element minOccurs="0" name="licenseOwnership" type="tns:licenseOwnership"/>
-          <xs:element minOccurs="0" name="suffix" type="xs:string"/>
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-<xs:complexType name="license">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="attributes" type="tns:licenseAttributes"/>
-      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
-      <xs:element minOccurs="0" name="licenseOriginType" type="tns:licenseOriginType"/>
-      <xs:element minOccurs="0" name="name" type="xs:string"/>
-      <xs:element minOccurs="0" name="text" type="xs:base64Binary"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="updateLicense">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
-      <xs:element minOccurs="0" name="license" type="tns:globalLicenseRequest"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="updateLicenseResponse">
-    <xs:sequence/>
-  </xs:complexType>
-<xs:complexType name="getLicenseObligations">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getLicenseObligationsResponse">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="ns1:assignedObligation"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="addLicenseObligation">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
-      <xs:element minOccurs="0" name="assignedObligationRequest" type="ns1:assignedObligationRequest"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="addLicenseObligationResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="removeTag">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="protexUserId" type="xs:string"/>
-      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
-      <xs:element minOccurs="0" name="tag" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="removeTagResponse">
-    <xs:sequence/>
-  </xs:complexType>
-<xs:complexType name="updateLicenseObligation">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
-      <xs:element minOccurs="0" name="obligationId" type="xs:string"/>
-      <xs:element minOccurs="0" name="obligationUpdateRequest" type="ns1:assignedObligationRequest"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="updateLicenseObligationResponse">
-    <xs:sequence/>
-  </xs:complexType>
-<xs:complexType name="getLicenseById">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getLicenseByIdResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="tns:globalLicense"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="suggestLicenses">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="anyWordStartsWith" type="xs:string"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="filterByLicenseTypes" type="tns:licenseOriginType"/>
-      <xs:element minOccurs="0" name="pageFilter" type="tns:licenseInfoPageFilter"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="suggestLicensesResponse">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:licenseInfo"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="addTag">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="protexUserId" type="xs:string"/>
-      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
-      <xs:element minOccurs="0" name="tag" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="addTagResponse">
-    <xs:sequence/>
-  </xs:complexType>
-<xs:complexType name="getLicenseByName">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="licenseName" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getLicenseByNameResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="tns:globalLicense"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="deleteLicense">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="deleteLicenseResponse">
-    <xs:sequence/>
-  </xs:complexType>
-<xs:complexType name="addLicenseObligationUsingReference">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
-      <xs:element minOccurs="0" name="globalObligationId" type="xs:string"/>
-      <xs:element minOccurs="0" name="requiresReview" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="isfulfilled" type="xs:boolean"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="addLicenseObligationUsingReferenceResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="cloneLicense">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="clonedLicenseName" type="xs:string"/>
-      <xs:element minOccurs="0" name="originalLicenseId" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="cloneLicenseResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getLicensesById">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="licenseIds" type="xs:string"/>
-      <xs:element minOccurs="0" name="getBehavior" type="common:getBehavior"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getLicensesByIdResponse">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:globalLicense"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getTags">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="protexUserId" type="xs:string"/>
-      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:complexType name="getTagsResponse">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:simpleType name="licenseApprovalState">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="APPROVED"/>
-      <xs:enumeration value="BLANKET_APPROVED"/>
-      <xs:enumeration value="DIS_APPROVED"/>
-      <xs:enumeration value="NOT_REVIEWED"/>
-    </xs:restriction>
-  </xs:simpleType>
-<xs:simpleType name="permittedOrRequired">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="NOT_PERMITTED"/>
-      <xs:enumeration value="PERMITTED"/>
-      <xs:enumeration value="REQUIRED"/>
-    </xs:restriction>
-  </xs:simpleType>
-<xs:simpleType name="restrictionType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="HAS_RESTRICTIONS"/>
-      <xs:enumeration value="HAS_NO_RESTRICTIONS"/>
-      <xs:enumeration value="HAS_NO_RESTRICTIONS_AND_CAN_NOT_ADD_ANY"/>
-    </xs:restriction>
-  </xs:simpleType>
-<xs:simpleType name="licenseExtensionLevel">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="NON"/>
-      <xs:enumeration value="FILE_PER_MPL"/>
-      <xs:enumeration value="MODULE_PER_EPL_CPL"/>
-      <xs:enumeration value="DYNAMIC_LIBRARY_PER_LGPL"/>
-      <xs:enumeration value="WORK_BASED_ON_PER_GPL"/>
-      <xs:enumeration value="ACCOMPANYING_SOFTWARE_USING_PER_SLEEPY_CAT"/>
-    </xs:restriction>
-  </xs:simpleType>
-<xs:simpleType name="rightToDistributeBinaryForMaximumUsage">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="NON_COMMERCIAL_OR_PERSONAL_USE"/>
-      <xs:enumeration value="INTERNAL_EVALUATION"/>
-      <xs:enumeration value="INTERNAL_PRODUCTION_USE"/>
-      <xs:enumeration value="ANY"/>
-    </xs:restriction>
-  </xs:simpleType>
-<xs:simpleType name="licenseOriginType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="STANDARD"/>
-      <xs:enumeration value="MODIFIED_STANDARD"/>
-      <xs:enumeration value="TEMPLATE"/>
-      <xs:enumeration value="CUSTOM"/>
-      <xs:enumeration value="PROJECT_LOCAL"/>
-    </xs:restriction>
-  </xs:simpleType>
-<xs:simpleType name="licenseInfoColumn">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="LICENSE_ID"/>
-      <xs:enumeration value="LICENSE_NAME"/>
-    </xs:restriction>
-  </xs:simpleType>
-<xs:simpleType name="licenseCodeSharingRequirement">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="RECIPROCAL"/>
-      <xs:enumeration value="WEAK_RECIPROCAL"/>
-      <xs:enumeration value="PERMISSIVE"/>
-      <xs:enumeration value="UNKNOWN"/>
-    </xs:restriction>
-  </xs:simpleType>
-<xs:simpleType name="licenseOwnership">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="OPEN_SOURCE"/>
-      <xs:enumeration value="PROPRIETARY"/>
-      <xs:enumeration value="UNKNOWN"/>
-    </xs:restriction>
-  </xs:simpleType>
-</xs:schema>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:common" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:common" version="1.0">
-<xs:complexType abstract="true" name="pageFilter">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="firstRowIndex" type="xs:int"/>
-      <xs:element minOccurs="0" name="lastRowIndex" type="xs:int"/>
-      <xs:element minOccurs="0" name="sortAscending" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="sortType" type="tns:sortType"/>
-    </xs:sequence>
-  </xs:complexType>
-<xs:simpleType name="sortType">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="ALPHABETICAL_CASE_INSENSITIVE"/>
-      <xs:enumeration value="NUMERIC"/>
-    </xs:restriction>
-  </xs:simpleType>
-<xs:simpleType name="getBehavior">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="CONTINUE_IF_NOT_FOUND"/>
-      <xs:enumeration value="ERROR_IF_NOT_FOUND"/>
-    </xs:restriction>
-  </xs:simpleType>
-</xs:schema>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:blackducksoftware.com:sdk:v7.0:fault" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="urn:blackducksoftware.com:sdk:v7.0:fault">
-  <xs:element name="sdkFaultDetails" type="tns:sdkFaultDetails"/>
-  <xs:complexType name="sdkFaultDetails">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="errorCode" type="tns:errorCode"/>
-      <xs:element minOccurs="0" name="message" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-  <xs:simpleType name="errorCode">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="SERVER_REGISTRATION_ERROR"/>
-      <xs:enumeration value="SERVER_PERFORMING_UPDATE"/>
-      <xs:enumeration value="NO_ANALYSIS_RUNNING"/>
-      <xs:enumeration value="ANALYSIS_ALREADY_RUNNING"/>
-      <xs:enumeration value="INVALID_SOURCE_LOCATION_FOR_SCAN"/>
-      <xs:enumeration value="PROJECT_COULD_NOT_BE_LOCKED"/>
-      <xs:enumeration value="LICENSE_NAME_TOO_LONG"/>
-      <xs:enumeration value="LICENSE_TYPE_STANDARD_CANT_CHANGE_NAME"/>
-      <xs:enumeration value="TAG_NOT_FOUND"/>
-      <xs:enumeration value="OBLIGATION_IS_REFERENCED"/>
-      <xs:enumeration value="OBLIGATION_NOT_ASSIGNED"/>
-      <xs:enumeration value="DUPLICATE_LICENSE_NAME"/>
-      <xs:enumeration value="LICENSE_NOT_FOUND"/>
-      <xs:enumeration value="LICENSE_IN_USE"/>
-      <xs:enumeration value="CAN_NOT_RESET_CUSTOM_LICENSE"/>
-      <xs:enumeration value="DUPLICATE_OBLIGATION_CATEGORY"/>
-      <xs:enumeration value="OBLIGATION_CATEGORY_NOT_FOUND"/>
-      <xs:enumeration value="OBLIGATION_CATEGORY_IN_USE"/>
-      <xs:enumeration value="OBLIGATION_CATEGORY_CAN_NOT_BE_DELETED"/>
-      <xs:enumeration value="DUPLICATE_OBLIGATION_NAME"/>
-      <xs:enumeration value="DUPLICATE_OBLIGATION_ASSIGNMENT"/>
-      <xs:enumeration value="INVALID_OBLIGATION_NAME"/>
-      <xs:enumeration value="OBLIGATION_NOT_FOUND"/>
-      <xs:enumeration value="OBLIGATION_IN_USE_BY_PROJECTS"/>
-      <xs:enumeration value="OBLIGATION_IN_USE_BY_LICENSES"/>
-      <xs:enumeration value="RAPID_ID_CONFIGURATION_NOT_FOUND"/>
-      <xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_NAME"/>
-      <xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_ASSOCIATION"/>
-      <xs:enumeration value="RAPID_ID_OPERATION_TYPE_DUPLICATE"/>
-      <xs:enumeration value="LEARNED_IDENTIFICATION_NOT_FOUND"/>
-      <xs:enumeration value="USER_NOT_ASSIGNED_TO_PROJECT"/>
-      <xs:enumeration value="UNKNOWN_ANALYSIS_DATABASE_OPTION"/>
-      <xs:enumeration value="STRING_SEARCH_PATTERN_UPDATE_OF_STANDARD_PATTERN_NOT_ALLOWED"/>
-      <xs:enumeration value="CUSTOM_COMPONENT_IN_USE"/>
-      <xs:enumeration value="CUSTOM_COMPONENT_HAS_NO_SOURCE"/>
-      <xs:enumeration value="DUPLICATE_TEMPLATE_TITLE"/>
-      <xs:enumeration value="REPORT_TEMPLATE_NOT_FOUND"/>
-      <xs:enumeration value="DEFAULT_REPORT_TEMPLATE_NOT_SET"/>
-      <xs:enumeration value="DUPLICATE_PROJECT_NAME"/>
-      <xs:enumeration value="PROJECT_ANALYSIS_LOCAL_SOURCE_NOT_SUPPORTED"/>
-      <xs:enumeration value="OPTIONS_SETTING_NOT_ALLOWED"/>
-      <xs:enumeration value="OPTIONS_CANNOT_BE_FORCED_FOR_LOCAL_SEARCH_SETTINGS"/>
-      <xs:enumeration value="DUPLICATE_STRING_SEARCH_PATTERN_NAME"/>
-      <xs:enumeration value="DUPLICATE_FILE_DISCOVERY_PATTERN_NAME"/>
-      <xs:enumeration value="LINKING_PROJECTS_FORCES_CLONING_OF_WORK_RESULTS"/>
-      <xs:enumeration value="PROJECT_NOT_YET_ANALYZED"/>
-      <xs:enumeration value="DUPLICATE_USER_ASSIGNMENT"/>
-      <xs:enumeration value="PROJECT_NAME_TOO_LONG"/>
-      <xs:enumeration value="INVALID_PROJECT_NAME"/>
-      <xs:enumeration value="PROJECT_NOT_FOUND"/>
-      <xs:enumeration value="PROJECT_SYNCID_INVALID"/>
-      <xs:enumeration value="LINKING_GLOBALLY_DISABLED"/>
-      <xs:enumeration value="PROJECT_IN_USE"/>
-      <xs:enumeration value="STRING_SEARCH_PATTERN_NAME_TOO_LONG"/>
-      <xs:enumeration value="ROLE_NOT_FOUND"/>
-      <xs:enumeration value="MINIMUM_ONE_ADMIN_USER"/>
-      <xs:enumeration value="REMOVE_SELF_AS_ADMIN_USER"/>
-      <xs:enumeration value="DUPLICATE_EMAIL_ADDRESS"/>
-      <xs:enumeration value="EMAIL_TOO_LONG"/>
-      <xs:enumeration value="FIRST_NAME_TOO_LONG"/>
-      <xs:enumeration value="LAST_NAME_TOO_LONG"/>
-      <xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_TOO_LONG"/>
-      <xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_DUPLICATE"/>
-      <xs:enumeration value="INVALID_EMAIL_ADDRESS"/>
-      <xs:enumeration value="USER_NOT_FOUND"/>
-      <xs:enumeration value="PASSWORD_TOO_SHORT"/>
-      <xs:enumeration value="PASSWORD_TOO_LONG"/>
-      <xs:enumeration value="STRING_SEARCH_DISCOVERY_NOT_FOUND"/>
-      <xs:enumeration value="STRING_SEARCH_REQUIRES_UPLOADED_SOURCE"/>
-      <xs:enumeration value="USAGE_LEVEL_INVALID_FOR_GIVEN_ID"/>
-      <xs:enumeration value="CANNOT_COPY_ID_PROJECT_SYNCHRONIZED"/>
-      <xs:enumeration value="CODE_TREE_PATH_NOT_FOUND"/>
-      <xs:enumeration value="CODE_TREE_GUARANTEED_EMPTY_RESULT"/>
-      <xs:enumeration value="NO_FILE_CONTENT"/>
-      <xs:enumeration value="CODE_TREE_PARENT_PATH_NOT_FOUND"/>
-      <xs:enumeration value="DUPLICATE_COMPONENT_NAME"/>
-      <xs:enumeration value="COMPONENT_NAME_TOO_LONG"/>
-      <xs:enumeration value="INVALID_COMPONENT_NAME"/>
-      <xs:enumeration value="COMPONENT_NOT_FOUND"/>
-      <xs:enumeration value="COMPONENT_VERSION_NOT_FOUND"/>
-      <xs:enumeration value="OPTION_IS_FORCED"/>
-      <xs:enumeration value="FILE_DISCOVERY_PATTERN_NOT_FOUND"/>
-      <xs:enumeration value="STRING_SEARCH_PATTERN_NOT_FOUND"/>
-      <xs:enumeration value="UNEXPECTED_EXCEPTION_ERROR"/>
-      <xs:enumeration value="UNKNOWN_REPORT_SECTION_ERROR"/>
-      <xs:enumeration value="PROTEX_FILE_SOURCE_NOT_AVAILABLE"/>
-      <xs:enumeration value="NOT_A_FILE_PATH"/>
-      <xs:enumeration value="ARGUMENT_VALUE_INVALID"/>
-      <xs:enumeration value="METHOD_NOT_YET_IMPLEMENTED"/>
-      <xs:enumeration value="ARGUMENT_NOT_YET_IMPLEMENTED"/>
-      <xs:enumeration value="ARGUMENT_VALUE_NOT_YET_IMPLEMENTED"/>
-      <xs:enumeration value="INVALID_CREDENTIALS"/>
-      <xs:enumeration value="INSUFFICIENT_PERMISSION"/>
-      <xs:enumeration value="UNKNOWN_ERROR"/>
-      <xs:enumeration value="BOM_REFRESH_NOT_FINISHED"/>
-      <xs:enumeration value="BOM_COMPONENT_PROJECT_CANT_UPDATE"/>
-      <xs:enumeration value="UPDATE_BOM_COMPONENT_VERSION_NAME_OF_COMPONENT_VERSION_PROHIBITED"/>
-      <xs:enumeration value="TODO_CONVERT_EXCEPTION"/>
-      <xs:enumeration value="UNEXPECTED_RETURN_VALUE_ERROR"/>
-      <xs:enumeration value="OUT_OF_MEMORY_ERROR"/>
-      <xs:enumeration value="NO_SESSION_ID"/>
-      <xs:enumeration value="INVALID_SORT_KEY"/>
-      <xs:enumeration value="CAN_NOT_OPEN_TEMP_FILE"/>
-      <xs:enumeration value="CODEMATCH_SELF_IDENTIFICATION_MUST_MATCH_DECLARED_LICENSE"/>
-      <xs:enumeration value="IDENTIFICATION_NOT_FOUND"/>
-      <xs:enumeration value="IDENTIFICATION_LEARNING_CONFLICT"/>
-      <xs:enumeration value="EXTERNAL_NAMESPACE_NAME_TOO_LONG"/>
-      <xs:enumeration value="DUPLICATE_EXTERNAL_NAMESPACE_KEY"/>
-      <xs:enumeration value="EXTERNAL_NAMESPACE_NOT_FOUND"/>
-      <xs:enumeration value="EXTERNAL_ID_MAPPING_NOT_FOUND"/>
-      <xs:enumeration value="DUPLICATE_EXTERNAL_ID_MAPPING"/>
-      <xs:enumeration value="TEMPLATE_NOT_FOUND"/>
-      <xs:enumeration value="DUPLICATE_VERSION_NAME"/>
-    </xs:restriction>
-  </xs:simpleType>
-  <xs:element name="SdkFault" nillable="true" type="tns:sdkFaultDetails"/>
-</xs:schema>
-  </wsdl:types>
-  <wsdl:message name="getLicenseObligationsResponse">
-    <wsdl:part name="parameters" element="tns:getLicenseObligationsResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getLicensesResponse">
-    <wsdl:part name="parameters" element="tns:getLicensesResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="updateLicenseResponse">
-    <wsdl:part name="parameters" element="tns:updateLicenseResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getLicenseObligations">
-    <wsdl:part name="parameters" element="tns:getLicenseObligations">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="addLicenseObligation">
-    <wsdl:part name="parameters" element="tns:addLicenseObligation">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="removeTag">
-    <wsdl:part name="parameters" element="tns:removeTag">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="updateLicenseObligation">
-    <wsdl:part name="parameters" element="tns:updateLicenseObligation">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getLicenseByNameResponse">
-    <wsdl:part name="parameters" element="tns:getLicenseByNameResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getTagsResponse">
-    <wsdl:part name="parameters" element="tns:getTagsResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="updateLicenseObligationResponse">
-    <wsdl:part name="parameters" element="tns:updateLicenseObligationResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="addTag">
-    <wsdl:part name="parameters" element="tns:addTag">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="addTagResponse">
-    <wsdl:part name="parameters" element="tns:addTagResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="addLicenseObligationUsingReference">
-    <wsdl:part name="parameters" element="tns:addLicenseObligationUsingReference">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="deleteLicenseResponse">
-    <wsdl:part name="parameters" element="tns:deleteLicenseResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="cloneLicense">
-    <wsdl:part name="parameters" element="tns:cloneLicense">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getTags">
-    <wsdl:part name="parameters" element="tns:getTags">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="cloneLicenseResponse">
-    <wsdl:part name="parameters" element="tns:cloneLicenseResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="resetLicense">
-    <wsdl:part name="parameters" element="tns:resetLicense">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="createLicense">
-    <wsdl:part name="parameters" element="tns:createLicense">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getLicenses">
-    <wsdl:part name="parameters" element="tns:getLicenses">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="removeLicenseObligationResponse">
-    <wsdl:part name="parameters" element="tns:removeLicenseObligationResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="suggestLicensesResponse">
-    <wsdl:part name="parameters" element="tns:suggestLicensesResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="resetLicenseResponse">
-    <wsdl:part name="parameters" element="tns:resetLicenseResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="removeLicenseObligation">
-    <wsdl:part name="parameters" element="tns:removeLicenseObligation">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getLicenseByIdResponse">
-    <wsdl:part name="parameters" element="tns:getLicenseByIdResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getTaggedLicenses">
-    <wsdl:part name="parameters" element="tns:getTaggedLicenses">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="updateLicense">
-    <wsdl:part name="parameters" element="tns:updateLicense">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getTaggedLicensesResponse">
-    <wsdl:part name="parameters" element="tns:getTaggedLicensesResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="addLicenseObligationResponse">
-    <wsdl:part name="parameters" element="tns:addLicenseObligationResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getLicensesByIdResponse">
-    <wsdl:part name="parameters" element="tns:getLicensesByIdResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getLicenseById">
-    <wsdl:part name="parameters" element="tns:getLicenseById">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="SdkFault">
-    <wsdl:part name="SdkFault" element="ns1:SdkFault">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="suggestLicenses">
-    <wsdl:part name="parameters" element="tns:suggestLicenses">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="removeTagResponse">
-    <wsdl:part name="parameters" element="tns:removeTagResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getLicenseByName">
-    <wsdl:part name="parameters" element="tns:getLicenseByName">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="deleteLicense">
-    <wsdl:part name="parameters" element="tns:deleteLicense">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getLicensesById">
-    <wsdl:part name="parameters" element="tns:getLicensesById">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="createLicenseResponse">
-    <wsdl:part name="parameters" element="tns:createLicenseResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="addLicenseObligationUsingReferenceResponse">
-    <wsdl:part name="parameters" element="tns:addLicenseObligationUsingReferenceResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:portType name="LicenseApi">
-    <wsdl:operation name="resetLicense">
-      <wsdl:input name="resetLicense" message="tns:resetLicense">
-    </wsdl:input>
-      <wsdl:output name="resetLicenseResponse" message="tns:resetLicenseResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="createLicense">
-      <wsdl:input name="createLicense" message="tns:createLicense">
-    </wsdl:input>
-      <wsdl:output name="createLicenseResponse" message="tns:createLicenseResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getLicenses">
-      <wsdl:input name="getLicenses" message="tns:getLicenses">
-    </wsdl:input>
-      <wsdl:output name="getLicensesResponse" message="tns:getLicensesResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="removeLicenseObligation">
-      <wsdl:input name="removeLicenseObligation" message="tns:removeLicenseObligation">
-    </wsdl:input>
-      <wsdl:output name="removeLicenseObligationResponse" message="tns:removeLicenseObligationResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getTaggedLicenses">
-      <wsdl:input name="getTaggedLicenses" message="tns:getTaggedLicenses">
-    </wsdl:input>
-      <wsdl:output name="getTaggedLicensesResponse" message="tns:getTaggedLicensesResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="updateLicense">
-      <wsdl:input name="updateLicense" message="tns:updateLicense">
-    </wsdl:input>
-      <wsdl:output name="updateLicenseResponse" message="tns:updateLicenseResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getLicenseObligations">
-      <wsdl:input name="getLicenseObligations" message="tns:getLicenseObligations">
-    </wsdl:input>
-      <wsdl:output name="getLicenseObligationsResponse" message="tns:getLicenseObligationsResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="addLicenseObligation">
-      <wsdl:input name="addLicenseObligation" message="tns:addLicenseObligation">
-    </wsdl:input>
-      <wsdl:output name="addLicenseObligationResponse" message="tns:addLicenseObligationResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="removeTag">
-      <wsdl:input name="removeTag" message="tns:removeTag">
-    </wsdl:input>
-      <wsdl:output name="removeTagResponse" message="tns:removeTagResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="updateLicenseObligation">
-      <wsdl:input name="updateLicenseObligation" message="tns:updateLicenseObligation">
-    </wsdl:input>
-      <wsdl:output name="updateLicenseObligationResponse" message="tns:updateLicenseObligationResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getLicenseById">
-      <wsdl:input name="getLicenseById" message="tns:getLicenseById">
-    </wsdl:input>
-      <wsdl:output name="getLicenseByIdResponse" message="tns:getLicenseByIdResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="suggestLicenses">
-      <wsdl:input name="suggestLicenses" message="tns:suggestLicenses">
-    </wsdl:input>
-      <wsdl:output name="suggestLicensesResponse" message="tns:suggestLicensesResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="addTag">
-      <wsdl:input name="addTag" message="tns:addTag">
-    </wsdl:input>
-      <wsdl:output name="addTagResponse" message="tns:addTagResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getLicenseByName">
-      <wsdl:input name="getLicenseByName" message="tns:getLicenseByName">
-    </wsdl:input>
-      <wsdl:output name="getLicenseByNameResponse" message="tns:getLicenseByNameResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="deleteLicense">
-      <wsdl:input name="deleteLicense" message="tns:deleteLicense">
-    </wsdl:input>
-      <wsdl:output name="deleteLicenseResponse" message="tns:deleteLicenseResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="addLicenseObligationUsingReference">
-      <wsdl:input name="addLicenseObligationUsingReference" message="tns:addLicenseObligationUsingReference">
-    </wsdl:input>
-      <wsdl:output name="addLicenseObligationUsingReferenceResponse" message="tns:addLicenseObligationUsingReferenceResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="cloneLicense">
-      <wsdl:input name="cloneLicense" message="tns:cloneLicense">
-    </wsdl:input>
-      <wsdl:output name="cloneLicenseResponse" message="tns:cloneLicenseResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getLicensesById">
-      <wsdl:input name="getLicensesById" message="tns:getLicensesById">
-    </wsdl:input>
-      <wsdl:output name="getLicensesByIdResponse" message="tns:getLicensesByIdResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getTags">
-      <wsdl:input name="getTags" message="tns:getTags">
-    </wsdl:input>
-      <wsdl:output name="getTagsResponse" message="tns:getTagsResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-  </wsdl:portType>
-  <wsdl:binding name="LicenseApiServiceSoapBinding" type="tns:LicenseApi">
-    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <wsdl:operation name="resetLicense">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="resetLicense">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="resetLicenseResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getLicenses">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getLicenses">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getLicensesResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="createLicense">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="createLicense">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="createLicenseResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="removeLicenseObligation">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="removeLicenseObligation">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="removeLicenseObligationResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getTaggedLicenses">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getTaggedLicenses">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getTaggedLicensesResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="updateLicense">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="updateLicense">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="updateLicenseResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getLicenseObligations">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getLicenseObligations">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getLicenseObligationsResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="addLicenseObligation">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="addLicenseObligation">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="addLicenseObligationResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="removeTag">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="removeTag">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="removeTagResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="updateLicenseObligation">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="updateLicenseObligation">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="updateLicenseObligationResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getLicenseById">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getLicenseById">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getLicenseByIdResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="suggestLicenses">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="suggestLicenses">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="suggestLicensesResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="addTag">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="addTag">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="addTagResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getLicenseByName">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getLicenseByName">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getLicenseByNameResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="deleteLicense">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="deleteLicense">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="deleteLicenseResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="addLicenseObligationUsingReference">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="addLicenseObligationUsingReference">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="addLicenseObligationUsingReferenceResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="cloneLicense">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="cloneLicense">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="cloneLicenseResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getLicensesById">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getLicensesById">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getLicensesByIdResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getTags">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getTags">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getTagsResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-  </wsdl:binding>
-  <wsdl:service name="LicenseApiService">
-    <wsdl:port name="LicenseApiPort" binding="tns:LicenseApiServiceSoapBinding">
-      <soap:address location="http://localhost:9090/LicenseApiPort"/>
-    </wsdl:port>
-  </wsdl:service>
+<wsdl:definitions name="LicenseApiService"
+	targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:license"
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:license"
+	xmlns:ns1="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+	<wsdl:types>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common"
+			xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:obligation"
+			targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:obligation"
+			version="1.0">
+			<xs:complexType name="assignedObligation">
+				<xs:complexContent>
+					<xs:extension base="tns:assignedObligationRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="fulfillmentInherited"
+								type="xs:boolean" />
+							<xs:element minOccurs="0" name="obligationId" type="xs:string" />
+							<xs:element minOccurs="0" name="originObjectId" type="xs:string" />
+							<xs:element minOccurs="0" name="originType"
+								type="tns:obligationOriginType" />
+							<xs:element minOccurs="0" name="reviewAndReportInherited"
+								type="xs:boolean" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="assignedObligationRequest">
+				<xs:complexContent>
+					<xs:extension base="tns:obligationRequest">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="fulfilled" type="xs:boolean" />
+							<xs:element minOccurs="0" name="reviewAndReport" type="xs:boolean" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="obligationRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="description" type="xs:string" />
+					<xs:element minOccurs="0" name="name" type="xs:string" />
+					<xs:element minOccurs="0" name="obligationCategoryId"
+						type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="obligationOriginType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="PROJECT" />
+					<xs:enumeration value="LICENSE" />
+					<xs:enumeration value="GLOBAL" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:schema>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common"
+			xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:license"
+			targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:localcomponent"
+			version="1.0">
+			<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:license" />
+			<xs:complexType name="localLicense">
+				<xs:complexContent>
+					<xs:extension base="ns1:license">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="basedOnLicenseId"
+								type="xs:string" />
+							<xs:element minOccurs="0" name="contextProjectId"
+								type="xs:string" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+		</xs:schema>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common"
+			xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:obligation"
+			xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:license"
+			elementFormDefault="unqualified"
+			targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:license"
+			version="1.0">
+			<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:common" />
+			<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" />
+			<xs:element name="addLicenseObligation" type="tns:addLicenseObligation" />
+			<xs:element name="addLicenseObligationResponse" type="tns:addLicenseObligationResponse" />
+			<xs:element name="addLicenseObligationUsingReference"
+				type="tns:addLicenseObligationUsingReference" />
+			<xs:element name="addLicenseObligationUsingReferenceResponse"
+				type="tns:addLicenseObligationUsingReferenceResponse" />
+			<xs:element name="addTag" type="tns:addTag" />
+			<xs:element name="addTagResponse" type="tns:addTagResponse" />
+			<xs:element name="cloneLicense" type="tns:cloneLicense" />
+			<xs:element name="cloneLicenseResponse" type="tns:cloneLicenseResponse" />
+			<xs:element name="createLicense" type="tns:createLicense" />
+			<xs:element name="createLicenseResponse" type="tns:createLicenseResponse" />
+			<xs:element name="deleteLicense" type="tns:deleteLicense" />
+			<xs:element name="deleteLicenseResponse" type="tns:deleteLicenseResponse" />
+			<xs:element name="getLicenseById" type="tns:getLicenseById" />
+			<xs:element name="getLicenseByIdResponse" type="tns:getLicenseByIdResponse" />
+			<xs:element name="getLicenseByName" type="tns:getLicenseByName" />
+			<xs:element name="getLicenseByNameResponse" type="tns:getLicenseByNameResponse" />
+			<xs:element name="getLicenseObligations" type="tns:getLicenseObligations" />
+			<xs:element name="getLicenseObligationsResponse" type="tns:getLicenseObligationsResponse" />
+			<xs:element name="getLicenses" type="tns:getLicenses" />
+			<xs:element name="getLicensesById" type="tns:getLicensesById" />
+			<xs:element name="getLicensesByIdResponse" type="tns:getLicensesByIdResponse" />
+			<xs:element name="getLicensesResponse" type="tns:getLicensesResponse" />
+			<xs:element name="getTaggedLicenses" type="tns:getTaggedLicenses" />
+			<xs:element name="getTaggedLicensesResponse" type="tns:getTaggedLicensesResponse" />
+			<xs:element name="getTags" type="tns:getTags" />
+			<xs:element name="getTagsResponse" type="tns:getTagsResponse" />
+			<xs:element name="removeLicenseObligation" type="tns:removeLicenseObligation" />
+			<xs:element name="removeLicenseObligationResponse" type="tns:removeLicenseObligationResponse" />
+			<xs:element name="removeTag" type="tns:removeTag" />
+			<xs:element name="removeTagResponse" type="tns:removeTagResponse" />
+			<xs:element name="resetLicense" type="tns:resetLicense" />
+			<xs:element name="resetLicenseResponse" type="tns:resetLicenseResponse" />
+			<xs:element name="suggestLicenses" type="tns:suggestLicenses" />
+			<xs:element name="suggestLicensesResponse" type="tns:suggestLicensesResponse" />
+			<xs:element name="updateLicense" type="tns:updateLicense" />
+			<xs:element name="updateLicenseObligation" type="tns:updateLicenseObligation" />
+			<xs:element name="updateLicenseObligationResponse" type="tns:updateLicenseObligationResponse" />
+			<xs:element name="updateLicenseResponse" type="tns:updateLicenseResponse" />
+			<xs:complexType name="resetLicense">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="licenseId" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="resetLicenseResponse">
+				<xs:sequence />
+			</xs:complexType>
+			<xs:complexType name="createLicense">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="licenseRequest"
+						type="tns:globalLicenseRequest" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="globalLicenseRequest">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="approvalState"
+						type="tns:licenseApprovalState" />
+					<xs:element minOccurs="0" name="attributes" type="tns:licenseAttributes" />
+					<xs:element minOccurs="0" name="comment" type="xs:string" />
+					<xs:element minOccurs="0" name="explanation" type="xs:string" />
+					<xs:element minOccurs="0" name="name" type="xs:string" />
+					<xs:element minOccurs="0" name="suffix" type="xs:string" />
+					<xs:element minOccurs="0" name="text" type="xs:base64Binary" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="licenseAttributes">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="antiDrmProvision" type="xs:boolean" />
+					<xs:element minOccurs="0" name="carriesDistributionObligations"
+						type="xs:boolean" />
+					<xs:element minOccurs="0" name="changeNoticeRequired"
+						type="xs:boolean" />
+					<xs:element minOccurs="0" name="chargingFees" type="tns:permittedOrRequired" />
+					<xs:element minOccurs="0" name="discriminatoryRestrictions"
+						type="tns:restrictionType" />
+					<xs:element minOccurs="0" name="expressPatentLicense"
+						type="xs:boolean" />
+					<xs:element minOccurs="0" name="grantRecipientRightToCopy"
+						type="tns:permittedOrRequired" />
+					<xs:element minOccurs="0" name="grantRecipientRightToModify"
+						type="tns:permittedOrRequired" />
+					<xs:element minOccurs="0"
+						name="grantRecipientRightToReverseEngineer" type="tns:permittedOrRequired" />
+					<xs:element minOccurs="0" name="includeLicense" type="xs:boolean" />
+					<xs:element minOccurs="0" name="indemnificationRequired"
+						type="xs:boolean" />
+					<xs:element minOccurs="0"
+						name="integrationLevelForLicenseApplication" type="tns:licenseExtensionLevel" />
+					<xs:element minOccurs="0" name="licenseBackRequired"
+						type="xs:boolean" />
+					<xs:element minOccurs="0" name="limitationOfLiabilityRequired"
+						type="xs:boolean" />
+					<xs:element minOccurs="0" name="notice" type="xs:boolean" />
+					<xs:element minOccurs="0" name="patentRetaliation" type="xs:boolean" />
+					<xs:element minOccurs="0" name="promotionRestriction"
+						type="xs:boolean" />
+					<xs:element minOccurs="0"
+						name="rightToDistributeBinaryForMaximumUsage" type="tns:rightToDistributeBinaryForMaximumUsage" />
+					<xs:element minOccurs="0" name="shareAlikeReciprocity"
+						type="xs:boolean" />
+					<xs:element minOccurs="0" name="sourceCodeDistribution"
+						type="tns:permittedOrRequired" />
+					<xs:element minOccurs="0" name="warrantyDisclaimerRequired"
+						type="xs:boolean" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="createLicenseResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getLicenses">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="filterByLicenseTypes" type="tns:licenseOriginType" />
+					<xs:element minOccurs="0" name="pageFilter"
+						type="tns:licenseInfoPageFilter" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="licenseInfoPageFilter">
+				<xs:complexContent>
+					<xs:extension base="common:pageFilter">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="sortedColumn" type="tns:licenseInfoColumn" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="getLicensesResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+						type="tns:licenseInfo" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="licenseInfo">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="licenseId" type="xs:string" />
+					<xs:element minOccurs="0" name="name" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="removeLicenseObligation">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="licenseId" type="xs:string" />
+					<xs:element minOccurs="0" name="obligationId" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="removeLicenseObligationResponse">
+				<xs:sequence />
+			</xs:complexType>
+			<xs:complexType name="getTaggedLicenses">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="protexUserId" type="xs:string" />
+					<xs:element minOccurs="0" name="tag" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTaggedLicensesResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+						type="tns:globalLicense" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="globalLicense">
+				<xs:complexContent>
+					<xs:extension base="tns:license">
+						<xs:sequence>
+							<xs:element minOccurs="0" name="approvalDate" type="xs:dateTime" />
+							<xs:element minOccurs="0" name="approvalState"
+								type="tns:licenseApprovalState" />
+							<xs:element minOccurs="0" name="approvedBy" type="xs:string" />
+							<xs:element minOccurs="0" name="comment" type="xs:string" />
+							<xs:element minOccurs="0" name="explanation" type="xs:string" />
+							<xs:element minOccurs="0" name="licenseCodeSharingRequirement"
+								type="tns:licenseCodeSharingRequirement" />
+							<xs:element minOccurs="0" name="licenseOwnership"
+								type="tns:licenseOwnership" />
+							<xs:element minOccurs="0" name="suffix" type="xs:string" />
+						</xs:sequence>
+					</xs:extension>
+				</xs:complexContent>
+			</xs:complexType>
+			<xs:complexType name="license">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="attributes" type="tns:licenseAttributes" />
+					<xs:element minOccurs="0" name="licenseId" type="xs:string" />
+					<xs:element minOccurs="0" name="licenseOriginType" type="tns:licenseOriginType" />
+					<xs:element minOccurs="0" name="name" type="xs:string" />
+					<xs:element minOccurs="0" name="text" type="xs:base64Binary" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="updateLicense">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="licenseId" type="xs:string" />
+					<xs:element minOccurs="0" name="license"
+						type="tns:globalLicenseRequest" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="updateLicenseResponse">
+				<xs:sequence />
+			</xs:complexType>
+			<xs:complexType name="getLicenseObligations">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="licenseId" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getLicenseObligationsResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+						type="ns1:assignedObligation" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="addLicenseObligation">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="licenseId" type="xs:string" />
+					<xs:element minOccurs="0" name="assignedObligationRequest"
+						type="ns1:assignedObligationRequest" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="addLicenseObligationResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="removeTag">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="protexUserId" type="xs:string" />
+					<xs:element minOccurs="0" name="licenseId" type="xs:string" />
+					<xs:element minOccurs="0" name="tag" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="removeTagResponse">
+				<xs:sequence />
+			</xs:complexType>
+			<xs:complexType name="updateLicenseObligation">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="licenseId" type="xs:string" />
+					<xs:element minOccurs="0" name="obligationId" type="xs:string" />
+					<xs:element minOccurs="0" name="obligationUpdateRequest"
+						type="ns1:assignedObligationRequest" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="updateLicenseObligationResponse">
+				<xs:sequence />
+			</xs:complexType>
+			<xs:complexType name="getLicenseById">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="licenseId" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getLicenseByIdResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="tns:globalLicense" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="suggestLicenses">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="anyWordStartsWith" type="xs:string" />
+					<xs:element maxOccurs="unbounded" minOccurs="0"
+						name="filterByLicenseTypes" type="tns:licenseOriginType" />
+					<xs:element minOccurs="0" name="pageFilter"
+						type="tns:licenseInfoPageFilter" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="suggestLicensesResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+						type="tns:licenseInfo" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="addTag">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="protexUserId" type="xs:string" />
+					<xs:element minOccurs="0" name="licenseId" type="xs:string" />
+					<xs:element minOccurs="0" name="tag" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="addTagResponse">
+				<xs:sequence />
+			</xs:complexType>
+			<xs:complexType name="getLicenseByName">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="licenseName" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getLicenseByNameResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="tns:globalLicense" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="deleteLicense">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="licenseId" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="deleteLicenseResponse">
+				<xs:sequence />
+			</xs:complexType>
+			<xs:complexType name="addLicenseObligationUsingReference">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="licenseId" type="xs:string" />
+					<xs:element minOccurs="0" name="globalObligationId"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="requiresReview" type="xs:boolean" />
+					<xs:element minOccurs="0" name="isfulfilled" type="xs:boolean" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="addLicenseObligationUsingReferenceResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="cloneLicense">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="clonedLicenseName" type="xs:string" />
+					<xs:element minOccurs="0" name="originalLicenseId" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="cloneLicenseResponse">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="return" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getLicensesById">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="licenseIds"
+						type="xs:string" />
+					<xs:element minOccurs="0" name="getBehavior" type="common:getBehavior" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getLicensesByIdResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+						type="tns:globalLicense" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTags">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="protexUserId" type="xs:string" />
+					<xs:element minOccurs="0" name="licenseId" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="getTagsResponse">
+				<xs:sequence>
+					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
+						type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="licenseApprovalState">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="APPROVED" />
+					<xs:enumeration value="BLANKET_APPROVED" />
+					<xs:enumeration value="DIS_APPROVED" />
+					<xs:enumeration value="NOT_REVIEWED" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="permittedOrRequired">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="NOT_PERMITTED" />
+					<xs:enumeration value="PERMITTED" />
+					<xs:enumeration value="REQUIRED" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="restrictionType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="HAS_RESTRICTIONS" />
+					<xs:enumeration value="HAS_NO_RESTRICTIONS" />
+					<xs:enumeration value="HAS_NO_RESTRICTIONS_AND_CAN_NOT_ADD_ANY" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="licenseExtensionLevel">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="NON" />
+					<xs:enumeration value="FILE_PER_MPL" />
+					<xs:enumeration value="MODULE_PER_EPL_CPL" />
+					<xs:enumeration value="DYNAMIC_LIBRARY_PER_LGPL" />
+					<xs:enumeration value="WORK_BASED_ON_PER_GPL" />
+					<xs:enumeration value="ACCOMPANYING_SOFTWARE_USING_PER_SLEEPY_CAT" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="rightToDistributeBinaryForMaximumUsage">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="NON_COMMERCIAL_OR_PERSONAL_USE" />
+					<xs:enumeration value="INTERNAL_EVALUATION" />
+					<xs:enumeration value="INTERNAL_PRODUCTION_USE" />
+					<xs:enumeration value="ANY" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="licenseOriginType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="STANDARD" />
+					<xs:enumeration value="MODIFIED_STANDARD" />
+					<xs:enumeration value="TEMPLATE" />
+					<xs:enumeration value="CUSTOM" />
+					<xs:enumeration value="PROJECT_LOCAL" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="licenseInfoColumn">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="LICENSE_ID" />
+					<xs:enumeration value="LICENSE_NAME" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="licenseCodeSharingRequirement">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="RECIPROCAL" />
+					<xs:enumeration value="WEAK_RECIPROCAL" />
+					<xs:enumeration value="PERMISSIVE" />
+					<xs:enumeration value="UNKNOWN" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="licenseOwnership">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="OPEN_SOURCE" />
+					<xs:enumeration value="PROPRIETARY" />
+					<xs:enumeration value="UNKNOWN" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:schema>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:common"
+			targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:common"
+			version="1.0">
+			<xs:complexType abstract="true" name="pageFilter">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="firstRowIndex" type="xs:int" />
+					<xs:element minOccurs="0" name="lastRowIndex" type="xs:int" />
+					<xs:element minOccurs="0" name="sortAscending" type="xs:boolean" />
+					<xs:element minOccurs="0" name="sortType" type="tns:sortType" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="sortType">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="ALPHABETICAL_CASE_INSENSITIVE" />
+					<xs:enumeration value="NUMERIC" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:simpleType name="getBehavior">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="CONTINUE_IF_NOT_FOUND" />
+					<xs:enumeration value="ERROR_IF_NOT_FOUND" />
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:schema>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:blackducksoftware.com:sdk:v7.0:fault"
+			attributeFormDefault="unqualified" elementFormDefault="unqualified"
+			targetNamespace="urn:blackducksoftware.com:sdk:v7.0:fault">
+			<xs:element name="sdkFaultDetails" type="tns:sdkFaultDetails" />
+			<xs:complexType name="sdkFaultDetails">
+				<xs:sequence>
+					<xs:element minOccurs="0" name="errorCode" type="tns:errorCode" />
+					<xs:element minOccurs="0" name="message" type="xs:string" />
+				</xs:sequence>
+			</xs:complexType>
+			<xs:simpleType name="errorCode">
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="SERVER_REGISTRATION_ERROR" />
+					<xs:enumeration value="SERVER_PERFORMING_UPDATE" />
+					<xs:enumeration value="NO_ANALYSIS_RUNNING" />
+					<xs:enumeration value="ANALYSIS_ALREADY_RUNNING" />
+					<xs:enumeration value="INVALID_SOURCE_LOCATION_FOR_SCAN" />
+					<xs:enumeration value="PROJECT_COULD_NOT_BE_LOCKED" />
+					<xs:enumeration value="LICENSE_NAME_TOO_LONG" />
+					<xs:enumeration value="LICENSE_TYPE_STANDARD_CANT_CHANGE_NAME" />
+					<xs:enumeration value="TAG_NOT_FOUND" />
+					<xs:enumeration value="OBLIGATION_IS_REFERENCED" />
+					<xs:enumeration value="OBLIGATION_NOT_ASSIGNED" />
+					<xs:enumeration value="DUPLICATE_LICENSE_NAME" />
+					<xs:enumeration value="LICENSE_NOT_FOUND" />
+					<xs:enumeration value="LICENSE_IN_USE" />
+					<xs:enumeration value="CAN_NOT_RESET_CUSTOM_LICENSE" />
+					<xs:enumeration value="DUPLICATE_OBLIGATION_CATEGORY" />
+					<xs:enumeration value="OBLIGATION_CATEGORY_NOT_FOUND" />
+					<xs:enumeration value="OBLIGATION_CATEGORY_IN_USE" />
+					<xs:enumeration value="OBLIGATION_CATEGORY_CAN_NOT_BE_DELETED" />
+					<xs:enumeration value="DUPLICATE_OBLIGATION_NAME" />
+					<xs:enumeration value="DUPLICATE_OBLIGATION_ASSIGNMENT" />
+					<xs:enumeration value="INVALID_OBLIGATION_NAME" />
+					<xs:enumeration value="OBLIGATION_NOT_FOUND" />
+					<xs:enumeration value="OBLIGATION_IN_USE_BY_PROJECTS" />
+					<xs:enumeration value="OBLIGATION_IN_USE_BY_LICENSES" />
+					<xs:enumeration value="RAPID_ID_CONFIGURATION_NOT_FOUND" />
+					<xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_NAME" />
+					<xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_ASSOCIATION" />
+					<xs:enumeration value="RAPID_ID_OPERATION_TYPE_DUPLICATE" />
+					<xs:enumeration value="LEARNED_IDENTIFICATION_NOT_FOUND" />
+					<xs:enumeration value="USER_NOT_ASSIGNED_TO_PROJECT" />
+					<xs:enumeration value="UNKNOWN_ANALYSIS_DATABASE_OPTION" />
+					<xs:enumeration
+						value="STRING_SEARCH_PATTERN_UPDATE_OF_STANDARD_PATTERN_NOT_ALLOWED" />
+					<xs:enumeration value="CUSTOM_COMPONENT_IN_USE" />
+					<xs:enumeration value="CUSTOM_COMPONENT_HAS_NO_SOURCE" />
+					<xs:enumeration value="DUPLICATE_TEMPLATE_TITLE" />
+					<xs:enumeration value="REPORT_TEMPLATE_NOT_FOUND" />
+					<xs:enumeration value="DEFAULT_REPORT_TEMPLATE_NOT_SET" />
+					<xs:enumeration value="DUPLICATE_PROJECT_NAME" />
+					<xs:enumeration value="PROJECT_ANALYSIS_LOCAL_SOURCE_NOT_SUPPORTED" />
+					<xs:enumeration value="OPTIONS_SETTING_NOT_ALLOWED" />
+					<xs:enumeration
+						value="OPTIONS_CANNOT_BE_FORCED_FOR_LOCAL_SEARCH_SETTINGS" />
+					<xs:enumeration value="DUPLICATE_STRING_SEARCH_PATTERN_NAME" />
+					<xs:enumeration value="DUPLICATE_FILE_DISCOVERY_PATTERN_NAME" />
+					<xs:enumeration value="LINKING_PROJECTS_FORCES_CLONING_OF_WORK_RESULTS" />
+					<xs:enumeration value="PROJECT_NOT_YET_ANALYZED" />
+					<xs:enumeration value="DUPLICATE_USER_ASSIGNMENT" />
+					<xs:enumeration value="PROJECT_NAME_TOO_LONG" />
+					<xs:enumeration value="INVALID_PROJECT_NAME" />
+					<xs:enumeration value="PROJECT_NOT_FOUND" />
+					<xs:enumeration value="PROJECT_SYNCID_INVALID" />
+					<xs:enumeration value="LINKING_GLOBALLY_DISABLED" />
+					<xs:enumeration value="PROJECT_IN_USE" />
+					<xs:enumeration value="STRING_SEARCH_PATTERN_NAME_TOO_LONG" />
+					<xs:enumeration value="ROLE_NOT_FOUND" />
+					<xs:enumeration value="MINIMUM_ONE_ADMIN_USER" />
+					<xs:enumeration value="REMOVE_SELF_AS_ADMIN_USER" />
+					<xs:enumeration value="DUPLICATE_EMAIL_ADDRESS" />
+					<xs:enumeration value="EMAIL_TOO_LONG" />
+					<xs:enumeration value="FIRST_NAME_TOO_LONG" />
+					<xs:enumeration value="LAST_NAME_TOO_LONG" />
+					<xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_TOO_LONG" />
+					<xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_DUPLICATE" />
+					<xs:enumeration value="INVALID_EMAIL_ADDRESS" />
+					<xs:enumeration value="USER_NOT_FOUND" />
+					<xs:enumeration value="PASSWORD_TOO_SHORT" />
+					<xs:enumeration value="PASSWORD_TOO_LONG" />
+					<xs:enumeration value="STRING_SEARCH_DISCOVERY_NOT_FOUND" />
+					<xs:enumeration value="STRING_SEARCH_REQUIRES_UPLOADED_SOURCE" />
+					<xs:enumeration value="USAGE_LEVEL_INVALID_FOR_GIVEN_ID" />
+					<xs:enumeration value="CANNOT_COPY_ID_PROJECT_SYNCHRONIZED" />
+					<xs:enumeration value="CODE_TREE_PATH_NOT_FOUND" />
+					<xs:enumeration value="CODE_TREE_GUARANTEED_EMPTY_RESULT" />
+					<xs:enumeration value="NO_FILE_CONTENT" />
+					<xs:enumeration value="CODE_TREE_PARENT_PATH_NOT_FOUND" />
+					<xs:enumeration value="DUPLICATE_COMPONENT_NAME" />
+					<xs:enumeration value="COMPONENT_NAME_TOO_LONG" />
+					<xs:enumeration value="INVALID_COMPONENT_NAME" />
+					<xs:enumeration value="COMPONENT_NOT_FOUND" />
+					<xs:enumeration value="COMPONENT_VERSION_NOT_FOUND" />
+					<xs:enumeration value="OPTION_IS_FORCED" />
+					<xs:enumeration value="FILE_DISCOVERY_PATTERN_NOT_FOUND" />
+					<xs:enumeration value="STRING_SEARCH_PATTERN_NOT_FOUND" />
+					<xs:enumeration value="UNEXPECTED_EXCEPTION_ERROR" />
+					<xs:enumeration value="UNKNOWN_REPORT_SECTION_ERROR" />
+					<xs:enumeration value="PROTEX_FILE_SOURCE_NOT_AVAILABLE" />
+					<xs:enumeration value="NOT_A_FILE_PATH" />
+					<xs:enumeration value="ARGUMENT_VALUE_INVALID" />
+					<xs:enumeration value="METHOD_NOT_YET_IMPLEMENTED" />
+					<xs:enumeration value="ARGUMENT_NOT_YET_IMPLEMENTED" />
+					<xs:enumeration value="ARGUMENT_VALUE_NOT_YET_IMPLEMENTED" />
+					<xs:enumeration value="INVALID_CREDENTIALS" />
+					<xs:enumeration value="INSUFFICIENT_PERMISSION" />
+					<xs:enumeration value="UNKNOWN_ERROR" />
+					<xs:enumeration value="BOM_REFRESH_NOT_FINISHED" />
+					<xs:enumeration value="BOM_COMPONENT_PROJECT_CANT_UPDATE" />
+					<xs:enumeration
+						value="UPDATE_BOM_COMPONENT_VERSION_NAME_OF_COMPONENT_VERSION_PROHIBITED" />
+					<xs:enumeration value="TODO_CONVERT_EXCEPTION" />
+					<xs:enumeration value="UNEXPECTED_RETURN_VALUE_ERROR" />
+					<xs:enumeration value="OUT_OF_MEMORY_ERROR" />
+					<xs:enumeration value="NO_SESSION_ID" />
+					<xs:enumeration value="INVALID_SORT_KEY" />
+					<xs:enumeration value="CAN_NOT_OPEN_TEMP_FILE" />
+					<xs:enumeration
+						value="CODEMATCH_SELF_IDENTIFICATION_MUST_MATCH_DECLARED_LICENSE" />
+					<xs:enumeration value="IDENTIFICATION_NOT_FOUND" />
+					<xs:enumeration value="IDENTIFICATION_LEARNING_CONFLICT" />
+					<xs:enumeration value="EXTERNAL_NAMESPACE_NAME_TOO_LONG" />
+					<xs:enumeration value="DUPLICATE_EXTERNAL_NAMESPACE_KEY" />
+					<xs:enumeration value="EXTERNAL_NAMESPACE_NOT_FOUND" />
+					<xs:enumeration value="EXTERNAL_ID_MAPPING_NOT_FOUND" />
+					<xs:enumeration value="DUPLICATE_EXTERNAL_ID_MAPPING" />
+					<xs:enumeration value="TEMPLATE_NOT_FOUND" />
+					<xs:enumeration value="DUPLICATE_VERSION_NAME" />
+				</xs:restriction>
+			</xs:simpleType>
+			<xs:element name="SdkFault" nillable="true" type="tns:sdkFaultDetails" />
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getLicenseObligationsResponse">
+		<wsdl:part name="parameters" element="tns:getLicenseObligationsResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getLicensesResponse">
+		<wsdl:part name="parameters" element="tns:getLicensesResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateLicenseResponse">
+		<wsdl:part name="parameters" element="tns:updateLicenseResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getLicenseObligations">
+		<wsdl:part name="parameters" element="tns:getLicenseObligations">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addLicenseObligation">
+		<wsdl:part name="parameters" element="tns:addLicenseObligation">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="removeTag">
+		<wsdl:part name="parameters" element="tns:removeTag">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateLicenseObligation">
+		<wsdl:part name="parameters" element="tns:updateLicenseObligation">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getLicenseByNameResponse">
+		<wsdl:part name="parameters" element="tns:getLicenseByNameResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getTagsResponse">
+		<wsdl:part name="parameters" element="tns:getTagsResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateLicenseObligationResponse">
+		<wsdl:part name="parameters" element="tns:updateLicenseObligationResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addTag">
+		<wsdl:part name="parameters" element="tns:addTag">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addTagResponse">
+		<wsdl:part name="parameters" element="tns:addTagResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addLicenseObligationUsingReference">
+		<wsdl:part name="parameters" element="tns:addLicenseObligationUsingReference">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="deleteLicenseResponse">
+		<wsdl:part name="parameters" element="tns:deleteLicenseResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="cloneLicense">
+		<wsdl:part name="parameters" element="tns:cloneLicense">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getTags">
+		<wsdl:part name="parameters" element="tns:getTags">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="cloneLicenseResponse">
+		<wsdl:part name="parameters" element="tns:cloneLicenseResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="resetLicense">
+		<wsdl:part name="parameters" element="tns:resetLicense">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createLicense">
+		<wsdl:part name="parameters" element="tns:createLicense">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getLicenses">
+		<wsdl:part name="parameters" element="tns:getLicenses">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="removeLicenseObligationResponse">
+		<wsdl:part name="parameters" element="tns:removeLicenseObligationResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="suggestLicensesResponse">
+		<wsdl:part name="parameters" element="tns:suggestLicensesResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="resetLicenseResponse">
+		<wsdl:part name="parameters" element="tns:resetLicenseResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="removeLicenseObligation">
+		<wsdl:part name="parameters" element="tns:removeLicenseObligation">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getLicenseByIdResponse">
+		<wsdl:part name="parameters" element="tns:getLicenseByIdResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getTaggedLicenses">
+		<wsdl:part name="parameters" element="tns:getTaggedLicenses">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="updateLicense">
+		<wsdl:part name="parameters" element="tns:updateLicense">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getTaggedLicensesResponse">
+		<wsdl:part name="parameters" element="tns:getTaggedLicensesResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addLicenseObligationResponse">
+		<wsdl:part name="parameters" element="tns:addLicenseObligationResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getLicensesByIdResponse">
+		<wsdl:part name="parameters" element="tns:getLicensesByIdResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getLicenseById">
+		<wsdl:part name="parameters" element="tns:getLicenseById">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="SdkFault">
+		<wsdl:part name="SdkFault" element="ns1:SdkFault">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="suggestLicenses">
+		<wsdl:part name="parameters" element="tns:suggestLicenses">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="removeTagResponse">
+		<wsdl:part name="parameters" element="tns:removeTagResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getLicenseByName">
+		<wsdl:part name="parameters" element="tns:getLicenseByName">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="deleteLicense">
+		<wsdl:part name="parameters" element="tns:deleteLicense">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="getLicensesById">
+		<wsdl:part name="parameters" element="tns:getLicensesById">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="createLicenseResponse">
+		<wsdl:part name="parameters" element="tns:createLicenseResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:message name="addLicenseObligationUsingReferenceResponse">
+		<wsdl:part name="parameters"
+			element="tns:addLicenseObligationUsingReferenceResponse">
+		</wsdl:part>
+	</wsdl:message>
+	<wsdl:portType name="LicenseApi">
+		<wsdl:operation name="resetLicense">
+			<wsdl:input name="resetLicense" message="tns:resetLicense">
+			</wsdl:input>
+			<wsdl:output name="resetLicenseResponse" message="tns:resetLicenseResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="createLicense">
+			<wsdl:input name="createLicense" message="tns:createLicense">
+			</wsdl:input>
+			<wsdl:output name="createLicenseResponse" message="tns:createLicenseResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getLicenses">
+			<wsdl:input name="getLicenses" message="tns:getLicenses">
+			</wsdl:input>
+			<wsdl:output name="getLicensesResponse" message="tns:getLicensesResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="removeLicenseObligation">
+			<wsdl:input name="removeLicenseObligation" message="tns:removeLicenseObligation">
+			</wsdl:input>
+			<wsdl:output name="removeLicenseObligationResponse"
+				message="tns:removeLicenseObligationResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getTaggedLicenses">
+			<wsdl:input name="getTaggedLicenses" message="tns:getTaggedLicenses">
+			</wsdl:input>
+			<wsdl:output name="getTaggedLicensesResponse" message="tns:getTaggedLicensesResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="updateLicense">
+			<wsdl:input name="updateLicense" message="tns:updateLicense">
+			</wsdl:input>
+			<wsdl:output name="updateLicenseResponse" message="tns:updateLicenseResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getLicenseObligations">
+			<wsdl:input name="getLicenseObligations" message="tns:getLicenseObligations">
+			</wsdl:input>
+			<wsdl:output name="getLicenseObligationsResponse"
+				message="tns:getLicenseObligationsResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="addLicenseObligation">
+			<wsdl:input name="addLicenseObligation" message="tns:addLicenseObligation">
+			</wsdl:input>
+			<wsdl:output name="addLicenseObligationResponse" message="tns:addLicenseObligationResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="removeTag">
+			<wsdl:input name="removeTag" message="tns:removeTag">
+			</wsdl:input>
+			<wsdl:output name="removeTagResponse" message="tns:removeTagResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="updateLicenseObligation">
+			<wsdl:input name="updateLicenseObligation" message="tns:updateLicenseObligation">
+			</wsdl:input>
+			<wsdl:output name="updateLicenseObligationResponse"
+				message="tns:updateLicenseObligationResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getLicenseById">
+			<wsdl:input name="getLicenseById" message="tns:getLicenseById">
+			</wsdl:input>
+			<wsdl:output name="getLicenseByIdResponse" message="tns:getLicenseByIdResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="suggestLicenses">
+			<wsdl:input name="suggestLicenses" message="tns:suggestLicenses">
+			</wsdl:input>
+			<wsdl:output name="suggestLicensesResponse" message="tns:suggestLicensesResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="addTag">
+			<wsdl:input name="addTag" message="tns:addTag">
+			</wsdl:input>
+			<wsdl:output name="addTagResponse" message="tns:addTagResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getLicenseByName">
+			<wsdl:input name="getLicenseByName" message="tns:getLicenseByName">
+			</wsdl:input>
+			<wsdl:output name="getLicenseByNameResponse" message="tns:getLicenseByNameResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="deleteLicense">
+			<wsdl:input name="deleteLicense" message="tns:deleteLicense">
+			</wsdl:input>
+			<wsdl:output name="deleteLicenseResponse" message="tns:deleteLicenseResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="addLicenseObligationUsingReference">
+			<wsdl:input name="addLicenseObligationUsingReference"
+				message="tns:addLicenseObligationUsingReference">
+			</wsdl:input>
+			<wsdl:output name="addLicenseObligationUsingReferenceResponse"
+				message="tns:addLicenseObligationUsingReferenceResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="cloneLicense">
+			<wsdl:input name="cloneLicense" message="tns:cloneLicense">
+			</wsdl:input>
+			<wsdl:output name="cloneLicenseResponse" message="tns:cloneLicenseResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getLicensesById">
+			<wsdl:input name="getLicensesById" message="tns:getLicensesById">
+			</wsdl:input>
+			<wsdl:output name="getLicensesByIdResponse" message="tns:getLicensesByIdResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getTags">
+			<wsdl:input name="getTags" message="tns:getTags">
+			</wsdl:input>
+			<wsdl:output name="getTagsResponse" message="tns:getTagsResponse">
+			</wsdl:output>
+			<wsdl:fault name="SdkFault" message="tns:SdkFault">
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="LicenseApiServiceSoapBinding" type="tns:LicenseApi">
+		<soap:binding style="document"
+			transport="http://schemas.xmlsoap.org/soap/http" />
+		<wsdl:operation name="resetLicense">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="resetLicense">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="resetLicenseResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getLicenses">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getLicenses">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getLicensesResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="createLicense">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="createLicense">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="createLicenseResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="removeLicenseObligation">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="removeLicenseObligation">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="removeLicenseObligationResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getTaggedLicenses">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getTaggedLicenses">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getTaggedLicensesResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="updateLicense">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="updateLicense">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="updateLicenseResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getLicenseObligations">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getLicenseObligations">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getLicenseObligationsResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="addLicenseObligation">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="addLicenseObligation">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="addLicenseObligationResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="removeTag">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="removeTag">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="removeTagResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="updateLicenseObligation">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="updateLicenseObligation">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="updateLicenseObligationResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getLicenseById">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getLicenseById">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getLicenseByIdResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="suggestLicenses">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="suggestLicenses">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="suggestLicensesResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="addTag">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="addTag">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="addTagResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getLicenseByName">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getLicenseByName">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getLicenseByNameResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="deleteLicense">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="deleteLicense">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="deleteLicenseResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="addLicenseObligationUsingReference">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="addLicenseObligationUsingReference">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="addLicenseObligationUsingReferenceResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="cloneLicense">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="cloneLicense">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="cloneLicenseResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getLicensesById">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getLicensesById">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getLicensesByIdResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+		<wsdl:operation name="getTags">
+			<soap:operation soapAction="" style="document" />
+			<wsdl:input name="getTags">
+				<soap:body use="literal" />
+			</wsdl:input>
+			<wsdl:output name="getTagsResponse">
+				<soap:body use="literal" />
+			</wsdl:output>
+			<wsdl:fault name="SdkFault">
+				<soap:fault name="SdkFault" use="literal" />
+			</wsdl:fault>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="LicenseApiService">
+		<wsdl:port name="LicenseApiPort" binding="tns:LicenseApiServiceSoapBinding">
+			<soap:address location="http://localhost:9090/LicenseApiPort" />
+		</wsdl:port>
+	</wsdl:service>
 </wsdl:definitions>
