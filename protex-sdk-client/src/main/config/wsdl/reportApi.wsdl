@@ -1,905 +1,847 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="ReportApiService"
-	targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:report"
-	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:report" xmlns:ns1="urn:blackducksoftware.com:sdk:v7.0:fault"
-	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
-	<wsdl:types>
-		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-			xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common"
-			xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:report"
-			elementFormDefault="unqualified" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:report"
-			version="1.0">
-			<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:common" />
-			<xs:element name="createReportTemplate" type="tns:createReportTemplate" />
-			<xs:element name="createReportTemplateResponse" type="tns:createReportTemplateResponse" />
-			<xs:element name="deleteReportTemplate" type="tns:deleteReportTemplate" />
-			<xs:element name="deleteReportTemplateResponse" type="tns:deleteReportTemplateResponse" />
-			<xs:element name="generateAdHocProjectReport" type="tns:generateAdHocProjectReport" />
-			<xs:element name="generateAdHocProjectReportResponse"
-				type="tns:generateAdHocProjectReportResponse" />
-			<xs:element name="generateAuditHistoryReport" type="tns:generateAuditHistoryReport" />
-			<xs:element name="generateAuditHistoryReportResponse"
-				type="tns:generateAuditHistoryReportResponse" />
-			<xs:element name="generateProjectReport" type="tns:generateProjectReport" />
-			<xs:element name="generateProjectReportFromDefaultTemplate"
-				type="tns:generateProjectReportFromDefaultTemplate" />
-			<xs:element name="generateProjectReportFromDefaultTemplateResponse"
-				type="tns:generateProjectReportFromDefaultTemplateResponse" />
-			<xs:element name="generateProjectReportResponse" type="tns:generateProjectReportResponse" />
-			<xs:element name="generateSpdxReport" type="tns:generateSpdxReport" />
-			<xs:element name="generateSpdxReportResponse" type="tns:generateSpdxReportResponse" />
-			<xs:element name="getDefaultReportTemplate" type="tns:getDefaultReportTemplate" />
-			<xs:element name="getDefaultReportTemplateResponse" type="tns:getDefaultReportTemplateResponse" />
-			<xs:element name="getReportTemplateById" type="tns:getReportTemplateById" />
-			<xs:element name="getReportTemplateByIdResponse" type="tns:getReportTemplateByIdResponse" />
-			<xs:element name="getReportTemplateByTitle" type="tns:getReportTemplateByTitle" />
-			<xs:element name="getReportTemplateByTitleResponse" type="tns:getReportTemplateByTitleResponse" />
-			<xs:element name="setDefaultReportTemplate" type="tns:setDefaultReportTemplate" />
-			<xs:element name="setDefaultReportTemplateResponse" type="tns:setDefaultReportTemplateResponse" />
-			<xs:element name="suggestReportTemplates" type="tns:suggestReportTemplates" />
-			<xs:element name="suggestReportTemplatesResponse" type="tns:suggestReportTemplatesResponse" />
-			<xs:element name="updateReportTemplate" type="tns:updateReportTemplate" />
-			<xs:element name="updateReportTemplateResponse" type="tns:updateReportTemplateResponse" />
-			<xs:complexType name="updateReportTemplate">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="reportTemplateId" type="xs:string" />
-					<xs:element minOccurs="0" name="reportTemplate"
-						type="tns:reportTemplateRequest" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="reportTemplateRequest">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="auditTrailEndDate" type="xs:dateTime" />
-					<xs:element minOccurs="0" name="auditTrailStartDate"
-						type="xs:dateTime" />
-					<xs:element minOccurs="0" name="clientLinkBaseURL" type="xs:string" />
-					<xs:element minOccurs="0" name="comment" type="xs:string" />
-					<xs:element maxOccurs="unbounded" minOccurs="0"
-						name="externalDocumentLinks" nillable="true"
-						type="common:externalDocumentLink" />
-					<xs:element minOccurs="0" name="footer" type="xs:string" />
-					<xs:element minOccurs="0" name="forced" type="xs:boolean" />
-					<xs:element minOccurs="0" name="header" type="xs:string" />
-					<xs:element minOccurs="0" name="name" type="xs:string" />
-					<xs:element maxOccurs="unbounded" minOccurs="0" name="sections"
-						nillable="true" type="tns:reportSection" />
-					<xs:element minOccurs="0" name="timezoneOffset" type="xs:string" />
-					<xs:element minOccurs="0" name="title" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="reportSection">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="label" type="xs:string" />
-					<xs:element minOccurs="0" name="sectionType" type="tns:reportSectionType" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="updateReportTemplateResponse">
-				<xs:sequence />
-			</xs:complexType>
-			<xs:complexType name="generateAdHocProjectReport">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="projectId" type="xs:string" />
-					<xs:element minOccurs="0" name="reportTemplateRequest"
-						type="tns:reportTemplateRequest" />
-					<xs:element minOccurs="0" name="outputFormat" type="tns:reportFormat" />
-					<xs:element name="tableOfContents" type="xs:boolean" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="generateAdHocProjectReportResponse">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="return" type="tns:report" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="report">
-				<xs:sequence>
-					<xs:element xmlns:ns1="http://www.w3.org/2005/05/xmlmime"
-						minOccurs="0" name="fileContent" ns1:expectedContentTypes="application/octet-stream"
-						type="xs:base64Binary" />
-					<xs:element minOccurs="0" name="fileName" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="createReportTemplate">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="reportTemplateRequest"
-						type="tns:reportTemplateRequest" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="createReportTemplateResponse">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="return" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getReportTemplateById">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="reportTemplateId" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getReportTemplateByIdResponse">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="return" type="tns:reportTemplate" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="reportTemplate">
-				<xs:complexContent>
-					<xs:extension base="tns:reportTemplateRequest">
-						<xs:sequence>
-							<xs:element minOccurs="0" name="reportTemplateId"
-								type="xs:string" />
-						</xs:sequence>
-					</xs:extension>
-				</xs:complexContent>
-			</xs:complexType>
-			<xs:complexType name="generateSpdxReport">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="projectId" type="xs:string" />
-					<xs:element minOccurs="0" name="spdxReportConfiguration"
-						type="tns:spdxReportConfiguration" />
-					<xs:element minOccurs="0" name="outputFormat" type="tns:spdxReportFormat" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="spdxReportConfiguration">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="allLicenseInfoFromFilesType"
-						type="tns:spdxAllLicenseInfoFromFileType" />
-					<xs:element minOccurs="0" name="copyright" type="xs:string" />
-					<xs:element minOccurs="0" name="createdBy" type="xs:string" />
-					<xs:element minOccurs="0" name="createdByEMail" type="xs:string" />
-					<xs:element minOccurs="0" name="creatorComment" type="xs:string" />
-					<xs:element minOccurs="0" name="documentComment" type="xs:string" />
-					<xs:element minOccurs="0" name="documentNamespace" type="xs:string" />
-					<xs:element minOccurs="0" name="fileLicenseConclusionType"
-						type="tns:spdxFileLicenseConclusionType" />
-					<xs:element minOccurs="0" name="licenseComment" type="xs:string" />
-					<xs:element minOccurs="0" name="organization" type="xs:string" />
-					<xs:element minOccurs="0" name="organizationEmail" type="xs:string" />
-					<xs:element minOccurs="0" name="packageDescription"
-						type="xs:string" />
-					<xs:element minOccurs="0" name="packageDownloadUrl"
-						type="xs:string" />
-					<xs:element minOccurs="0" name="packageFileName" type="xs:string" />
-					<xs:element minOccurs="0" name="packageLicenseConclusionType"
-						type="tns:spdxPackageLicenseConclusionType" />
-					<xs:element minOccurs="0" name="packageLicenseDeclarationType"
-						type="tns:spdxLicenseDeclarationType" />
-					<xs:element minOccurs="0" name="packageName" type="xs:string" />
-					<xs:element minOccurs="0" name="packageOriginator" type="xs:string" />
-					<xs:element minOccurs="0" name="packageSourceInformation"
-						type="xs:string" />
-					<xs:element minOccurs="0" name="packageSupplier" type="xs:string" />
-					<xs:element minOccurs="0" name="packageVersion" type="xs:string" />
-					<xs:element minOccurs="0" name="protexUrl" type="xs:string" />
-					<xs:element minOccurs="0" name="reportComment" type="xs:string" />
-					<xs:element minOccurs="0" name="reviewInfo"
-						type="tns:spdxReviewInformation" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="spdxReviewInformation">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="reviewComment" type="xs:string" />
-					<xs:element minOccurs="0" name="reviewDate" type="xs:dateTime" />
-					<xs:element minOccurs="0" name="reviewedBy" type="xs:string" />
-					<xs:element minOccurs="0" name="reviewerType" type="tns:spdxReviewerType" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="generateSpdxReportResponse">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="return" type="tns:report" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="deleteReportTemplate">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="title" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="deleteReportTemplateResponse">
-				<xs:sequence />
-			</xs:complexType>
-			<xs:complexType name="getDefaultReportTemplate">
-				<xs:sequence />
-			</xs:complexType>
-			<xs:complexType name="getDefaultReportTemplateResponse">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="return" type="tns:reportTemplate" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="setDefaultReportTemplate">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="reportTemplateId" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="setDefaultReportTemplateResponse">
-				<xs:sequence />
-			</xs:complexType>
-			<xs:complexType name="generateProjectReport">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="projectId" type="xs:string" />
-					<xs:element minOccurs="0" name="reportTemplateId" type="xs:string" />
-					<xs:element minOccurs="0" name="outputFormat" type="tns:reportFormat" />
-					<xs:element name="tableOfContents" type="xs:boolean" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="generateProjectReportResponse">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="return" type="tns:report" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="generateProjectReportFromDefaultTemplate">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="projectId" type="xs:string" />
-					<xs:element minOccurs="0" name="outputFormat" type="tns:reportFormat" />
-					<xs:element name="tableOfContents" type="xs:boolean" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="generateProjectReportFromDefaultTemplateResponse">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="return" type="tns:report" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="suggestReportTemplates">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="anyWordStartsWith" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="suggestReportTemplatesResponse">
-				<xs:sequence>
-					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
-						type="tns:reportTemplate" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="generateAuditHistoryReport">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="auditHistoryReportRequest"
-						type="tns:auditHistoryReportRequest" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="auditHistoryReportRequest">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="endDate" type="xs:dateTime" />
-					<xs:element minOccurs="0" name="startDate" type="xs:dateTime" />
-					<xs:element maxOccurs="unbounded" minOccurs="0" name="userIds"
-						nillable="true" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="generateAuditHistoryReportResponse">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="return" type="tns:report" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getReportTemplateByTitle">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="reportTemplateTitle"
-						type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getReportTemplateByTitleResponse">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="return" type="tns:reportTemplate" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:simpleType name="reportSectionType">
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="SUMMARY" />
-					<xs:enumeration value="ANALYSIS_SUMMARY" />
-					<xs:enumeration value="BILL_OF_MATERIALS" />
-					<xs:enumeration value="POTENTIAL_BILL_OF_MATERIALS" />
-					<xs:enumeration value="IP_ARCHITECTURE" />
-					<xs:enumeration value="LICENSES_IN_EFFECT" />
-					<xs:enumeration value="LICENSE_CONFLICTS" />
-					<xs:enumeration value="OBLIGATIONS" />
-					<xs:enumeration value="FILE_INVENTORY" />
-					<xs:enumeration value="IDENTIFIED_FILES" />
-					<xs:enumeration value="EXCLUDED_COMPONENTS" />
-					<xs:enumeration value="STRING_SEARCHES" />
-					<xs:enumeration value="STRING_SEARCH_HITS_PENDING_ID" />
-					<xs:enumeration value="STRING_SEARCH_PATTERNS" />
-					<xs:enumeration value="DEPENDENCIES_ALL" />
-					<xs:enumeration value="DEPENDENCIES_JAVA_IMPORT_STATEMENTS" />
-					<xs:enumeration value="DEPENDENCIES_JAVA_PACKAGE_STATEMENTS" />
-					<xs:enumeration value="DEPENDENCIES_NON_JAVA" />
-					<xs:enumeration value="WORK_HISTORY_BILL_OF_MATERIALS" />
-					<xs:enumeration value="WORK_HISTORY_FILE_INVENTORY" />
-					<xs:enumeration
-						value="FILE_DISCOVERY_PATTERN_MATCHES_PENDING_IDENTIFICATION" />
-					<xs:enumeration value="CODE_MATCHES_PENDING_IDENTIFICATION_PRECISION" />
-					<xs:enumeration value="CODE_MATCHES_PRECISION" />
-					<xs:enumeration value="CODE_MATCHES_ALL" />
-					<xs:enumeration value="LICENSE_TEXTS" />
-					<xs:enumeration value="CODE_LABEL" />
-					<xs:enumeration value="COMPARE_CODE_MATCHES_PRECISION" />
-					<xs:enumeration value="COMPARE_CODE_MATCHES_ALL" />
-					<xs:enumeration value="IDENTIFICATION_AUDIT_TRAIL" />
-					<xs:enumeration value="FILE_DISCOVERY_PATTERNS" />
-					<xs:enumeration value="RAPID_ID_CONFIGURATIONS" />
-					<xs:enumeration value="ANALYSIS_WARNINGS_AND_ERRORS" />
-					<xs:enumeration value="LINK_TO_EXTERNAL_DOCUMENTS" />
-				</xs:restriction>
-			</xs:simpleType>
-			<xs:simpleType name="reportFormat">
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="HTML" />
-					<xs:enumeration value="XLS" />
-					<xs:enumeration value="ODF_SPREADSHEET" />
-					<xs:enumeration value="MS_WORD" />
-					<xs:enumeration value="ODF_TEXT" />
-					<xs:enumeration value="CSV" />
-				</xs:restriction>
-			</xs:simpleType>
-			<xs:simpleType name="spdxAllLicenseInfoFromFileType">
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="NO_ASSERTION" />
-					<xs:enumeration value="IDENTIFIED_PLUS_STRING_SEARCH_MATCH_LICENSES" />
-				</xs:restriction>
-			</xs:simpleType>
-			<xs:simpleType name="spdxFileLicenseConclusionType">
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="NO_ASSERTION" />
-					<xs:enumeration value="COMPONENT_IDENTIFIED_LICENSES" />
-				</xs:restriction>
-			</xs:simpleType>
-			<xs:simpleType name="spdxPackageLicenseConclusionType">
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="NO_ASSERTION" />
-					<xs:enumeration value="COMPONENT_IDENTIFIED_LICENSES" />
-				</xs:restriction>
-			</xs:simpleType>
-			<xs:simpleType name="spdxLicenseDeclarationType">
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="NO_ASSERTION" />
-					<xs:enumeration value="PROJECT_DECLARED_LICENSE" />
-				</xs:restriction>
-			</xs:simpleType>
-			<xs:simpleType name="spdxReviewerType">
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="PERSON" />
-					<xs:enumeration value="ORGANIZATION" />
-					<xs:enumeration value="TOOL" />
-				</xs:restriction>
-			</xs:simpleType>
-			<xs:simpleType name="spdxReportFormat">
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="RDF" />
-					<xs:enumeration value="XLS" />
-					<xs:enumeration value="HTML" />
-					<xs:enumeration value="RDF_AND_XLS_WRAPPED_IN_ZIP" />
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:schema>
-		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-			targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:common"
-			version="1.0">
-			<xs:complexType name="externalDocumentLink">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="documentId" type="xs:string" />
-					<xs:element minOccurs="0" name="documentLocation" type="xs:string" />
-					<xs:element minOccurs="0" name="linkText" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-		</xs:schema>
-		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-			xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:blackducksoftware.com:sdk:v7.0:fault"
-			attributeFormDefault="unqualified" elementFormDefault="unqualified"
-			targetNamespace="urn:blackducksoftware.com:sdk:v7.0:fault">
-			<xs:element name="sdkFaultDetails" type="tns:sdkFaultDetails" />
-			<xs:complexType name="sdkFaultDetails">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="errorCode" type="tns:errorCode" />
-					<xs:element minOccurs="0" name="message" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:simpleType name="errorCode">
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="SERVER_REGISTRATION_ERROR" />
-					<xs:enumeration value="SERVER_PERFORMING_UPDATE" />
-					<xs:enumeration value="NO_ANALYSIS_RUNNING" />
-					<xs:enumeration value="ANALYSIS_ALREADY_RUNNING" />
-					<xs:enumeration value="INVALID_SOURCE_LOCATION_FOR_SCAN" />
-					<xs:enumeration value="PROJECT_COULD_NOT_BE_LOCKED" />
-					<xs:enumeration value="LICENSE_NAME_TOO_LONG" />
-					<xs:enumeration value="LICENSE_TYPE_STANDARD_CANT_CHANGE_NAME" />
-					<xs:enumeration value="TAG_NOT_FOUND" />
-					<xs:enumeration value="OBLIGATION_IS_REFERENCED" />
-					<xs:enumeration value="OBLIGATION_NOT_ASSIGNED" />
-					<xs:enumeration value="DUPLICATE_LICENSE_NAME" />
-					<xs:enumeration value="LICENSE_NOT_FOUND" />
-					<xs:enumeration value="LICENSE_IN_USE" />
-					<xs:enumeration value="CAN_NOT_RESET_CUSTOM_LICENSE" />
-					<xs:enumeration value="DUPLICATE_OBLIGATION_CATEGORY" />
-					<xs:enumeration value="OBLIGATION_CATEGORY_NOT_FOUND" />
-					<xs:enumeration value="OBLIGATION_CATEGORY_IN_USE" />
-					<xs:enumeration value="OBLIGATION_CATEGORY_CAN_NOT_BE_DELETED" />
-					<xs:enumeration value="DUPLICATE_OBLIGATION_NAME" />
-					<xs:enumeration value="DUPLICATE_OBLIGATION_ASSIGNMENT" />
-					<xs:enumeration value="INVALID_OBLIGATION_NAME" />
-					<xs:enumeration value="OBLIGATION_NOT_FOUND" />
-					<xs:enumeration value="OBLIGATION_IN_USE_BY_PROJECTS" />
-					<xs:enumeration value="OBLIGATION_IN_USE_BY_LICENSES" />
-					<xs:enumeration value="RAPID_ID_CONFIGURATION_NOT_FOUND" />
-					<xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_NAME" />
-					<xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_ASSOCIATION" />
-					<xs:enumeration value="RAPID_ID_OPERATION_TYPE_DUPLICATE" />
-					<xs:enumeration value="LEARNED_IDENTIFICATION_NOT_FOUND" />
-					<xs:enumeration value="USER_NOT_ASSIGNED_TO_PROJECT" />
-					<xs:enumeration value="UNKNOWN_ANALYSIS_DATABASE_OPTION" />
-					<xs:enumeration
-						value="STRING_SEARCH_PATTERN_UPDATE_OF_STANDARD_PATTERN_NOT_ALLOWED" />
-					<xs:enumeration value="CUSTOM_COMPONENT_IN_USE" />
-					<xs:enumeration value="CUSTOM_COMPONENT_HAS_NO_SOURCE" />
-					<xs:enumeration value="DUPLICATE_TEMPLATE_TITLE" />
-					<xs:enumeration value="REPORT_TEMPLATE_NOT_FOUND" />
-					<xs:enumeration value="DEFAULT_REPORT_TEMPLATE_NOT_SET" />
-					<xs:enumeration value="DUPLICATE_PROJECT_NAME" />
-					<xs:enumeration value="PROJECT_ANALYSIS_LOCAL_SOURCE_NOT_SUPPORTED" />
-					<xs:enumeration value="OPTIONS_SETTING_NOT_ALLOWED" />
-					<xs:enumeration
-						value="OPTIONS_CANNOT_BE_FORCED_FOR_LOCAL_SEARCH_SETTINGS" />
-					<xs:enumeration value="DUPLICATE_STRING_SEARCH_PATTERN_NAME" />
-					<xs:enumeration value="DUPLICATE_FILE_DISCOVERY_PATTERN_NAME" />
-					<xs:enumeration value="LINKING_PROJECTS_FORCES_CLONING_OF_WORK_RESULTS" />
-					<xs:enumeration value="PROJECT_NOT_YET_ANALYZED" />
-					<xs:enumeration value="DUPLICATE_USER_ASSIGNMENT" />
-					<xs:enumeration value="PROJECT_NAME_TOO_LONG" />
-					<xs:enumeration value="INVALID_PROJECT_NAME" />
-					<xs:enumeration value="PROJECT_NOT_FOUND" />
-					<xs:enumeration value="PROJECT_SYNCID_INVALID" />
-					<xs:enumeration value="LINKING_GLOBALLY_DISABLED" />
-					<xs:enumeration value="PROJECT_IN_USE" />
-					<xs:enumeration value="STRING_SEARCH_PATTERN_NAME_TOO_LONG" />
-					<xs:enumeration value="ROLE_NOT_FOUND" />
-					<xs:enumeration value="MINIMUM_ONE_ADMIN_USER" />
-					<xs:enumeration value="REMOVE_SELF_AS_ADMIN_USER" />
-					<xs:enumeration value="DUPLICATE_EMAIL_ADDRESS" />
-					<xs:enumeration value="EMAIL_TOO_LONG" />
-					<xs:enumeration value="FIRST_NAME_TOO_LONG" />
-					<xs:enumeration value="LAST_NAME_TOO_LONG" />
-					<xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_TOO_LONG" />
-					<xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_DUPLICATE" />
-					<xs:enumeration value="INVALID_EMAIL_ADDRESS" />
-					<xs:enumeration value="USER_NOT_FOUND" />
-					<xs:enumeration value="PASSWORD_TOO_SHORT" />
-					<xs:enumeration value="PASSWORD_TOO_LONG" />
-					<xs:enumeration value="STRING_SEARCH_DISCOVERY_NOT_FOUND" />
-					<xs:enumeration value="STRING_SEARCH_REQUIRES_UPLOADED_SOURCE" />
-					<xs:enumeration value="USAGE_LEVEL_INVALID_FOR_GIVEN_ID" />
-					<xs:enumeration value="CANNOT_COPY_ID_PROJECT_SYNCHRONIZED" />
-					<xs:enumeration value="CODE_TREE_PATH_NOT_FOUND" />
-					<xs:enumeration value="CODE_TREE_GUARANTEED_EMPTY_RESULT" />
-					<xs:enumeration value="NO_FILE_CONTENT" />
-					<xs:enumeration value="CODE_TREE_PARENT_PATH_NOT_FOUND" />
-					<xs:enumeration value="DUPLICATE_COMPONENT_NAME" />
-					<xs:enumeration value="COMPONENT_NAME_TOO_LONG" />
-					<xs:enumeration value="INVALID_COMPONENT_NAME" />
-					<xs:enumeration value="COMPONENT_NOT_FOUND" />
-					<xs:enumeration value="COMPONENT_VERSION_NOT_FOUND" />
-					<xs:enumeration value="OPTION_IS_FORCED" />
-					<xs:enumeration value="FILE_DISCOVERY_PATTERN_NOT_FOUND" />
-					<xs:enumeration value="STRING_SEARCH_PATTERN_NOT_FOUND" />
-					<xs:enumeration value="UNEXPECTED_EXCEPTION_ERROR" />
-					<xs:enumeration value="UNKNOWN_REPORT_SECTION_ERROR" />
-					<xs:enumeration value="PROTEX_FILE_SOURCE_NOT_AVAILABLE" />
-					<xs:enumeration value="NOT_A_FILE_PATH" />
-					<xs:enumeration value="ARGUMENT_VALUE_INVALID" />
-					<xs:enumeration value="METHOD_NOT_YET_IMPLEMENTED" />
-					<xs:enumeration value="ARGUMENT_NOT_YET_IMPLEMENTED" />
-					<xs:enumeration value="ARGUMENT_VALUE_NOT_YET_IMPLEMENTED" />
-					<xs:enumeration value="INVALID_CREDENTIALS" />
-					<xs:enumeration value="INSUFFICIENT_PERMISSION" />
-					<xs:enumeration value="UNKNOWN_ERROR" />
-					<xs:enumeration value="BOM_REFRESH_NOT_FINISHED" />
-					<xs:enumeration value="BOM_COMPONENT_PROJECT_CANT_UPDATE" />
-					<xs:enumeration
-						value="UPDATE_BOM_COMPONENT_VERSION_NAME_OF_COMPONENT_VERSION_PROHIBITED" />
-					<xs:enumeration value="TODO_CONVERT_EXCEPTION" />
-					<xs:enumeration value="UNEXPECTED_RETURN_VALUE_ERROR" />
-					<xs:enumeration value="OUT_OF_MEMORY_ERROR" />
-					<xs:enumeration value="NO_SESSION_ID" />
-					<xs:enumeration value="INVALID_SORT_KEY" />
-					<xs:enumeration value="CAN_NOT_OPEN_TEMP_FILE" />
-					<xs:enumeration
-						value="CODEMATCH_SELF_IDENTIFICATION_MUST_MATCH_DECLARED_LICENSE" />
-					<xs:enumeration value="IDENTIFICATION_NOT_FOUND" />
-					<xs:enumeration value="IDENTIFICATION_LEARNING_CONFLICT" />
-					<xs:enumeration value="EXTERNAL_NAMESPACE_NAME_TOO_LONG" />
-					<xs:enumeration value="DUPLICATE_EXTERNAL_NAMESPACE_KEY" />
-					<xs:enumeration value="EXTERNAL_NAMESPACE_NOT_FOUND" />
-					<xs:enumeration value="EXTERNAL_ID_MAPPING_NOT_FOUND" />
-					<xs:enumeration value="DUPLICATE_EXTERNAL_ID_MAPPING" />
-					<xs:enumeration value="TEMPLATE_NOT_FOUND" />
-					<xs:enumeration value="DUPLICATE_VERSION_NAME" />
-				</xs:restriction>
-			</xs:simpleType>
-			<xs:element name="SdkFault" nillable="true" type="tns:sdkFaultDetails" />
-		</xs:schema>
-	</wsdl:types>
-	<wsdl:message name="generateSpdxReportResponse">
-		<wsdl:part name="parameters" element="tns:generateSpdxReportResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="updateReportTemplate">
-		<wsdl:part name="parameters" element="tns:updateReportTemplate">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="createReportTemplate">
-		<wsdl:part name="parameters" element="tns:createReportTemplate">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="generateProjectReportFromDefaultTemplateResponse">
-		<wsdl:part name="parameters"
-			element="tns:generateProjectReportFromDefaultTemplateResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="deleteReportTemplate">
-		<wsdl:part name="parameters" element="tns:deleteReportTemplate">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getDefaultReportTemplate">
-		<wsdl:part name="parameters" element="tns:getDefaultReportTemplate">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="generateProjectReport">
-		<wsdl:part name="parameters" element="tns:generateProjectReport">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="generateAuditHistoryReport">
-		<wsdl:part name="parameters" element="tns:generateAuditHistoryReport">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="suggestReportTemplatesResponse">
-		<wsdl:part name="parameters" element="tns:suggestReportTemplatesResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getReportTemplateByIdResponse">
-		<wsdl:part name="parameters" element="tns:getReportTemplateByIdResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="generateAdHocProjectReport">
-		<wsdl:part name="parameters" element="tns:generateAdHocProjectReport">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="updateReportTemplateResponse">
-		<wsdl:part name="parameters" element="tns:updateReportTemplateResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="generateProjectReportResponse">
-		<wsdl:part name="parameters" element="tns:generateProjectReportResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getReportTemplateById">
-		<wsdl:part name="parameters" element="tns:getReportTemplateById">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="generateSpdxReport">
-		<wsdl:part name="parameters" element="tns:generateSpdxReport">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="setDefaultReportTemplateResponse">
-		<wsdl:part name="parameters" element="tns:setDefaultReportTemplateResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getReportTemplateByTitleResponse">
-		<wsdl:part name="parameters" element="tns:getReportTemplateByTitleResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="deleteReportTemplateResponse">
-		<wsdl:part name="parameters" element="tns:deleteReportTemplateResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="setDefaultReportTemplate">
-		<wsdl:part name="parameters" element="tns:setDefaultReportTemplate">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getDefaultReportTemplateResponse">
-		<wsdl:part name="parameters" element="tns:getDefaultReportTemplateResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="generateProjectReportFromDefaultTemplate">
-		<wsdl:part name="parameters"
-			element="tns:generateProjectReportFromDefaultTemplate">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="suggestReportTemplates">
-		<wsdl:part name="parameters" element="tns:suggestReportTemplates">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="generateAuditHistoryReportResponse">
-		<wsdl:part name="parameters" element="tns:generateAuditHistoryReportResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getReportTemplateByTitle">
-		<wsdl:part name="parameters" element="tns:getReportTemplateByTitle">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="SdkFault">
-		<wsdl:part name="SdkFault" element="ns1:SdkFault">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="generateAdHocProjectReportResponse">
-		<wsdl:part name="parameters" element="tns:generateAdHocProjectReportResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="createReportTemplateResponse">
-		<wsdl:part name="parameters" element="tns:createReportTemplateResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:portType name="ReportApi">
-		<wsdl:operation name="updateReportTemplate">
-			<wsdl:input name="updateReportTemplate" message="tns:updateReportTemplate">
-			</wsdl:input>
-			<wsdl:output name="updateReportTemplateResponse" message="tns:updateReportTemplateResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="generateAdHocProjectReport">
-			<wsdl:input name="generateAdHocProjectReport" message="tns:generateAdHocProjectReport">
-			</wsdl:input>
-			<wsdl:output name="generateAdHocProjectReportResponse"
-				message="tns:generateAdHocProjectReportResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="createReportTemplate">
-			<wsdl:input name="createReportTemplate" message="tns:createReportTemplate">
-			</wsdl:input>
-			<wsdl:output name="createReportTemplateResponse" message="tns:createReportTemplateResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getReportTemplateById">
-			<wsdl:input name="getReportTemplateById" message="tns:getReportTemplateById">
-			</wsdl:input>
-			<wsdl:output name="getReportTemplateByIdResponse"
-				message="tns:getReportTemplateByIdResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="generateSpdxReport">
-			<wsdl:input name="generateSpdxReport" message="tns:generateSpdxReport">
-			</wsdl:input>
-			<wsdl:output name="generateSpdxReportResponse" message="tns:generateSpdxReportResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="deleteReportTemplate">
-			<wsdl:input name="deleteReportTemplate" message="tns:deleteReportTemplate">
-			</wsdl:input>
-			<wsdl:output name="deleteReportTemplateResponse" message="tns:deleteReportTemplateResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getDefaultReportTemplate">
-			<wsdl:input name="getDefaultReportTemplate" message="tns:getDefaultReportTemplate">
-			</wsdl:input>
-			<wsdl:output name="getDefaultReportTemplateResponse"
-				message="tns:getDefaultReportTemplateResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="setDefaultReportTemplate">
-			<wsdl:input name="setDefaultReportTemplate" message="tns:setDefaultReportTemplate">
-			</wsdl:input>
-			<wsdl:output name="setDefaultReportTemplateResponse"
-				message="tns:setDefaultReportTemplateResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="generateProjectReport">
-			<wsdl:input name="generateProjectReport" message="tns:generateProjectReport">
-			</wsdl:input>
-			<wsdl:output name="generateProjectReportResponse"
-				message="tns:generateProjectReportResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="generateProjectReportFromDefaultTemplate">
-			<wsdl:input name="generateProjectReportFromDefaultTemplate"
-				message="tns:generateProjectReportFromDefaultTemplate">
-			</wsdl:input>
-			<wsdl:output name="generateProjectReportFromDefaultTemplateResponse"
-				message="tns:generateProjectReportFromDefaultTemplateResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="suggestReportTemplates">
-			<wsdl:input name="suggestReportTemplates" message="tns:suggestReportTemplates">
-			</wsdl:input>
-			<wsdl:output name="suggestReportTemplatesResponse"
-				message="tns:suggestReportTemplatesResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="generateAuditHistoryReport">
-			<wsdl:input name="generateAuditHistoryReport" message="tns:generateAuditHistoryReport">
-			</wsdl:input>
-			<wsdl:output name="generateAuditHistoryReportResponse"
-				message="tns:generateAuditHistoryReportResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getReportTemplateByTitle">
-			<wsdl:input name="getReportTemplateByTitle" message="tns:getReportTemplateByTitle">
-			</wsdl:input>
-			<wsdl:output name="getReportTemplateByTitleResponse"
-				message="tns:getReportTemplateByTitleResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-	</wsdl:portType>
-	<wsdl:binding name="ReportApiServiceSoapBinding" type="tns:ReportApi">
-		<soap:binding style="document"
-			transport="http://schemas.xmlsoap.org/soap/http" />
-		<wsdl:operation name="updateReportTemplate">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="updateReportTemplate">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="updateReportTemplateResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="createReportTemplate">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="createReportTemplate">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="createReportTemplateResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="generateAdHocProjectReport">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="generateAdHocProjectReport">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="generateAdHocProjectReportResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getReportTemplateById">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="getReportTemplateById">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="getReportTemplateByIdResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="generateSpdxReport">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="generateSpdxReport">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="generateSpdxReportResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="deleteReportTemplate">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="deleteReportTemplate">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="deleteReportTemplateResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getDefaultReportTemplate">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="getDefaultReportTemplate">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="getDefaultReportTemplateResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="setDefaultReportTemplate">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="setDefaultReportTemplate">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="setDefaultReportTemplateResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="generateProjectReport">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="generateProjectReport">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="generateProjectReportResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="generateProjectReportFromDefaultTemplate">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="generateProjectReportFromDefaultTemplate">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="generateProjectReportFromDefaultTemplateResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="suggestReportTemplates">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="suggestReportTemplates">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="suggestReportTemplatesResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="generateAuditHistoryReport">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="generateAuditHistoryReport">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="generateAuditHistoryReportResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getReportTemplateByTitle">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="getReportTemplateByTitle">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="getReportTemplateByTitleResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-	</wsdl:binding>
-	<wsdl:service name="ReportApiService">
-		<wsdl:port name="ReportApiPort" binding="tns:ReportApiServiceSoapBinding">
-			<soap:address location="http://localhost:9090/ReportApiPort" />
-		</wsdl:port>
-	</wsdl:service>
+<wsdl:definitions name="ReportApiService" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:report" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:report" xmlns:ns1="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:report" elementFormDefault="unqualified" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:report" version="1.0">
+<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:common"/>
+<xs:element name="createReportTemplate" type="tns:createReportTemplate"/>
+<xs:element name="createReportTemplateResponse" type="tns:createReportTemplateResponse"/>
+<xs:element name="deleteReportTemplate" type="tns:deleteReportTemplate"/>
+<xs:element name="deleteReportTemplateResponse" type="tns:deleteReportTemplateResponse"/>
+<xs:element name="generateAdHocProjectReport" type="tns:generateAdHocProjectReport"/>
+<xs:element name="generateAdHocProjectReportResponse" type="tns:generateAdHocProjectReportResponse"/>
+<xs:element name="generateAuditHistoryReport" type="tns:generateAuditHistoryReport"/>
+<xs:element name="generateAuditHistoryReportResponse" type="tns:generateAuditHistoryReportResponse"/>
+<xs:element name="generateProjectReport" type="tns:generateProjectReport"/>
+<xs:element name="generateProjectReportFromDefaultTemplate" type="tns:generateProjectReportFromDefaultTemplate"/>
+<xs:element name="generateProjectReportFromDefaultTemplateResponse" type="tns:generateProjectReportFromDefaultTemplateResponse"/>
+<xs:element name="generateProjectReportResponse" type="tns:generateProjectReportResponse"/>
+<xs:element name="generateSpdxReport" type="tns:generateSpdxReport"/>
+<xs:element name="generateSpdxReportResponse" type="tns:generateSpdxReportResponse"/>
+<xs:element name="getDefaultReportTemplate" type="tns:getDefaultReportTemplate"/>
+<xs:element name="getDefaultReportTemplateResponse" type="tns:getDefaultReportTemplateResponse"/>
+<xs:element name="getReportTemplateById" type="tns:getReportTemplateById"/>
+<xs:element name="getReportTemplateByIdResponse" type="tns:getReportTemplateByIdResponse"/>
+<xs:element name="getReportTemplateByTitle" type="tns:getReportTemplateByTitle"/>
+<xs:element name="getReportTemplateByTitleResponse" type="tns:getReportTemplateByTitleResponse"/>
+<xs:element name="setDefaultReportTemplate" type="tns:setDefaultReportTemplate"/>
+<xs:element name="setDefaultReportTemplateResponse" type="tns:setDefaultReportTemplateResponse"/>
+<xs:element name="suggestReportTemplates" type="tns:suggestReportTemplates"/>
+<xs:element name="suggestReportTemplatesResponse" type="tns:suggestReportTemplatesResponse"/>
+<xs:element name="updateReportTemplate" type="tns:updateReportTemplate"/>
+<xs:element name="updateReportTemplateResponse" type="tns:updateReportTemplateResponse"/>
+<xs:complexType name="updateReportTemplate">
+<xs:sequence>
+<xs:element minOccurs="0" name="reportTemplateId" type="xs:string"/>
+<xs:element minOccurs="0" name="reportTemplate" type="tns:reportTemplateRequest"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="reportTemplateRequest">
+<xs:sequence>
+<xs:element minOccurs="0" name="auditTrailEndDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="auditTrailStartDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="clientLinkBaseURL" type="xs:string"/>
+<xs:element minOccurs="0" name="comment" type="xs:string"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="externalDocumentLinks" nillable="true" type="common:externalDocumentLink"/>
+<xs:element minOccurs="0" name="footer" type="xs:string"/>
+<xs:element minOccurs="0" name="forced" type="xs:boolean"/>
+<xs:element minOccurs="0" name="header" type="xs:string"/>
+<xs:element minOccurs="0" name="name" type="xs:string"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="sections" nillable="true" type="tns:reportSection"/>
+<xs:element minOccurs="0" name="timezoneOffset" type="xs:string"/>
+<xs:element minOccurs="0" name="title" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="reportSection">
+<xs:sequence>
+<xs:element minOccurs="0" name="label" type="xs:string"/>
+<xs:element minOccurs="0" name="sectionType" type="tns:reportSectionType"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="updateReportTemplateResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="generateAdHocProjectReport">
+<xs:sequence>
+<xs:element minOccurs="0" name="projectId" type="xs:string"/>
+<xs:element minOccurs="0" name="reportTemplateRequest" type="tns:reportTemplateRequest"/>
+<xs:element minOccurs="0" name="outputFormat" type="tns:reportFormat"/>
+<xs:element name="tableOfContents" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="generateAdHocProjectReportResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:report"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="report">
+<xs:sequence>
+<xs:element xmlns:ns1="http://www.w3.org/2005/05/xmlmime" minOccurs="0" name="fileContent" ns1:expectedContentTypes="application/octet-stream" type="xs:base64Binary"/>
+<xs:element minOccurs="0" name="fileName" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="createReportTemplate">
+<xs:sequence>
+<xs:element minOccurs="0" name="reportTemplateRequest" type="tns:reportTemplateRequest"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="createReportTemplateResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getReportTemplateById">
+<xs:sequence>
+<xs:element minOccurs="0" name="reportTemplateId" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getReportTemplateByIdResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:reportTemplate"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="reportTemplate">
+<xs:complexContent>
+<xs:extension base="tns:reportTemplateRequest">
+<xs:sequence>
+<xs:element minOccurs="0" name="reportTemplateId" type="xs:string"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="generateSpdxReport">
+<xs:sequence>
+<xs:element minOccurs="0" name="projectId" type="xs:string"/>
+<xs:element minOccurs="0" name="spdxReportConfiguration" type="tns:spdxReportConfiguration"/>
+<xs:element minOccurs="0" name="outputFormat" type="tns:spdxReportFormat"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="spdxReportConfiguration">
+<xs:sequence>
+<xs:element minOccurs="0" name="allLicenseInfoFromFilesType" type="tns:spdxAllLicenseInfoFromFileType"/>
+<xs:element minOccurs="0" name="copyright" type="xs:string"/>
+<xs:element minOccurs="0" name="createdBy" type="xs:string"/>
+<xs:element minOccurs="0" name="createdByEMail" type="xs:string"/>
+<xs:element minOccurs="0" name="creatorComment" type="xs:string"/>
+<xs:element minOccurs="0" name="documentComment" type="xs:string"/>
+<xs:element minOccurs="0" name="documentNamespace" type="xs:string"/>
+<xs:element minOccurs="0" name="fileLicenseConclusionType" type="tns:spdxFileLicenseConclusionType"/>
+<xs:element minOccurs="0" name="licenseComment" type="xs:string"/>
+<xs:element minOccurs="0" name="organization" type="xs:string"/>
+<xs:element minOccurs="0" name="organizationEmail" type="xs:string"/>
+<xs:element minOccurs="0" name="packageDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="packageDownloadUrl" type="xs:string"/>
+<xs:element minOccurs="0" name="packageFileName" type="xs:string"/>
+<xs:element minOccurs="0" name="packageLicenseConclusionType" type="tns:spdxPackageLicenseConclusionType"/>
+<xs:element minOccurs="0" name="packageLicenseDeclarationType" type="tns:spdxLicenseDeclarationType"/>
+<xs:element minOccurs="0" name="packageName" type="xs:string"/>
+<xs:element minOccurs="0" name="packageOriginator" type="xs:string"/>
+<xs:element minOccurs="0" name="packageSourceInformation" type="xs:string"/>
+<xs:element minOccurs="0" name="packageSupplier" type="xs:string"/>
+<xs:element minOccurs="0" name="packageVersion" type="xs:string"/>
+<xs:element minOccurs="0" name="protexUrl" type="xs:string"/>
+<xs:element minOccurs="0" name="reportComment" type="xs:string"/>
+<xs:element minOccurs="0" name="reviewInfo" type="tns:spdxReviewInformation"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="spdxReviewInformation">
+<xs:sequence>
+<xs:element minOccurs="0" name="reviewComment" type="xs:string"/>
+<xs:element minOccurs="0" name="reviewDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="reviewedBy" type="xs:string"/>
+<xs:element minOccurs="0" name="reviewerType" type="tns:spdxReviewerType"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="generateSpdxReportResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:report"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="deleteReportTemplate">
+<xs:sequence>
+<xs:element minOccurs="0" name="title" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="deleteReportTemplateResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="getDefaultReportTemplate">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="getDefaultReportTemplateResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:reportTemplate"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="setDefaultReportTemplate">
+<xs:sequence>
+<xs:element minOccurs="0" name="reportTemplateId" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="setDefaultReportTemplateResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="generateProjectReport">
+<xs:sequence>
+<xs:element minOccurs="0" name="projectId" type="xs:string"/>
+<xs:element minOccurs="0" name="reportTemplateId" type="xs:string"/>
+<xs:element minOccurs="0" name="outputFormat" type="tns:reportFormat"/>
+<xs:element name="tableOfContents" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="generateProjectReportResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:report"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="generateProjectReportFromDefaultTemplate">
+<xs:sequence>
+<xs:element minOccurs="0" name="projectId" type="xs:string"/>
+<xs:element minOccurs="0" name="outputFormat" type="tns:reportFormat"/>
+<xs:element name="tableOfContents" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="generateProjectReportFromDefaultTemplateResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:report"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="suggestReportTemplates">
+<xs:sequence>
+<xs:element minOccurs="0" name="anyWordStartsWith" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="suggestReportTemplatesResponse">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:reportTemplate"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="generateAuditHistoryReport">
+<xs:sequence>
+<xs:element minOccurs="0" name="auditHistoryReportRequest" type="tns:auditHistoryReportRequest"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="auditHistoryReportRequest">
+<xs:sequence>
+<xs:element minOccurs="0" name="endDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="startDate" type="xs:dateTime"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="userIds" nillable="true" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="generateAuditHistoryReportResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:report"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getReportTemplateByTitle">
+<xs:sequence>
+<xs:element minOccurs="0" name="reportTemplateTitle" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getReportTemplateByTitleResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:reportTemplate"/>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="reportSectionType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="SUMMARY"/>
+<xs:enumeration value="ANALYSIS_SUMMARY"/>
+<xs:enumeration value="BILL_OF_MATERIALS"/>
+<xs:enumeration value="POTENTIAL_BILL_OF_MATERIALS"/>
+<xs:enumeration value="IP_ARCHITECTURE"/>
+<xs:enumeration value="LICENSES_IN_EFFECT"/>
+<xs:enumeration value="LICENSE_CONFLICTS"/>
+<xs:enumeration value="OBLIGATIONS"/>
+<xs:enumeration value="FILE_INVENTORY"/>
+<xs:enumeration value="IDENTIFIED_FILES"/>
+<xs:enumeration value="EXCLUDED_COMPONENTS"/>
+<xs:enumeration value="STRING_SEARCHES"/>
+<xs:enumeration value="STRING_SEARCH_HITS_PENDING_ID"/>
+<xs:enumeration value="STRING_SEARCH_PATTERNS"/>
+<xs:enumeration value="DEPENDENCIES_ALL"/>
+<xs:enumeration value="DEPENDENCIES_JAVA_IMPORT_STATEMENTS"/>
+<xs:enumeration value="DEPENDENCIES_JAVA_PACKAGE_STATEMENTS"/>
+<xs:enumeration value="DEPENDENCIES_NON_JAVA"/>
+<xs:enumeration value="WORK_HISTORY_BILL_OF_MATERIALS"/>
+<xs:enumeration value="WORK_HISTORY_FILE_INVENTORY"/>
+<xs:enumeration value="FILE_DISCOVERY_PATTERN_MATCHES_PENDING_IDENTIFICATION"/>
+<xs:enumeration value="CODE_MATCHES_PENDING_IDENTIFICATION_PRECISION"/>
+<xs:enumeration value="CODE_MATCHES_PRECISION"/>
+<xs:enumeration value="CODE_MATCHES_ALL"/>
+<xs:enumeration value="LICENSE_TEXTS"/>
+<xs:enumeration value="CODE_LABEL"/>
+<xs:enumeration value="COMPARE_CODE_MATCHES_PRECISION"/>
+<xs:enumeration value="COMPARE_CODE_MATCHES_ALL"/>
+<xs:enumeration value="IDENTIFICATION_AUDIT_TRAIL"/>
+<xs:enumeration value="FILE_DISCOVERY_PATTERNS"/>
+<xs:enumeration value="RAPID_ID_CONFIGURATIONS"/>
+<xs:enumeration value="ANALYSIS_WARNINGS_AND_ERRORS"/>
+<xs:enumeration value="LINK_TO_EXTERNAL_DOCUMENTS"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="reportFormat">
+<xs:restriction base="xs:string">
+<xs:enumeration value="HTML"/>
+<xs:enumeration value="XLS"/>
+<xs:enumeration value="ODF_SPREADSHEET"/>
+<xs:enumeration value="MS_WORD"/>
+<xs:enumeration value="ODF_TEXT"/>
+<xs:enumeration value="CSV"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="spdxAllLicenseInfoFromFileType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="NO_ASSERTION"/>
+<xs:enumeration value="IDENTIFIED_PLUS_STRING_SEARCH_MATCH_LICENSES"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="spdxFileLicenseConclusionType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="NO_ASSERTION"/>
+<xs:enumeration value="COMPONENT_IDENTIFIED_LICENSES"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="spdxPackageLicenseConclusionType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="NO_ASSERTION"/>
+<xs:enumeration value="COMPONENT_IDENTIFIED_LICENSES"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="spdxLicenseDeclarationType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="NO_ASSERTION"/>
+<xs:enumeration value="PROJECT_DECLARED_LICENSE"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="spdxReviewerType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="PERSON"/>
+<xs:enumeration value="ORGANIZATION"/>
+<xs:enumeration value="TOOL"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="spdxReportFormat">
+<xs:restriction base="xs:string">
+<xs:enumeration value="RDF"/>
+<xs:enumeration value="XLS"/>
+<xs:enumeration value="HTML"/>
+<xs:enumeration value="RDF_AND_XLS_WRAPPED_IN_ZIP"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:common" version="1.0">
+<xs:complexType name="externalDocumentLink">
+<xs:sequence>
+<xs:element minOccurs="0" name="documentId" type="xs:string"/>
+<xs:element minOccurs="0" name="documentLocation" type="xs:string"/>
+<xs:element minOccurs="0" name="linkText" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:blackducksoftware.com:sdk:v7.0:fault" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="urn:blackducksoftware.com:sdk:v7.0:fault">
+<xs:element name="sdkFaultDetails" type="tns:sdkFaultDetails"/>
+<xs:complexType name="sdkFaultDetails">
+<xs:sequence>
+<xs:element minOccurs="0" name="errorCode" type="tns:errorCode"/>
+<xs:element minOccurs="0" name="message" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="errorCode">
+<xs:restriction base="xs:string">
+<xs:enumeration value="SERVER_REGISTRATION_ERROR"/>
+<xs:enumeration value="SERVER_PERFORMING_UPDATE"/>
+<xs:enumeration value="NO_ANALYSIS_RUNNING"/>
+<xs:enumeration value="ANALYSIS_ALREADY_RUNNING"/>
+<xs:enumeration value="INVALID_SOURCE_LOCATION_FOR_SCAN"/>
+<xs:enumeration value="PROJECT_COULD_NOT_BE_LOCKED"/>
+<xs:enumeration value="LICENSE_NAME_TOO_LONG"/>
+<xs:enumeration value="LICENSE_TYPE_STANDARD_CANT_CHANGE_NAME"/>
+<xs:enumeration value="TAG_NOT_FOUND"/>
+<xs:enumeration value="OBLIGATION_IS_REFERENCED"/>
+<xs:enumeration value="OBLIGATION_NOT_ASSIGNED"/>
+<xs:enumeration value="DUPLICATE_LICENSE_NAME"/>
+<xs:enumeration value="LICENSE_NOT_FOUND"/>
+<xs:enumeration value="LICENSE_IN_USE"/>
+<xs:enumeration value="CAN_NOT_RESET_CUSTOM_LICENSE"/>
+<xs:enumeration value="DUPLICATE_OBLIGATION_CATEGORY"/>
+<xs:enumeration value="OBLIGATION_CATEGORY_NOT_FOUND"/>
+<xs:enumeration value="OBLIGATION_CATEGORY_IN_USE"/>
+<xs:enumeration value="OBLIGATION_CATEGORY_CAN_NOT_BE_DELETED"/>
+<xs:enumeration value="DUPLICATE_OBLIGATION_NAME"/>
+<xs:enumeration value="DUPLICATE_OBLIGATION_ASSIGNMENT"/>
+<xs:enumeration value="INVALID_OBLIGATION_NAME"/>
+<xs:enumeration value="OBLIGATION_NOT_FOUND"/>
+<xs:enumeration value="OBLIGATION_IN_USE_BY_PROJECTS"/>
+<xs:enumeration value="OBLIGATION_IN_USE_BY_LICENSES"/>
+<xs:enumeration value="RAPID_ID_CONFIGURATION_NOT_FOUND"/>
+<xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_NAME"/>
+<xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_ASSOCIATION"/>
+<xs:enumeration value="RAPID_ID_OPERATION_TYPE_DUPLICATE"/>
+<xs:enumeration value="LEARNED_IDENTIFICATION_NOT_FOUND"/>
+<xs:enumeration value="USER_NOT_ASSIGNED_TO_PROJECT"/>
+<xs:enumeration value="UNKNOWN_ANALYSIS_DATABASE_OPTION"/>
+<xs:enumeration value="STRING_SEARCH_PATTERN_UPDATE_OF_STANDARD_PATTERN_NOT_ALLOWED"/>
+<xs:enumeration value="CUSTOM_COMPONENT_IN_USE"/>
+<xs:enumeration value="CUSTOM_COMPONENT_HAS_NO_SOURCE"/>
+<xs:enumeration value="DUPLICATE_TEMPLATE_TITLE"/>
+<xs:enumeration value="REPORT_TEMPLATE_NOT_FOUND"/>
+<xs:enumeration value="DEFAULT_REPORT_TEMPLATE_NOT_SET"/>
+<xs:enumeration value="DUPLICATE_PROJECT_NAME"/>
+<xs:enumeration value="PROJECT_ANALYSIS_LOCAL_SOURCE_NOT_SUPPORTED"/>
+<xs:enumeration value="OPTIONS_SETTING_NOT_ALLOWED"/>
+<xs:enumeration value="OPTIONS_CANNOT_BE_FORCED_FOR_LOCAL_SEARCH_SETTINGS"/>
+<xs:enumeration value="DUPLICATE_STRING_SEARCH_PATTERN_NAME"/>
+<xs:enumeration value="DUPLICATE_FILE_DISCOVERY_PATTERN_NAME"/>
+<xs:enumeration value="LINKING_PROJECTS_FORCES_CLONING_OF_WORK_RESULTS"/>
+<xs:enumeration value="PROJECT_NOT_YET_ANALYZED"/>
+<xs:enumeration value="DUPLICATE_USER_ASSIGNMENT"/>
+<xs:enumeration value="PROJECT_NAME_TOO_LONG"/>
+<xs:enumeration value="INVALID_PROJECT_NAME"/>
+<xs:enumeration value="PROJECT_NOT_FOUND"/>
+<xs:enumeration value="PROJECT_SYNCID_INVALID"/>
+<xs:enumeration value="LINKING_GLOBALLY_DISABLED"/>
+<xs:enumeration value="PROJECT_IN_USE"/>
+<xs:enumeration value="STRING_SEARCH_PATTERN_NAME_TOO_LONG"/>
+<xs:enumeration value="ROLE_NOT_FOUND"/>
+<xs:enumeration value="MINIMUM_ONE_ADMIN_USER"/>
+<xs:enumeration value="REMOVE_SELF_AS_ADMIN_USER"/>
+<xs:enumeration value="DUPLICATE_EMAIL_ADDRESS"/>
+<xs:enumeration value="EMAIL_TOO_LONG"/>
+<xs:enumeration value="FIRST_NAME_TOO_LONG"/>
+<xs:enumeration value="LAST_NAME_TOO_LONG"/>
+<xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_TOO_LONG"/>
+<xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_DUPLICATE"/>
+<xs:enumeration value="INVALID_EMAIL_ADDRESS"/>
+<xs:enumeration value="USER_NOT_FOUND"/>
+<xs:enumeration value="PASSWORD_TOO_SHORT"/>
+<xs:enumeration value="PASSWORD_TOO_LONG"/>
+<xs:enumeration value="STRING_SEARCH_DISCOVERY_NOT_FOUND"/>
+<xs:enumeration value="STRING_SEARCH_REQUIRES_UPLOADED_SOURCE"/>
+<xs:enumeration value="USAGE_LEVEL_INVALID_FOR_GIVEN_ID"/>
+<xs:enumeration value="CANNOT_COPY_ID_PROJECT_SYNCHRONIZED"/>
+<xs:enumeration value="CODE_TREE_PATH_NOT_FOUND"/>
+<xs:enumeration value="CODE_TREE_GUARANTEED_EMPTY_RESULT"/>
+<xs:enumeration value="NO_FILE_CONTENT"/>
+<xs:enumeration value="CODE_TREE_PARENT_PATH_NOT_FOUND"/>
+<xs:enumeration value="DUPLICATE_COMPONENT_NAME"/>
+<xs:enumeration value="COMPONENT_NAME_TOO_LONG"/>
+<xs:enumeration value="INVALID_COMPONENT_NAME"/>
+<xs:enumeration value="COMPONENT_NOT_FOUND"/>
+<xs:enumeration value="COMPONENT_VERSION_NOT_FOUND"/>
+<xs:enumeration value="OPTION_IS_FORCED"/>
+<xs:enumeration value="FILE_DISCOVERY_PATTERN_NOT_FOUND"/>
+<xs:enumeration value="STRING_SEARCH_PATTERN_NOT_FOUND"/>
+<xs:enumeration value="UNEXPECTED_EXCEPTION_ERROR"/>
+<xs:enumeration value="UNKNOWN_REPORT_SECTION_ERROR"/>
+<xs:enumeration value="PROTEX_FILE_SOURCE_NOT_AVAILABLE"/>
+<xs:enumeration value="NOT_A_FILE_PATH"/>
+<xs:enumeration value="ARGUMENT_VALUE_INVALID"/>
+<xs:enumeration value="METHOD_NOT_YET_IMPLEMENTED"/>
+<xs:enumeration value="ARGUMENT_NOT_YET_IMPLEMENTED"/>
+<xs:enumeration value="ARGUMENT_VALUE_NOT_YET_IMPLEMENTED"/>
+<xs:enumeration value="INVALID_CREDENTIALS"/>
+<xs:enumeration value="INSUFFICIENT_PERMISSION"/>
+<xs:enumeration value="UNKNOWN_ERROR"/>
+<xs:enumeration value="BOM_REFRESH_NOT_FINISHED"/>
+<xs:enumeration value="BOM_COMPONENT_PROJECT_CANT_UPDATE"/>
+<xs:enumeration value="UPDATE_BOM_COMPONENT_VERSION_NAME_OF_COMPONENT_VERSION_PROHIBITED"/>
+<xs:enumeration value="TODO_CONVERT_EXCEPTION"/>
+<xs:enumeration value="UNEXPECTED_RETURN_VALUE_ERROR"/>
+<xs:enumeration value="OUT_OF_MEMORY_ERROR"/>
+<xs:enumeration value="NO_SESSION_ID"/>
+<xs:enumeration value="INVALID_SORT_KEY"/>
+<xs:enumeration value="CAN_NOT_OPEN_TEMP_FILE"/>
+<xs:enumeration value="CODEMATCH_SELF_IDENTIFICATION_MUST_MATCH_DECLARED_LICENSE"/>
+<xs:enumeration value="IDENTIFICATION_NOT_FOUND"/>
+<xs:enumeration value="IDENTIFICATION_LEARNING_CONFLICT"/>
+<xs:enumeration value="EXTERNAL_NAMESPACE_NAME_TOO_LONG"/>
+<xs:enumeration value="DUPLICATE_EXTERNAL_NAMESPACE_KEY"/>
+<xs:enumeration value="EXTERNAL_NAMESPACE_NOT_FOUND"/>
+<xs:enumeration value="EXTERNAL_ID_MAPPING_NOT_FOUND"/>
+<xs:enumeration value="DUPLICATE_EXTERNAL_ID_MAPPING"/>
+<xs:enumeration value="TEMPLATE_NOT_FOUND"/>
+<xs:enumeration value="DUPLICATE_VERSION_NAME"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="SdkFault" nillable="true" type="tns:sdkFaultDetails"/>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="generateSpdxReportResponse">
+    <wsdl:part name="parameters" element="tns:generateSpdxReportResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateReportTemplate">
+    <wsdl:part name="parameters" element="tns:updateReportTemplate">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createReportTemplate">
+    <wsdl:part name="parameters" element="tns:createReportTemplate">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="generateProjectReportFromDefaultTemplateResponse">
+    <wsdl:part name="parameters" element="tns:generateProjectReportFromDefaultTemplateResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteReportTemplate">
+    <wsdl:part name="parameters" element="tns:deleteReportTemplate">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDefaultReportTemplate">
+    <wsdl:part name="parameters" element="tns:getDefaultReportTemplate">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="generateProjectReport">
+    <wsdl:part name="parameters" element="tns:generateProjectReport">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="generateAuditHistoryReport">
+    <wsdl:part name="parameters" element="tns:generateAuditHistoryReport">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="suggestReportTemplatesResponse">
+    <wsdl:part name="parameters" element="tns:suggestReportTemplatesResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getReportTemplateByIdResponse">
+    <wsdl:part name="parameters" element="tns:getReportTemplateByIdResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="generateAdHocProjectReport">
+    <wsdl:part name="parameters" element="tns:generateAdHocProjectReport">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateReportTemplateResponse">
+    <wsdl:part name="parameters" element="tns:updateReportTemplateResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="generateProjectReportResponse">
+    <wsdl:part name="parameters" element="tns:generateProjectReportResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getReportTemplateById">
+    <wsdl:part name="parameters" element="tns:getReportTemplateById">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="generateSpdxReport">
+    <wsdl:part name="parameters" element="tns:generateSpdxReport">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setDefaultReportTemplateResponse">
+    <wsdl:part name="parameters" element="tns:setDefaultReportTemplateResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getReportTemplateByTitleResponse">
+    <wsdl:part name="parameters" element="tns:getReportTemplateByTitleResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteReportTemplateResponse">
+    <wsdl:part name="parameters" element="tns:deleteReportTemplateResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setDefaultReportTemplate">
+    <wsdl:part name="parameters" element="tns:setDefaultReportTemplate">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDefaultReportTemplateResponse">
+    <wsdl:part name="parameters" element="tns:getDefaultReportTemplateResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="generateProjectReportFromDefaultTemplate">
+    <wsdl:part name="parameters" element="tns:generateProjectReportFromDefaultTemplate">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="suggestReportTemplates">
+    <wsdl:part name="parameters" element="tns:suggestReportTemplates">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="generateAuditHistoryReportResponse">
+    <wsdl:part name="parameters" element="tns:generateAuditHistoryReportResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getReportTemplateByTitle">
+    <wsdl:part name="parameters" element="tns:getReportTemplateByTitle">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SdkFault">
+    <wsdl:part name="SdkFault" element="ns1:SdkFault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="generateAdHocProjectReportResponse">
+    <wsdl:part name="parameters" element="tns:generateAdHocProjectReportResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="createReportTemplateResponse">
+    <wsdl:part name="parameters" element="tns:createReportTemplateResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="ReportApi">
+    <wsdl:operation name="updateReportTemplate">
+      <wsdl:input name="updateReportTemplate" message="tns:updateReportTemplate">
+    </wsdl:input>
+      <wsdl:output name="updateReportTemplateResponse" message="tns:updateReportTemplateResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="generateAdHocProjectReport">
+      <wsdl:input name="generateAdHocProjectReport" message="tns:generateAdHocProjectReport">
+    </wsdl:input>
+      <wsdl:output name="generateAdHocProjectReportResponse" message="tns:generateAdHocProjectReportResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createReportTemplate">
+      <wsdl:input name="createReportTemplate" message="tns:createReportTemplate">
+    </wsdl:input>
+      <wsdl:output name="createReportTemplateResponse" message="tns:createReportTemplateResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getReportTemplateById">
+      <wsdl:input name="getReportTemplateById" message="tns:getReportTemplateById">
+    </wsdl:input>
+      <wsdl:output name="getReportTemplateByIdResponse" message="tns:getReportTemplateByIdResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="generateSpdxReport">
+      <wsdl:input name="generateSpdxReport" message="tns:generateSpdxReport">
+    </wsdl:input>
+      <wsdl:output name="generateSpdxReportResponse" message="tns:generateSpdxReportResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteReportTemplate">
+      <wsdl:input name="deleteReportTemplate" message="tns:deleteReportTemplate">
+    </wsdl:input>
+      <wsdl:output name="deleteReportTemplateResponse" message="tns:deleteReportTemplateResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDefaultReportTemplate">
+      <wsdl:input name="getDefaultReportTemplate" message="tns:getDefaultReportTemplate">
+    </wsdl:input>
+      <wsdl:output name="getDefaultReportTemplateResponse" message="tns:getDefaultReportTemplateResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setDefaultReportTemplate">
+      <wsdl:input name="setDefaultReportTemplate" message="tns:setDefaultReportTemplate">
+    </wsdl:input>
+      <wsdl:output name="setDefaultReportTemplateResponse" message="tns:setDefaultReportTemplateResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="generateProjectReport">
+      <wsdl:input name="generateProjectReport" message="tns:generateProjectReport">
+    </wsdl:input>
+      <wsdl:output name="generateProjectReportResponse" message="tns:generateProjectReportResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="generateProjectReportFromDefaultTemplate">
+      <wsdl:input name="generateProjectReportFromDefaultTemplate" message="tns:generateProjectReportFromDefaultTemplate">
+    </wsdl:input>
+      <wsdl:output name="generateProjectReportFromDefaultTemplateResponse" message="tns:generateProjectReportFromDefaultTemplateResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="suggestReportTemplates">
+      <wsdl:input name="suggestReportTemplates" message="tns:suggestReportTemplates">
+    </wsdl:input>
+      <wsdl:output name="suggestReportTemplatesResponse" message="tns:suggestReportTemplatesResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="generateAuditHistoryReport">
+      <wsdl:input name="generateAuditHistoryReport" message="tns:generateAuditHistoryReport">
+    </wsdl:input>
+      <wsdl:output name="generateAuditHistoryReportResponse" message="tns:generateAuditHistoryReportResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getReportTemplateByTitle">
+      <wsdl:input name="getReportTemplateByTitle" message="tns:getReportTemplateByTitle">
+    </wsdl:input>
+      <wsdl:output name="getReportTemplateByTitleResponse" message="tns:getReportTemplateByTitleResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="ReportApiServiceSoapBinding" type="tns:ReportApi">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="updateReportTemplate">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateReportTemplate">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateReportTemplateResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="createReportTemplate">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="createReportTemplate">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="createReportTemplateResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="generateAdHocProjectReport">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="generateAdHocProjectReport">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="generateAdHocProjectReportResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getReportTemplateById">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getReportTemplateById">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getReportTemplateByIdResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="generateSpdxReport">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="generateSpdxReport">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="generateSpdxReportResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteReportTemplate">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteReportTemplate">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteReportTemplateResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDefaultReportTemplate">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getDefaultReportTemplate">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getDefaultReportTemplateResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="setDefaultReportTemplate">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="setDefaultReportTemplate">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="setDefaultReportTemplateResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="generateProjectReport">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="generateProjectReport">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="generateProjectReportResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="generateProjectReportFromDefaultTemplate">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="generateProjectReportFromDefaultTemplate">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="generateProjectReportFromDefaultTemplateResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="suggestReportTemplates">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="suggestReportTemplates">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="suggestReportTemplatesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="generateAuditHistoryReport">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="generateAuditHistoryReport">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="generateAuditHistoryReportResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getReportTemplateByTitle">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getReportTemplateByTitle">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getReportTemplateByTitleResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ReportApiService">
+    <wsdl:port name="ReportApiPort" binding="tns:ReportApiServiceSoapBinding">
+      <soap:address location="http://localhost:9090/ReportApiPort"/>
+    </wsdl:port>
+  </wsdl:service>
 </wsdl:definitions>
