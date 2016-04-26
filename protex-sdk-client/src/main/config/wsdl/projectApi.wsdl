@@ -84,6 +84,8 @@
 <xs:element name="getFilesOmittedFromRapidIdResponse" type="tns:getFilesOmittedFromRapidIdResponse"/>
 <xs:element name="getLicenseById" type="tns:getLicenseById"/>
 <xs:element name="getLicenseByIdResponse" type="tns:getLicenseByIdResponse"/>
+<xs:element name="getMinimumComponentRankCaptureOption" type="tns:getMinimumComponentRankCaptureOption"/>
+<xs:element name="getMinimumComponentRankCaptureOptionResponse" type="tns:getMinimumComponentRankCaptureOptionResponse"/>
 <xs:element name="getProjectById" type="tns:getProjectById"/>
 <xs:element name="getProjectByIdResponse" type="tns:getProjectByIdResponse"/>
 <xs:element name="getProjectByName" type="tns:getProjectByName"/>
@@ -152,6 +154,8 @@
 <xs:element name="updateCodeLabelOptionResponse" type="tns:updateCodeLabelOptionResponse"/>
 <xs:element name="updateFileDiscoveryPattern" type="tns:updateFileDiscoveryPattern"/>
 <xs:element name="updateFileDiscoveryPatternResponse" type="tns:updateFileDiscoveryPatternResponse"/>
+<xs:element name="updateMinimumComponentRankCaptureOption" type="tns:updateMinimumComponentRankCaptureOption"/>
+<xs:element name="updateMinimumComponentRankCaptureOptionResponse" type="tns:updateMinimumComponentRankCaptureOptionResponse"/>
 <xs:element name="updateProject" type="tns:updateProject"/>
 <xs:element name="updateProjectObligation" type="tns:updateProjectObligation"/>
 <xs:element name="updateProjectObligationResponse" type="tns:updateProjectObligationResponse"/>
@@ -266,6 +270,15 @@
 </xs:sequence>
 </xs:complexType>
 <xs:complexType name="resetFileDiscoveryPatternResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="updateMinimumComponentRankCaptureOption">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="xs:string"/>
+<xs:element minOccurs="0" name="arg1" type="common:forcibleIntegerOption"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="updateMinimumComponentRankCaptureOptionResponse">
 <xs:sequence/>
 </xs:complexType>
 <xs:complexType name="setOmitFromRapidId">
@@ -892,6 +905,16 @@
 <xs:complexType name="addProjectUserResponse">
 <xs:sequence/>
 </xs:complexType>
+<xs:complexType name="getMinimumComponentRankCaptureOption">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getMinimumComponentRankCaptureOptionResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="common:forcibleIntegerOption"/>
+</xs:sequence>
+</xs:complexType>
 <xs:complexType name="updateRapidIdentificationMode">
 <xs:sequence>
 <xs:element minOccurs="0" name="projectId" type="xs:string"/>
@@ -1226,6 +1249,12 @@
 </xs:extension>
 </xs:complexContent>
 </xs:complexType>
+<xs:complexType name="forcibleIntegerOption">
+<xs:sequence>
+<xs:element minOccurs="0" name="forced" type="xs:boolean"/>
+<xs:element minOccurs="0" name="option" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
 <xs:complexType name="stringSearchPattern">
 <xs:complexContent>
 <xs:extension base="tns:stringSearchPatternRequest">
@@ -1356,12 +1385,6 @@
 <xs:element minOccurs="0" name="stringSearchWildcardsOption" type="tns:forcibleBooleanOption"/>
 <xs:element minOccurs="0" name="stringSearchesOption" type="tns:forcibleBooleanOption"/>
 <xs:element minOccurs="0" name="uploadSourceCodeOption" type="tns:forcibleUploadSourceCodeOption"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="forcibleIntegerOption">
-<xs:sequence>
-<xs:element minOccurs="0" name="forced" type="xs:boolean"/>
-<xs:element minOccurs="0" name="option" type="xs:int"/>
 </xs:sequence>
 </xs:complexType>
 <xs:complexType name="forcibleDetectFileChangesOption">
@@ -1785,6 +1808,10 @@
     <wsdl:part name="parameters" element="tns:suggestComponentsResponse">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="getMinimumComponentRankCaptureOptionResponse">
+    <wsdl:part name="parameters" element="tns:getMinimumComponentRankCaptureOptionResponse">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="getAnalysisLogsResponse">
     <wsdl:part name="parameters" element="tns:getAnalysisLogsResponse">
     </wsdl:part>
@@ -2077,6 +2104,10 @@
     <wsdl:part name="SdkFault" element="ns1:SdkFault">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="updateMinimumComponentRankCaptureOptionResponse">
+    <wsdl:part name="parameters" element="tns:updateMinimumComponentRankCaptureOptionResponse">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="getRapidIdConfigurationAssociationsResponse">
     <wsdl:part name="parameters" element="tns:getRapidIdConfigurationAssociationsResponse">
     </wsdl:part>
@@ -2107,6 +2138,10 @@
   </wsdl:message>
   <wsdl:message name="createProjectFromTemplate">
     <wsdl:part name="parameters" element="tns:createProjectFromTemplate">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateMinimumComponentRankCaptureOption">
+    <wsdl:part name="parameters" element="tns:updateMinimumComponentRankCaptureOption">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="setOmitFromRapidId">
@@ -2309,6 +2344,10 @@
     <wsdl:part name="parameters" element="tns:addProjectUser">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="getMinimumComponentRankCaptureOption">
+    <wsdl:part name="parameters" element="tns:getMinimumComponentRankCaptureOption">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:portType name="ProjectApi">
     <wsdl:operation name="startAnalysis">
       <wsdl:input name="startAnalysis" message="tns:startAnalysis">
@@ -2362,6 +2401,14 @@
       <wsdl:input name="resetFileDiscoveryPattern" message="tns:resetFileDiscoveryPattern">
     </wsdl:input>
       <wsdl:output name="resetFileDiscoveryPatternResponse" message="tns:resetFileDiscoveryPatternResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateMinimumComponentRankCaptureOption">
+      <wsdl:input name="updateMinimumComponentRankCaptureOption" message="tns:updateMinimumComponentRankCaptureOption">
+    </wsdl:input>
+      <wsdl:output name="updateMinimumComponentRankCaptureOptionResponse" message="tns:updateMinimumComponentRankCaptureOptionResponse">
     </wsdl:output>
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
@@ -2830,6 +2877,14 @@
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="getMinimumComponentRankCaptureOption">
+      <wsdl:input name="getMinimumComponentRankCaptureOption" message="tns:getMinimumComponentRankCaptureOption">
+    </wsdl:input>
+      <wsdl:output name="getMinimumComponentRankCaptureOptionResponse" message="tns:getMinimumComponentRankCaptureOptionResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="updateRapidIdentificationMode">
       <wsdl:input name="updateRapidIdentificationMode" message="tns:updateRapidIdentificationMode">
     </wsdl:input>
@@ -2919,6 +2974,18 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="getRapidIdConfigurationByNameResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateMinimumComponentRankCaptureOption">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateMinimumComponentRankCaptureOption">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateMinimumComponentRankCaptureOptionResponse">
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="SdkFault">
@@ -3615,6 +3682,18 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="addProjectUserResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getMinimumComponentRankCaptureOption">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getMinimumComponentRankCaptureOption">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getMinimumComponentRankCaptureOptionResponse">
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="SdkFault">
