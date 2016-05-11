@@ -105,6 +105,22 @@
 </xs:restriction>
 </xs:simpleType>
 </xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:identification" version="1.0">
+<xs:simpleType name="identificationType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="DECLARATION"/>
+<xs:enumeration value="CODE_MATCH"/>
+<xs:enumeration value="STRING_SEARCH"/>
+<xs:enumeration value="DEPENDENCY"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="identificationMode">
+<xs:restriction base="xs:string">
+<xs:enumeration value="RAPID_ID"/>
+<xs:enumeration value="MANUAL"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:common" version="1.0">
 <xs:complexType name="componentKey">
 <xs:sequence>
@@ -156,10 +172,70 @@
 </xs:restriction>
 </xs:simpleType>
 </xs:schema>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bom="urn:protex.blackducksoftware.com:sdk:v7.0:bom" xmlns:codetree="urn:protex.blackducksoftware.com:sdk:v7.0:codetree" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:license="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:obligation="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:bom" elementFormDefault="unqualified" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:bom" version="1.0">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:codetree" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:codetree" version="1.0">
+<xs:complexType name="codeTreeNode">
+<xs:complexContent>
+<xs:extension base="tns:sourceNode">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="nodeCounts" nillable="true" type="tns:nodeCount"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="sourceNode">
+<xs:sequence>
+<xs:element minOccurs="0" name="name" type="xs:string"/>
+<xs:element minOccurs="0" name="nodeType" type="tns:codeTreeNodeType"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="nodeCount">
+<xs:sequence>
+<xs:element minOccurs="0" name="count" type="xs:long"/>
+<xs:element minOccurs="0" name="countType" type="tns:nodeCountType"/>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="nodeCountType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="VIOLATIONS"/>
+<xs:enumeration value="LICENSE_CONFLICTS"/>
+<xs:enumeration value="DECLARED"/>
+<xs:enumeration value="NO_ISSUES"/>
+<xs:enumeration value="PENDING_REVIEW"/>
+<xs:enumeration value="APPROVED"/>
+<xs:enumeration value="DISAPPROVED"/>
+<xs:enumeration value="CODE_MATCH_IDENTIFIED"/>
+<xs:enumeration value="DEPENDENCY_IDENTIFIED"/>
+<xs:enumeration value="STRING_SEARCH_IDENTIFIED"/>
+<xs:enumeration value="FILES"/>
+<xs:enumeration value="FOLDERS"/>
+<xs:enumeration value="DISCOVERIES"/>
+<xs:enumeration value="PENDING_ID_ALL"/>
+<xs:enumeration value="PENDING_ID_CODE_MATCH"/>
+<xs:enumeration value="PENDING_ID_STRING_SEARCH"/>
+<xs:enumeration value="PENDING_ID_DEPENDENCY"/>
+<xs:enumeration value="NO_DISCOVERIES"/>
+<xs:enumeration value="PENDING_ID_FILE_PATTERN"/>
+<xs:enumeration value="DISCOVERED_COMPONENTS"/>
+<xs:enumeration value="DISCOVERED_LICENSES"/>
+<xs:enumeration value="MANUALLY_IDENTIFIED_FILES"/>
+<xs:enumeration value="RAPID_IDENTIFIED_FILES"/>
+<xs:enumeration value="ANALYZED_FILE_BYTES"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="codeTreeNodeType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="FILE"/>
+<xs:enumeration value="EXPANDED_ARCHIVE"/>
+<xs:enumeration value="FOLDER"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:bom="urn:protex.blackducksoftware.com:sdk:v7.0:bom" xmlns:codetree="urn:protex.blackducksoftware.com:sdk:v7.0:codetree" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:license="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:identification" xmlns:obligation="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:bom" elementFormDefault="unqualified" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:bom" version="1.0">
 <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:common"/>
 <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:license"/>
 <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:obligation"/>
+<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:identification"/>
+<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:codetree"/>
 <xs:element name="addBomComponent" type="tns:addBomComponent"/>
 <xs:element name="addBomComponentResponse" type="tns:addBomComponentResponse"/>
 <xs:element name="getBomComponentChildren" type="tns:getBomComponentChildren"/>
@@ -184,6 +260,8 @@
 <xs:element name="getBomShippingCodeInfoResponse" type="tns:getBomShippingCodeInfoResponse"/>
 <xs:element name="getComponentComment" type="tns:getComponentComment"/>
 <xs:element name="getComponentCommentResponse" type="tns:getComponentCommentResponse"/>
+<xs:element name="getFilesIdentifiedTo" type="tns:getFilesIdentifiedTo"/>
+<xs:element name="getFilesIdentifiedToResponse" type="tns:getFilesIdentifiedToResponse"/>
 <xs:element name="getIdentifyBomUrl" type="tns:getIdentifyBomUrl"/>
 <xs:element name="getIdentifyBomUrlResponse" type="tns:getIdentifyBomUrlResponse"/>
 <xs:element name="getLastBomRefreshFinishDate" type="tns:getLastBomRefreshFinishDate"/>
@@ -490,6 +568,19 @@
 </xs:complexType>
 <xs:complexType name="addBomComponentResponse">
 <xs:sequence/>
+</xs:complexType>
+<xs:complexType name="getFilesIdentifiedTo">
+<xs:sequence>
+<xs:element minOccurs="0" name="projectId" type="xs:string"/>
+<xs:element minOccurs="0" name="componentKey" type="common:componentKey"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="includedIdentificationTypes" type="ns1:identificationType"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="includedIdentificationModes" type="ns1:identificationMode"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getFilesIdentifiedToResponse">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="codetree:codeTreeNode"/>
+</xs:sequence>
 </xs:complexType>
 <xs:complexType name="getBomComponentChildren">
 <xs:sequence>
@@ -798,6 +889,10 @@
     <wsdl:part name="parameters" element="tns:getRefreshBomProgress">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="getFilesIdentifiedToResponse">
+    <wsdl:part name="parameters" element="tns:getFilesIdentifiedToResponse">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="getBomComponentsForPath">
     <wsdl:part name="parameters" element="tns:getBomComponentsForPath">
     </wsdl:part>
@@ -824,6 +919,10 @@
   </wsdl:message>
   <wsdl:message name="getBomComponentsResponse">
     <wsdl:part name="parameters" element="tns:getBomComponentsResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getFilesIdentifiedTo">
+    <wsdl:part name="parameters" element="tns:getFilesIdentifiedTo">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="getBomComponentChildren">
@@ -983,6 +1082,14 @@
       <wsdl:input name="addBomComponent" message="tns:addBomComponent">
     </wsdl:input>
       <wsdl:output name="addBomComponentResponse" message="tns:addBomComponentResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getFilesIdentifiedTo">
+      <wsdl:input name="getFilesIdentifiedTo" message="tns:getFilesIdentifiedTo">
+    </wsdl:input>
+      <wsdl:output name="getFilesIdentifiedToResponse" message="tns:getFilesIdentifiedToResponse">
     </wsdl:output>
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
@@ -1228,6 +1335,18 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="addBomComponentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getFilesIdentifiedTo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getFilesIdentifiedTo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getFilesIdentifiedToResponse">
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="SdkFault">
