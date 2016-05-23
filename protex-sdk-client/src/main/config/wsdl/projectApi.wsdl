@@ -274,8 +274,8 @@
 </xs:complexType>
 <xs:complexType name="updateMinimumComponentRankCaptureOption">
 <xs:sequence>
-<xs:element minOccurs="0" name="arg0" type="xs:string"/>
-<xs:element minOccurs="0" name="arg1" type="common:forcibleIntegerOption"/>
+<xs:element minOccurs="0" name="projectId" type="xs:string"/>
+<xs:element minOccurs="0" name="minimumRanking" type="common:forcibleIntegerOption"/>
 </xs:sequence>
 </xs:complexType>
 <xs:complexType name="updateMinimumComponentRankCaptureOptionResponse">
@@ -907,7 +907,7 @@
 </xs:complexType>
 <xs:complexType name="getMinimumComponentRankCaptureOption">
 <xs:sequence>
-<xs:element minOccurs="0" name="arg0" type="xs:string"/>
+<xs:element minOccurs="0" name="projectId" type="xs:string"/>
 </xs:sequence>
 </xs:complexType>
 <xs:complexType name="getMinimumComponentRankCaptureOptionResponse">

@@ -234,7 +234,7 @@
 </xs:complexType>
 <xs:complexType name="updateMinimumComponentRankCaptureOption">
 <xs:sequence>
-<xs:element minOccurs="0" name="arg0" type="common:forcibleIntegerOption"/>
+<xs:element minOccurs="0" name="minimumRanking" type="common:forcibleIntegerOption"/>
 </xs:sequence>
 </xs:complexType>
 <xs:complexType name="updateMinimumComponentRankCaptureOptionResponse">
