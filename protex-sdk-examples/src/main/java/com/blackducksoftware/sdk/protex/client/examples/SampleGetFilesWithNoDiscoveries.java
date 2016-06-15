@@ -14,7 +14,6 @@ package com.blackducksoftware.sdk.protex.client.examples;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import com.blackducksoftware.sdk.fault.SdkFault;
@@ -24,6 +23,7 @@ import com.blackducksoftware.sdk.protex.project.codetree.CodeTreeNode;
 import com.blackducksoftware.sdk.protex.project.codetree.CodeTreeNodeRequest;
 import com.blackducksoftware.sdk.protex.project.codetree.CodeTreeNodeType;
 import com.blackducksoftware.sdk.protex.project.codetree.NodeCountType;
+import com.blackducksoftware.sdk.protex.util.CodeTreeNodeComparator;
 import com.blackducksoftware.sdk.protex.util.CodeTreeUtilities;
 
 /**
@@ -100,12 +100,7 @@ public class SampleGetFilesWithNoDiscoveries extends BDProtexSample {
             }
 
             if (codeTree != null) {
-                Collections.sort(codeTree, new Comparator<CodeTreeNode>() {
-                    @Override
-                    public int compare(CodeTreeNode node1, CodeTreeNode node2) {
-                        return node1.getName().compareTo(node2.getName());
-                    }
-                });
+                Collections.sort(codeTree, CodeTreeNodeComparator.getInstance());
 
                 String emptyPath = null;
 
