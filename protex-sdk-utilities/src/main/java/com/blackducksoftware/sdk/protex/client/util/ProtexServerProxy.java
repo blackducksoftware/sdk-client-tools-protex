@@ -348,7 +348,7 @@ public class ProtexServerProxy implements Closeable {
      *
      * @return The maximum number of elements allowed in returned lists
      */
-    public Long getMaximumChildElements() {
+    public long getMaximumChildElements() {
         return maximumChildElements;
     }
 
