@@ -19,7 +19,6 @@
 package com.blackducksoftware.sdk.protex.client.util;
 
 import java.io.Closeable;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.security.KeyStore;
@@ -279,16 +278,16 @@ public class ProtexServerProxy implements Closeable {
     }
 
     /**
-     * Gets the default timeout for all get*Api calls that don't specify their own
+     * Gets the default timeout for all API connections produced by get*Api calls that don't specify their own
      *
      * @return The timeout in milliseconds
      */
-    public Long getDefaultTimeout() {
+    public long getDefaultTimeout() {
         return defaultTimeout;
     }
 
     /**
-     * Sets the default timeout for all get*Api calls that don't specify their own
+     * Sets the default timeout for all API connections produced by get*Api calls that don't specify their own
      *
      * @param defaultTimeout
      *            The timeout in milliseconds
@@ -298,6 +297,8 @@ public class ProtexServerProxy implements Closeable {
     }
 
     /**
+     * Gets the cookies to apply to each HTTP request for all fresh API connections produced by get*Api() calls
+     *
      * @return Cookies to apply to each HTTP request
      */
     public Map<String, List<String>> getRequestCookies() {
@@ -305,6 +306,8 @@ public class ProtexServerProxy implements Closeable {
     }
 
     /**
+     * Sets the cookies to apply to each HTTP request for all fresh API connections produced by get*Api() calls
+     *
      * @param requestCookies
      *            Cookies to apply to each HTTP request
      */
@@ -317,6 +320,8 @@ public class ProtexServerProxy implements Closeable {
     }
 
     /**
+     * Gets the custom headers to apply to each HTTP request for all fresh API connections produced by get*Api() calls
+     *
      * @return Custom headers to apply to each HTTP request
      */
     public Map<String, List<String>> getRequestHeaders() {
@@ -324,6 +329,8 @@ public class ProtexServerProxy implements Closeable {
     }
 
     /**
+     * Sets the custom headers to apply to each HTTP request for all fresh API connections produced by get*Api() calls
+     *
      * @param requestHeaders
      *            Custom headers to apply to each HTTP request
      */
@@ -336,16 +343,18 @@ public class ProtexServerProxy implements Closeable {
     }
 
     /**
-     * Gets the maximum number of elements allowed in returned lists
+     * Gets the maximum number of elements allowed in returned lists for all fresh API connections produced by get*Api()
+     * calls
      *
-     * @return The timeout in milliseconds
+     * @return The maximum number of elements allowed in returned lists
      */
     public Long getMaximumChildElements() {
         return maximumChildElements;
     }
 
     /**
-     * Sets the maximum number of elements allowed in returned lists
+     * Sets the maximum number of elements allowed in returned lists for all fresh API connections produced by get*Api()
+     * calls
      *
      * @param maximumChildElements
      *            The maximum number of elements allowed in returned lists
@@ -380,18 +389,15 @@ public class ProtexServerProxy implements Closeable {
         } catch (SdkFault e) {
             if (ErrorCode.INVALID_CREDENTIALS.equals(e.getFaultInfo().getErrorCode())) {
                 throw new ServerAuthenticationException("Invalid credentials provided for '" + userName + "'", e);
-            } else {
-                // Eat these errors - we just want to know if the user exists and can talk to the server
-                logger.warn("Non-fatal error during user validation ({})", e.getMessage());
             }
+            // Eat these errors - we just want to know if the user exists and can talk to the server
         } catch (SOAPFaultException e) {
             throw new ServerAuthenticationException("Validating credentials for '" + userName + "' failed", e);
         }
     }
 
     /**
-     * Resets all cached API connections. Any subsequent calls to get*Api() will create a fresh connection
-     * to the server
+     * Resets all cached API connections. Any subsequent calls to get*Api() will create a fresh connection to the server
      *
      * <p>
      * This call may be used to attempt to handle {@code TimeoutException} occurrences - call this method and use
@@ -401,6 +407,8 @@ public class ProtexServerProxy implements Closeable {
     public void resetApiConnections() {
         licenseApi = null;
         localComponentApi = null;
+        componentApi = null;
+        customComponentManagementApi = null;
         obligationApi = null;
         policyApi = null;
         externalIdApi = null;
@@ -426,25 +434,25 @@ public class ProtexServerProxy implements Closeable {
     /* === APIs === */
 
     /**
-     * Get a reference the license API entry point
+     * Gets a license API entry point
      *
      * <p>
      * Uses the configured proxy default timeout for server communication
      * </p>
      *
-     * @return The license API entry point for SDK calls to the server
+     * @return A license API entry point for SDK calls to the server
      */
     public LicenseApi getLicenseApi() {
-        return this.getLicenseApi(defaultTimeout);
+        return getLicenseApi(defaultTimeout);
     }
 
     /**
-     * Get a reference the license API entry point
+     * Gets a license API entry point
      *
      * @param timeout
-     *            The timeout to use when communicating with the server. Applies only to
-     *            this call (does not change proxy default timeout)
-     * @return The license API entry point for SDK calls to the server
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return A license API entry point for SDK calls to the server
      */
     public LicenseApi getLicenseApi(long timeout) {
         licenseApi = getApiInstance(licenseApi, ProtexApi.LICENSE, timeout);
@@ -452,25 +460,25 @@ public class ProtexServerProxy implements Closeable {
     }
 
     /**
-     * Get a reference the component API entry point
+     * Gets a component API entry point
      *
      * <p>
      * Uses the configured proxy default timeout for server communication
      * </p>
      *
-     * @return The custom component API entry point for SDK calls to the server
+     * @return A component API entry point for SDK calls to the server
      */
     public ComponentApi getComponentApi() {
         return getComponentApi(defaultTimeout);
     }
 
     /**
-     * Get a reference the component API entry point
+     * Gets a component API entry point
      *
      * @param timeout
-     *            The timeout to use when communicating with the server. Applies only to
-     *            this call (does not change proxy default timeout)
-     * @return The custom component API entry point for SDK calls to the server
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return A component API entry point for SDK calls to the server
      */
     public ComponentApi getComponentApi(long timeout) {
         componentApi = getApiInstance(componentApi, ProtexApi.COMPONENT, timeout);
@@ -478,25 +486,25 @@ public class ProtexServerProxy implements Closeable {
     }
 
     /**
-     * Get a reference the custom component API entry point
+     * Gets a custom component management API entry point
      *
      * <p>
      * Uses the configured proxy default timeout for server communication
      * </p>
      *
-     * @return The custom component API entry point for SDK calls to the server
+     * @return A custom component management API entry point for SDK calls to the server
      */
     public CustomComponentManagementApi getCustomComponentManagementApi() {
         return getCustomComponentManagementApi(defaultTimeout);
     }
 
     /**
-     * Get a reference the custom component API entry point
+     * Gets a custom component management API entry point
      *
      * @param timeout
-     *            The timeout to use when communicating with the server. Applies only to
-     *            this call (does not change proxy default timeout)
-     * @return The custom component API entry point for SDK calls to the server
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return A custom component management API entry point for SDK calls to the server
      */
     public CustomComponentManagementApi getCustomComponentManagementApi(long timeout) {
         customComponentManagementApi = getApiInstance(customComponentManagementApi, ProtexApi.CUSTOM_COMPONENT_MANAGEMENT, timeout);
@@ -504,51 +512,51 @@ public class ProtexServerProxy implements Closeable {
     }
 
     /**
-     * Get a reference the local component API entry point
+     * Gets a local component API entry point
      *
      * <p>
      * Uses the configured proxy default timeout for server communication
      * </p>
      *
-     * @return The local component API entry point for SDK calls to the server
+     * @return A local component API entry point for SDK calls to the server
      */
     public LocalComponentApi getLocalComponentApi() {
         return getLocalComponentApi(defaultTimeout);
     }
 
     /**
-     * Get a reference the local component API entry point
+     * Gets a local component API entry point
      *
      * @param timeout
-     *            The timeout to use when communicating with the server. Applies only to
-     *            this call (does not change proxy default timeout)
-     * @return The local component API entry point for SDK calls to the server
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return A local component API entry point for SDK calls to the server
      */
-    public LocalComponentApi getLocalComponentApi(Long timeout) {
+    public LocalComponentApi getLocalComponentApi(long timeout) {
         localComponentApi = getApiInstance(localComponentApi, ProtexApi.LOCAL_COMPONENT, timeout);
         return localComponentApi;
     }
 
     /**
-     * Get a reference the obligation API entry point
+     * Gets an obligation API entry point
      *
      * <p>
      * Uses the configured proxy default timeout for server communication
      * </p>
      *
-     * @return The obligation API entry point for SDK calls to the server
+     * @return An obligation API entry point for SDK calls to the server
      */
     public ObligationApi getObligationApi() {
         return getObligationApi(defaultTimeout);
     }
 
     /**
-     * Get a reference the obligation API entry point
+     * Gets an obligation API entry point
      *
      * @param timeout
-     *            The timeout to use when communicating with the server. Applies only to
-     *            this call (does not change proxy default timeout)
-     * @return The obligation API entry point for SDK calls to the server
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return An obligation API entry point for SDK calls to the server
      */
     public ObligationApi getObligationApi(long timeout) {
         obligationApi = getApiInstance(obligationApi, ProtexApi.OBLIGATION, timeout);
@@ -556,25 +564,25 @@ public class ProtexServerProxy implements Closeable {
     }
 
     /**
-     * Get a reference the policy API entry point
+     * Gets a policy API entry point
      *
      * <p>
      * Uses the configured proxy default timeout for server communication
      * </p>
      *
-     * @return The policy API entry point for SDK calls to the server
+     * @return A policy API entry point for SDK calls to the server
      */
     public PolicyApi getPolicyApi() {
         return getPolicyApi(defaultTimeout);
     }
 
     /**
-     * Get a reference the policy API entry point
+     * Gets a policy API entry point
      *
      * @param timeout
-     *            The timeout to use when communicating with the server. Applies only to
-     *            this call (does not change proxy default timeout)
-     * @return The policy API entry point for SDK calls to the server
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return A policy API entry point for SDK calls to the server
      */
     public PolicyApi getPolicyApi(long timeout) {
         policyApi = getApiInstance(policyApi, ProtexApi.POLICY, timeout);
@@ -582,25 +590,25 @@ public class ProtexServerProxy implements Closeable {
     }
 
     /**
-     * Get a reference the external ID API entry point
+     * Gets an external ID API entry point
      *
      * <p>
      * Uses the configured proxy default timeout for server communication
      * </p>
      *
-     * @return The external ID API entry point for SDK calls to the server
+     * @return An external ID API entry point for SDK calls to the server
      */
     public ExternalIdApi getExternalIdApi() {
         return getExternalIdApi(defaultTimeout);
     }
 
     /**
-     * Get a reference the external ID API entry point
+     * Gets an external ID API entry point
      *
      * @param timeout
-     *            The timeout to use when communicating with the server. Applies only to
-     *            this call (does not change proxy default timeout)
-     * @return The license API entry point for SDK calls to the server
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return An external ID API entry point for SDK calls to the server
      */
     public ExternalIdApi getExternalIdApi(long timeout) {
         externalIdApi = getApiInstance(externalIdApi, ProtexApi.EXTERNAL_ID, timeout);
@@ -608,25 +616,25 @@ public class ProtexServerProxy implements Closeable {
     }
 
     /**
-     * Get a reference the file comparison API entry point
+     * Gets a file comparison API entry point
      *
      * <p>
      * Uses the configured proxy default timeout for server communication
      * </p>
      *
-     * @return The file comparison API entry point for SDK calls to the server
+     * @return A file comparison API entry point for SDK calls to the server
      */
     public FileComparisonApi getFileComparisonApi() {
         return getFileComparisonApi(defaultTimeout);
     }
 
     /**
-     * Get a reference the file comparison API entry point
+     * Gets a file comparison API entry point
      *
      * @param timeout
-     *            The timeout to use when communicating with the server. Applies only to
-     *            this call (does not change proxy default timeout)
-     * @return The file comparison API entry point for SDK calls to the server
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return A file comparison API entry point for SDK calls to the server
      */
     public FileComparisonApi getFileComparisonApi(long timeout) {
         fileComparisonApi = getApiInstance(fileComparisonApi, ProtexApi.FILE_COMPARISON, timeout);
@@ -634,25 +642,25 @@ public class ProtexServerProxy implements Closeable {
     }
 
     /**
-     * Get a reference the project API entry point
+     * Gets a project API entry point
      *
      * <p>
      * Uses the configured proxy default timeout for server communication
      * </p>
      *
-     * @return The project API entry point for SDK calls to the server
+     * @return A project API entry point for SDK calls to the server
      */
     public ProjectApi getProjectApi() {
         return getProjectApi(defaultTimeout);
     }
 
     /**
-     * Get a reference the project API entry point
+     * Gets a project API entry point
      *
      * @param timeout
-     *            The timeout to use when communicating with the server. Applies only to
-     *            this call (does not change proxy default timeout)
-     * @return The project API entry point for SDK calls to the server
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return A project API entry point for SDK calls to the server
      */
     public ProjectApi getProjectApi(long timeout) {
         projectApi = getApiInstance(projectApi, ProtexApi.PROJECT, timeout);
@@ -660,19 +668,25 @@ public class ProtexServerProxy implements Closeable {
     }
 
     /**
-     * @return The template API entry point for SDK calls to the server
+     * Gets a template API entry point
+     *
+     * <p>
+     * Uses the configured proxy default timeout for server communication
+     * </p>
+     *
+     * @return A template API entry point for SDK calls to the server
      */
     public TemplateApi getTemplateApi() {
         return getTemplateApi(defaultTimeout);
     }
 
     /**
-     * Get a reference to the project template API entry point
+     * Gets a template API entry point
      *
      * @param timeout
-     *            The timeout to use when communicating with the server. Applies only to
-     *            this call (does not change proxy default timeout)
-     * @return The project template API entry point for SDK calls to the server
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return A template API entry point for SDK calls to the server
      */
     public TemplateApi getTemplateApi(long timeout) {
         templateApi = getApiInstance(templateApi, ProtexApi.TEMPLATE, timeout);
@@ -680,25 +694,51 @@ public class ProtexServerProxy implements Closeable {
     }
 
     /**
-     * Get a reference the BOM API entry point
+     * Gets a code tree API entry point
      *
      * <p>
      * Uses the configured proxy default timeout for server communication
      * </p>
      *
-     * @return The BOM API entry point for SDK calls to the server
+     * @return A code tree API entry point for SDK calls to the server
+     */
+    public CodeTreeApi getCodeTreeApi() {
+        return getCodeTreeApi(defaultTimeout);
+    }
+
+    /**
+     * Gets a code tree API entry point
+     *
+     * @param timeout
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return A code tree API entry point for SDK calls to the server
+     */
+    public CodeTreeApi getCodeTreeApi(long timeout) {
+        codeTreeApi = getApiInstance(codeTreeApi, ProtexApi.CODETREE, timeout);
+        return codeTreeApi;
+    }
+
+    /**
+     * Gets a BOM API entry point
+     *
+     * <p>
+     * Uses the configured proxy default timeout for server communication
+     * </p>
+     *
+     * @return A BOM API entry point for SDK calls to the server
      */
     public BomApi getBomApi() {
         return getBomApi(defaultTimeout);
     }
 
     /**
-     * Get a reference the BOM API entry point
+     * Gets a BOM API entry point
      *
      * @param timeout
-     *            The timeout to use when communicating with the server. Applies only to
-     *            this call (does not change proxy default timeout)
-     * @return The BOM API entry point for SDK calls to the server
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return A BOM API entry point for SDK calls to the server
      */
     public BomApi getBomApi(long timeout) {
         bomApi = getApiInstance(bomApi, ProtexApi.BOM, timeout);
@@ -706,179 +746,157 @@ public class ProtexServerProxy implements Closeable {
     }
 
     /**
-     * Get a reference the code tree API entry point
+     * Gets a discovery API entry point
      *
      * <p>
      * Uses the configured proxy default timeout for server communication
      * </p>
      *
-     * @return The code tree API entry point for SDK calls to the server
-     */
-    public CodeTreeApi getCodeTreeApi() {
-        return getCodeTreeApi(defaultTimeout);
-    }
-
-    /**
-     * Get a reference the code tree API entry point
-     *
-     * @param timeout
-     *            The timeout to use when communicating with the server. Applies only to
-     *            this call (does not change proxy default timeout)
-     * @return The code tree API entry point for SDK calls to the server
-     */
-    public CodeTreeApi getCodeTreeApi(Long timeout) {
-        codeTreeApi = getApiInstance(codeTreeApi, ProtexApi.CODETREE, timeout);
-        return codeTreeApi;
-    }
-
-    /**
-     * Get a reference the discovery API entry point
-     *
-     * <p>
-     * Uses the configured proxy default timeout for server communication
-     * </p>
-     *
-     * @return The discovery API entry point for SDK calls to the server
+     * @return A discovery API entry point for SDK calls to the server
      */
     public DiscoveryApi getDiscoveryApi() {
         return getDiscoveryApi(defaultTimeout);
     }
 
     /**
-     * Get a reference the discovery API entry point
+     * Gets a discovery API entry point
      *
      * @param timeout
-     *            The timeout to use when communicating with the server. Applies only to
-     *            this call (does not change proxy default timeout)
-     * @return The discovery API entry point for SDK calls to the server
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return A discovery API entry point for SDK calls to the server
      */
-    public DiscoveryApi getDiscoveryApi(Long timeout) {
+    public DiscoveryApi getDiscoveryApi(long timeout) {
         discoveryApi = getApiInstance(discoveryApi, ProtexApi.DISCOVERY, timeout);
         return discoveryApi;
     }
 
     /**
-     * Get a reference the identification API entry point
+     * Gets an identification API entry point
      *
      * <p>
      * Uses the configured proxy default timeout for server communication
      * </p>
      *
-     * @return The identification API entry point for SDK calls to the server
+     * @return An identification API entry point for SDK calls to the server
      */
     public IdentificationApi getIdentificationApi() {
         return getIdentificationApi(defaultTimeout);
     }
 
     /**
-     * Get a reference the identification API entry point
+     * Gets an identification API entry point
      *
      * @param timeout
-     *            The timeout to use when communicating with the server. Applies only to
-     *            this call (does not change proxy default timeout)
-     * @return The identification API entry point for SDK calls to the server
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return An identification API entry point for SDK calls to the server
      */
-    public IdentificationApi getIdentificationApi(Long timeout) {
+    public IdentificationApi getIdentificationApi(long timeout) {
         identificationApi = getApiInstance(identificationApi, ProtexApi.IDENTIFICATION, timeout);
         return identificationApi;
     }
 
     /**
-     * Get a reference the report API entry point
+     * Gets a report API entry point
      *
      * <p>
      * Uses the configured proxy default timeout for server communication
      * </p>
      *
-     * @return The report API entry point for SDK calls to the server
+     * @return A report API entry point for SDK calls to the server
      */
     public ReportApi getReportApi() {
         return getReportApi(defaultTimeout);
     }
 
     /**
-     * Get a reference the report API entry point
+     * Gets a report API entry point
      *
      * @param timeout
-     *            The timeout to use when communicating with the server. Applies only to
-     *            this call (does not change proxy default timeout)
-     * @return The report API entry point for SDK calls to the server
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return A report API entry point for SDK calls to the server
      */
-    public ReportApi getReportApi(Long timeout) {
+    public ReportApi getReportApi(long timeout) {
         reportApi = getApiInstance(reportApi, ProtexApi.REPORT, timeout);
         return reportApi;
     }
 
     /**
-     * Get a reference the role API entry point
+     * Gets a role API entry point
      *
      * <p>
      * Uses the configured proxy default timeout for server communication
      * </p>
      *
-     * @return The role API entry point for SDK calls to the server
+     * @return A role API entry point for SDK calls to the server
      */
     public RoleApi getRoleApi() {
         return getRoleApi(defaultTimeout);
     }
 
     /**
-     * Get a reference the role API entry point
+     * Gets a role API entry point
      *
      * @param timeout
-     *            The timeout to use when communicating with the server. Applies only to
-     *            this call (does not change proxy default timeout)
-     * @return The role API entry point for SDK calls to the server
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return A role API entry point for SDK calls to the server
      */
-    public RoleApi getRoleApi(Long timeout) {
+    public RoleApi getRoleApi(long timeout) {
         roleApi = getApiInstance(roleApi, ProtexApi.ROLE, timeout);
         return roleApi;
     }
 
     /**
-     * Get a reference the user API entry point
+     * Gets an user API entry point
      *
      * <p>
      * Uses the configured proxy default timeout for server communication
      * </p>
      *
-     * @return The user API entry point for SDK calls to the server
+     * @return An user API entry point for SDK calls to the server
      */
     public UserApi getUserApi() {
         return getUserApi(defaultTimeout);
     }
 
     /**
-     * Get a reference the user API entry point
+     * Gets an user API entry point
      *
      * @param timeout
-     *            The timeout to use when communicating with the server. Applies only to
-     *            this call (does not change proxy default timeout)
-     * @return The user API entry point for SDK calls to the server
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return An user API entry point for SDK calls to the server
      */
-    public UserApi getUserApi(Long timeout) {
+    public UserApi getUserApi(long timeout) {
         userApi = getApiInstance(userApi, ProtexApi.USER, timeout);
         return userApi;
     }
 
     /**
-     * Get a reference to the synchronization API entry point
+     * Gets a synchronization API entry point
      *
-     * @return The synchronization API entry point for SDK calls to the server
+     * <p>
+     * Uses the configured proxy default timeout for server communication
+     * </p>
+     *
+     * @return A synchronization API entry point for SDK calls to the server
      */
     public SynchronizationApi getSynchronizationApi() {
         return getSynchronizationApi(defaultTimeout);
     }
 
     /**
-     * Get a reference to the synchronization API entry point
+     * Gets a synchronization API entry point
      *
      * @param timeout
-     *            The timeout to use when communicating with the server. Applies only to
-     *            this call (does not change proxy default timeout)
-     * @return The synchronization API entry point for SDK calls to the server
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return A synchronization API entry point for SDK calls to the server
      */
-    public SynchronizationApi getSynchronizationApi(Long timeout) {
+    public SynchronizationApi getSynchronizationApi(long timeout) {
         synchronizationApi = getApiInstance(synchronizationApi, ProtexApi.SYNCHRONIZATION, timeout);
         return synchronizationApi;
     }
@@ -955,10 +973,9 @@ public class ProtexServerProxy implements Closeable {
      * @param userName
      *            The user name to login to the Protex server, for example: test@example.com
      * @param password
-     *            The users password
+     *            The user's password
      * @param timeout
-     *            Optional HTTP timeout in milliseconds, if {@link #INDEFINITE_TIMEOUT}, there is
-     *            no timeout
+     *            Optional HTTP timeout in milliseconds, if {@link #INDEFINITE_TIMEOUT}, there is no timeout
      * @deprecated use {@link #instrumentService(Object, CallbackHandler, long)} instead
      */
     @Deprecated
@@ -974,10 +991,9 @@ public class ProtexServerProxy implements Closeable {
      * @param callbackHandler
      *            Callback which allows retrieval of authentication information
      * @param timeout
-     *            Optional HTTP timeout in milliseconds, if {@link #INDEFINITE_TIMEOUT}, there is
-     *            no timeout
+     *            Optional HTTP timeout in milliseconds, if {@link #INDEFINITE_TIMEOUT}, there is no timeout
      */
-    protected void instrumentService(Object serviceApi, CallbackHandler callbackHandler, long timeout) {
+    protected void instrumentService(Object serviceApi, CallbackHandler callbackHandler, long timeout) throws ServerConnectException {
         logger.debug("Instrument service: {}", serviceApi.toString());
 
         try {
@@ -1006,9 +1022,7 @@ public class ProtexServerProxy implements Closeable {
                 httpClientPolicy.setAutoRedirect(true);
             }
         } catch (Exception e) {
-            // Not the best practice, but the exception can be handled by the client - better to not eat it. None of the
-            // anticipated exceptions should occur on a properly set up system
-            throw new RuntimeException(e);
+            throw new ServerConnectException("Connection to server \"" + serverUrl + "\" failed: " + e.getMessage(), e);
         }
     }
 
@@ -1036,6 +1050,7 @@ public class ProtexServerProxy implements Closeable {
      *            The timeout to configure the connection with
      * @return An instance of the API requested
      */
+    @SuppressWarnings("unchecked")
     private <T> T getApiInstance(T targetApi, ProtexApi api, long timeout) {
         if (targetApi == null) {
             targetApi = (T) getPortFromUrl(api.getApiClass(), serverUrl + api.getServiceStub());
@@ -1059,7 +1074,7 @@ public class ProtexServerProxy implements Closeable {
      *            The object representing the service API port
      * @return The timeout in milliseconds for the provided API port
      */
-    private Long getTimeout(Object serviceApi) {
+    protected long getTimeout(Object serviceApi) {
         org.apache.cxf.endpoint.Client client = org.apache.cxf.frontend.ClientProxy.getClient(serviceApi);
         /* get timeout */
         HTTPConduit http = (HTTPConduit) client.getConduit();
@@ -1077,7 +1092,7 @@ public class ProtexServerProxy implements Closeable {
      *            The timeout in milliseconds to configure the server API port with
      *
      */
-    private void setTimeout(Object serviceApi, Long timeout) {
+    protected void setTimeout(Object serviceApi, long timeout) {
         logger.debug("Set timeout for service: {} ({}ms)", serviceApi.toString(), timeout);
 
         org.apache.cxf.endpoint.Client client = org.apache.cxf.frontend.ClientProxy.getClient(serviceApi);
@@ -1085,8 +1100,8 @@ public class ProtexServerProxy implements Closeable {
         HTTPConduit http = (HTTPConduit) client.getConduit();
 
         HTTPClientPolicy httpClientPolicy = new HTTPClientPolicy();
-        httpClientPolicy.setConnectionTimeout(timeout.longValue());
-        httpClientPolicy.setReceiveTimeout(timeout.longValue());
+        httpClientPolicy.setConnectionTimeout(timeout);
+        httpClientPolicy.setReceiveTimeout(timeout);
 
         http.setClient(httpClientPolicy);
     }
@@ -1094,10 +1109,11 @@ public class ProtexServerProxy implements Closeable {
     /**
      * Applies configured cookies values to a client
      *
-     * @param http
+     * @param httpClientPolicy
      *            HTTP conduit to be used by CXF
+     * @return the updated client
      */
-    private HTTPClientPolicy applyRequestCookies(HTTPClientPolicy httpClientPolicy) {
+    protected HTTPClientPolicy applyRequestCookies(HTTPClientPolicy httpClientPolicy) {
         if (!requestCookies.isEmpty()) {
             StringBuilder cookieBuilder = new StringBuilder();
 
@@ -1128,7 +1144,7 @@ public class ProtexServerProxy implements Closeable {
      *            Client which will handle HTTP communications
      * @return The provided client
      */
-    private org.apache.cxf.endpoint.Client applyRequestHeaders(org.apache.cxf.endpoint.Client client) {
+    protected org.apache.cxf.endpoint.Client applyRequestHeaders(org.apache.cxf.endpoint.Client client) {
         if (!requestHeaders.isEmpty() && client != null && client.getRequestContext() != null) {
             client.getRequestContext().put(Message.PROTOCOL_HEADERS, requestHeaders);
 
@@ -1147,7 +1163,7 @@ public class ProtexServerProxy implements Closeable {
      * @throws Exception
      *             If there is an error finding or applying key/trust store data
      */
-    private HTTPConduit applyCertificates(HTTPConduit http) throws Exception {
+    protected HTTPConduit applyCertificates(HTTPConduit http) throws Exception {
         StoreParameters trustStoreParams = StoreParameters.getTrustStoreParameters();
         StoreParameters keyStoreParams = StoreParameters.getKeyStoreParameters();
 
@@ -1201,7 +1217,7 @@ public class ProtexServerProxy implements Closeable {
      *            The URL which corresponds to the communication point for the port object
      * @return An instance of the port object mapped to the specified class
      */
-    private <T> Object getPortFromUrl(Class<T> serviceClass, String serviceUrl) {
+    private static <T> Object getPortFromUrl(Class<T> serviceClass, String serviceUrl) {
         JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
         factory.setServiceClass(serviceClass);
         factory.setAddress(serviceUrl);
@@ -1235,7 +1251,7 @@ public class ProtexServerProxy implements Closeable {
         USER("user", UserApi.class),
         SYNCHRONIZATION("synchronization", SynchronizationApi.class), ;
 
-        /** The URL which references the WSDL file on a protex server for the API */
+        /** The URL which references the WSDL file on a Protex server for the API */
         private final String serviceStub;
 
         /** The class which the target URL maps to for the API */
@@ -1243,7 +1259,7 @@ public class ProtexServerProxy implements Closeable {
 
         /**
          * @param apiStub
-         *            The URL which references the WSDL file on a protex server for the API
+         *            The URL which references the WSDL file on a Protex server for the API
          * @param apiClass
          *            The class which the target URL maps to for the API
          */
@@ -1253,7 +1269,7 @@ public class ProtexServerProxy implements Closeable {
         }
 
         /**
-         * @return The URL which references the WSDL file on a protex server for the API
+         * @return The URL which references the WSDL file on a Protex server for the API
          */
         public String getServiceStub() {
             return serviceStub;
@@ -1307,8 +1323,9 @@ public class ProtexServerProxy implements Closeable {
             KeyStore store = null;
             if (isCustomLocation()) {
                 store = KeyStore.getInstance(storeType);
-                File storeFile = new File(storeLocation);
-                store.load(new FileInputStream(storeFile), storePassword);
+                FileInputStream storeFileStream = new FileInputStream(storeLocation);
+                store.load(storeFileStream, storePassword);
+                storeFileStream.close();
             }
 
             return store;
