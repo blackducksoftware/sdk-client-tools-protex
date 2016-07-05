@@ -1,6 +1,7 @@
 package com.blackducksoftware.sdk.protex.client.examples.report;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -10,14 +11,15 @@ import com.blackducksoftware.sdk.protex.client.examples.BDProtexSample;
 import com.blackducksoftware.sdk.protex.client.util.ProtexServerProxy;
 import com.blackducksoftware.sdk.protex.common.ComponentInfo;
 import com.blackducksoftware.sdk.protex.common.ComponentKey;
+import com.blackducksoftware.sdk.protex.common.UsageLevel;
 import com.blackducksoftware.sdk.protex.project.ProjectApi;
 import com.blackducksoftware.sdk.protex.project.codetree.CharEncoding;
 import com.blackducksoftware.sdk.protex.project.codetree.CodeTreeApi;
 import com.blackducksoftware.sdk.protex.project.codetree.CodeTreeNode;
 import com.blackducksoftware.sdk.protex.project.codetree.CodeTreeNodeRequest;
-import com.blackducksoftware.sdk.protex.project.codetree.CodeTreeNodeType;
 import com.blackducksoftware.sdk.protex.project.codetree.SourceFileInfoNode;
 import com.blackducksoftware.sdk.protex.project.codetree.identification.CodeMatchIdentification;
+import com.blackducksoftware.sdk.protex.project.codetree.identification.CodeMatchIdentificationDirective;
 import com.blackducksoftware.sdk.protex.project.codetree.identification.CodeTreeIdentificationInfo;
 import com.blackducksoftware.sdk.protex.project.codetree.identification.DeclaredIdentification;
 import com.blackducksoftware.sdk.protex.project.codetree.identification.DependencyIdentification;
@@ -26,13 +28,14 @@ import com.blackducksoftware.sdk.protex.project.codetree.identification.Identifi
 import com.blackducksoftware.sdk.protex.project.codetree.identification.IdentificationType;
 import com.blackducksoftware.sdk.protex.project.codetree.identification.IdentifiedStringSearchMatchLocation;
 import com.blackducksoftware.sdk.protex.project.codetree.identification.StringSearchIdentification;
+import com.blackducksoftware.sdk.protex.util.CodeTreeNodeComparator;
 import com.blackducksoftware.sdk.protex.util.CodeTreeUtilities;
 
 public class SampleReportDataIdentifiedFiles extends BDProtexSample {
 
     private static final String ROOT = "/";
 
-    private static Map<ComponentKey, ComponentInfo> componentInfos = new HashMap<ComponentKey, ComponentInfo>();
+    private static Map<String, ComponentInfo> componentInfos = new HashMap<String, ComponentInfo>();
 
     private static ProjectApi projectApi = null;
 
@@ -54,8 +57,6 @@ public class SampleReportDataIdentifiedFiles extends BDProtexSample {
 
         outputUsageDetails(className, parameters, paramDescriptions);
     }
-
-
 
     public static void main(String[] args) throws Exception {
         // check and save parameters
@@ -86,132 +87,100 @@ public class SampleReportDataIdentifiedFiles extends BDProtexSample {
                 throw e;
             }
 
-            // Call the Api
-            final String rowFormat = "%1$-16s | %2$-14s | %3$-80s | %4$10s | %5$11s | %6$11s | "
-                    + "%7$-20s | %8$-15s | %9$-20s | %10$-20s | %11$4s%% | %12$-80s | %13$12s | %14$25s | %15$20s";
-            System.out.println("");
-            System.out.println(String.format(rowFormat, "Resolution Type", "Discovery Type", "File / Folder", "Size",
-                    "File Line", "Total Lines", "Component", "Version", "License", "Usage", "", "Matched File",
-                    "Matched File Line", "Comment", "Search"));
+            CodeTreeNodeRequest codeTreeParameters = new CodeTreeNodeRequest();
+            codeTreeParameters.getIncludedNodeTypes().addAll(CodeTreeUtilities.ALL_CODE_TREE_NODE_TYPES);
+            codeTreeParameters.setDepth(CodeTreeUtilities.INFINITE_DEPTH);
+            codeTreeParameters.setIncludeParentNode(false);
 
-            try {
-                CodeTreeWorker myWorker = new CodeTreeWorker() {
-                    @Override
-                    public void doWork(String projectId, String parentPath, List<CodeTreeNode> thisLevel) throws SdkFault {
-                        // do the work here
-                        if (thisLevel.size() == 0) {
-                            return;
-                        }
-                        List<CodeTreeNode> fileNodes = new ArrayList<CodeTreeNode>();
+            List<CodeTreeNode> fileNodes = codeTreeApi.getCodeTreeNodes(projectId, ROOT, codeTreeParameters);
+            Collections.sort(fileNodes, CodeTreeNodeComparator.getInstance());
 
-                        for (CodeTreeNode node : thisLevel) {
-                            if (node.getNodeType() == CodeTreeNodeType.FILE) {
-                                fileNodes.add(node);
-                            }
-                        }
-                        if (fileNodes.size() == 0) {
-                            // System.out.println("CodeTree for '" + thisLevel.getParentPath()
-                            // + "' does not contain any file nodes");
-                            return;
-                        }
-                        List<CodeTreeIdentificationInfo> idInfos = identificationApi.getEffectiveIdentifications(projectId, fileNodes);
-                        List<SourceFileInfoNode> fileInfos = codeTreeApi.getFileInfo(projectId, parentPath, -1, true, CharEncoding.NONE);
+            List<CodeTreeIdentificationInfo> idInfos = identificationApi.getEffectiveIdentifications(projectId, fileNodes);
+            List<SourceFileInfoNode> fileInfos = codeTreeApi.getFileInfo(projectId, ROOT, CodeTreeUtilities.INFINITE_DEPTH, true, CharEncoding.NONE);
 
-                        Map<String, SourceFileInfoNode> fileInfoMap = new HashMap<String, SourceFileInfoNode>();
+            Map<String, SourceFileInfoNode> fileInfoMap = new HashMap<String, SourceFileInfoNode>();
 
-                        for (SourceFileInfoNode fileInfo : fileInfos) {
-                            fileInfoMap.put(fileInfo.getName(), fileInfo);
-                        }
-
-                        for (CodeTreeIdentificationInfo idInfo : idInfos) {
-                            String filePath = idInfo.getName();
-                            SourceFileInfoNode thisNodeFileInfo = fileInfoMap.get(filePath);
-                            for (Identification id : idInfo.getIdentifications()) {
-                                ComponentInfo componentInfo = getComponentInfo(projectId, id.getIdentifiedComponentKey());
-                                String versionName = (componentInfo.getVersionName() != null ? componentInfo.getVersionName() : "");
-
-                                if (IdentificationType.CODE_MATCH.equals(id.getType())) {
-                                    CodeMatchIdentification cmId = (CodeMatchIdentification) id;
-                                    System.out.println(String.format(rowFormat, "", id.getType(), filePath,
-                                            thisNodeFileInfo.getLength(),
-                                            cmId.getFirstLine(), "<?>",
-                                            componentInfo.getComponentName(),
-                                            versionName,
-                                            id.getIdentifiedLicenseInfo() == null ? "" : id.getIdentifiedLicenseInfo()
-                                                    .getName(),
-                                                    id.getIdentifiedUsageLevel(),
-                                                    cmId.getMatchRatioAsPercent(), cmId.getComponentFilePath(),
-                                                    "Matched File Line", "Comment",
-                                            ""));
-                                } else if (IdentificationType.STRING_SEARCH.equals(id.getType())) {
-                                    StringSearchIdentification ssId = (StringSearchIdentification) id;
-                                    StringBuilder fileLines = new StringBuilder();
-                                    StringBuilder comments = new StringBuilder();
-
-                                    for (IdentifiedStringSearchMatchLocation hit : ssId.getMatchLocations()) {
-                                        if (fileLines.length() > 0) {
-                                            fileLines.append(',');
-                                        }
-                                        if (comments.length() > 0) {
-                                            comments.append(',');
-                                        }
-                                        fileLines.append(hit.getFirstLine() != null ? hit.getFirstLine().toString() : "");
-                                        comments.append(hit.getIdentificationComment() != null ? hit.getIdentificationComment() : "");
-                                    }
-
-                                    System.out.println(String.format(
-                                            rowFormat,
-                                            "", ssId.getType(), filePath, thisNodeFileInfo.getLength(), "", "<?>",
-                                            componentInfo.getComponentName(), versionName,
-                                            id.getIdentifiedLicenseInfo() == null ? "" : id.getIdentifiedLicenseInfo().getName(),
-                                            id.getIdentifiedUsageLevel(), "", "", fileLines.toString(), comments.toString(), ssId.getStringSearchId()));
-                                } else if (IdentificationType.DEPENDENCY.equals(id.getType())) {
-                                    DependencyIdentification dpId = (DependencyIdentification) id;
-                                    System.out.println(String.format(
-                                            rowFormat,
-                                            "",
-                                            dpId.getType(),
-                                            filePath,
-                                            thisNodeFileInfo.getLength(),
-                                            "",
-                                            "<?>",
-                                            componentInfo.getComponentName(),
-                                            versionName,
-                                            id.getIdentifiedLicenseInfo() == null ? "" : id.getIdentifiedLicenseInfo()
-                                                    .getName(),
-                                                    id.getIdentifiedUsageLevel(),
-                                                    "", "",
-                                                    "Matched File Line", "Comment",
-                                            ""));
-                                } else if (IdentificationType.DECLARATION.equals(id.getType())) {
-                                    DeclaredIdentification dId = (DeclaredIdentification) id;
-                                    System.out.println(String.format(
-                                            rowFormat,
-                                            "",
-                                            dId.getType(),
-                                            filePath,
-                                            thisNodeFileInfo.getLength(),
-                                            "",
-                                            "<?>",
-                                            componentInfo.getComponentName(),
-                                            versionName,
-                                            id.getIdentifiedLicenseInfo() == null ? "" : id.getIdentifiedLicenseInfo()
-                                                    .getName(),
-                                                    id.getIdentifiedUsageLevel(),
-                                                    "", "",
-                                                    "Matched File Line", "Comment",
-                                            ""));
-                                }
-                            }
-                        }
-                    }
-                };
-
-                myWorker.walk(projectId, ROOT);
-            } catch (SdkFault e) {
-                System.err.println("getCodeTree() failed: " + e.getMessage());
-                throw new RuntimeException(e);
+            for (SourceFileInfoNode fileInfo : fileInfos) {
+                fileInfoMap.put(fileInfo.getName(), fileInfo);
             }
+
+            final String rowFormat = "%-16s | %-26s | %-100s | %9s | %9s | %-40s | %-40s | %-20s | %-40s | %-30s | %8s | %-100s | %12s | %s";
+            System.out.println("");
+            System.out.println(String.format(rowFormat, "Resolution Type", "Discovery Type", "File / Folder", "File Size", "File Line", "Discovery",
+                    "Identified Component", "Identified Version", "License", "Usage", "Coverage", "Matched File", "Matched Line", "Comment"));
+
+            for (CodeTreeIdentificationInfo idInfo : idInfos) {
+                String filePath = idInfo.getName();
+                SourceFileInfoNode thisNodeFileInfo = fileInfoMap.get(filePath);
+
+                Long fileSize = thisNodeFileInfo != null ? thisNodeFileInfo.getLength() : null;
+
+                for (Identification id : idInfo.getIdentifications()) {
+                    ComponentInfo componentInfo = getComponentInfo(projectId, id.getIdentifiedComponentKey());
+
+                    CodeMatchIdentificationDirective resolutionType = null;
+                    Object discoveryType = id.getType();
+                    Object fileLine = null;
+                    String discovery = "";
+                    String componentName = componentInfo.getComponentName();
+                    String versionName = toString(componentInfo.getVersionName());
+                    String license = id.getIdentifiedLicenseInfo() != null ? id.getIdentifiedLicenseInfo().getName() : "";
+                    UsageLevel usage = id.getIdentifiedUsageLevel();
+                    Integer coverage = null;
+                    String matchedFile = "";
+                    Integer matchedFileLine = null;
+                    String comment = "";
+
+                    if (IdentificationType.CODE_MATCH.equals(id.getType())) {
+                        CodeMatchIdentification cmId = (CodeMatchIdentification) id;
+
+                        resolutionType = cmId.getCodeMatchIdentificationDirective();
+                        fileLine = cmId.getFirstLine();
+                        discovery = toString(cmId.getDiscoveredComponentKey());
+                        coverage = cmId.getMatchRatioAsPercent();
+                        matchedFile = cmId.getComponentFilePath();
+                        comment = cmId.getComment();
+
+                    } else if (IdentificationType.STRING_SEARCH.equals(id.getType())) {
+                        StringSearchIdentification ssId = (StringSearchIdentification) id;
+
+                        StringBuilder fileLines = new StringBuilder();
+                        StringBuilder comments = new StringBuilder();
+
+                        for (IdentifiedStringSearchMatchLocation hit : ssId.getMatchLocations()) {
+                            if (fileLines.length() > 0) {
+                                fileLines.append(", ");
+                            }
+                            if (comments.length() > 0) {
+                                comments.append(", ");
+                            }
+                            fileLines.append(hit.getFirstLine());
+                            comments.append(hit.getIdentificationComment());
+                        }
+
+                        fileLine = fileLines.toString();
+                        discovery = ssId.getStringSearchId();
+                        comment = comments.toString();
+
+                    } else if (IdentificationType.DEPENDENCY.equals(id.getType())) {
+                        DependencyIdentification dpId = (DependencyIdentification) id;
+
+                        discoveryType = dpId.getDependencyType();
+                        discovery = dpId.getDependencyId();
+                        comment = dpId.getComment();
+
+                    } else if (IdentificationType.DECLARATION.equals(id.getType())) {
+                        DeclaredIdentification dId = (DeclaredIdentification) id;
+
+                        comment = dId.getComment();
+                    }
+
+                    System.out.println(String.format(rowFormat, toString(resolutionType), toString(discoveryType), filePath, fileSize, toString(fileLine),
+                            discovery, componentName, versionName, license, toString(usage), coverage != null ? coverage.toString() + "%" : "", matchedFile,
+                            toString(matchedFileLine), comment));
+                }
+            }
+
         } catch (Exception e) {
             System.err.println("SampleReportDataIdentifiedFiles failed");
             e.printStackTrace(System.err);
@@ -225,47 +194,25 @@ public class SampleReportDataIdentifiedFiles extends BDProtexSample {
         }
     }
 
+    private static String toString(Object obj) {
+        return obj != null ? obj.toString() : "";
+    }
+
+    private static String toString(ComponentKey componentKey) {
+        return componentKey.getComponentId()
+                + ((componentKey.getVersionId() != null) && !componentKey.getVersionId().isEmpty() ? "#" + componentKey.getVersionId() : "");
+    }
+
     private static ComponentInfo getComponentInfo(String projectId, ComponentKey componentKey) throws SdkFault {
-        ComponentInfo componentInfo = componentInfos.get(componentKey);
+        String componentName = toString(componentKey);
+        ComponentInfo componentInfo = componentInfos.get(componentName);
+
         if (componentInfo == null) {
             componentInfo = projectApi.getComponentByKey(projectId, componentKey);
-            componentInfos.put(componentInfo.getComponentKey(), componentInfo);
+            componentInfos.put(componentName, componentInfo);
         }
 
         return componentInfo;
     }
-
-    private static abstract class CodeTreeWorker {
-
-        public abstract void doWork(String projectId, String parentPath, List<CodeTreeNode> nodes) throws SdkFault;
-
-        private void walk(String projectId, String parentPath) throws SdkFault {
-            List<CodeTreeNode> thisLevel = getCodeTreeChildren(projectId, parentPath);
-            // Deal with all the sub-folders first
-            for (CodeTreeNode node : thisLevel) {
-                if ((CodeTreeNodeType.EXPANDED_ARCHIVE.equals(node.getNodeType()))
-                        || (CodeTreeNodeType.FOLDER.equals(node.getNodeType()))) {
-                    String subFolder = node.getName();
-                    walk(projectId, subFolder);
-                }
-            }
-
-            doWork(projectId, parentPath, thisLevel);
-        }
-
-        private List<CodeTreeNode> getCodeTreeChildren(String projectId, String parentPath) throws SdkFault {
-            CodeTreeNodeRequest codeTreeParameters = new CodeTreeNodeRequest();
-            codeTreeParameters.getIncludedNodeTypes().addAll(CodeTreeUtilities.ALL_CODE_TREE_NODE_TYPES);
-            codeTreeParameters.setDepth(CodeTreeUtilities.DIRECT_CHILDREN);
-            codeTreeParameters.setIncludeParentNode(false);
-
-            return codeTreeApi.getCodeTreeNodes(projectId, parentPath, codeTreeParameters);
-        }
-
-    }
-
-
-
-
 
 }
