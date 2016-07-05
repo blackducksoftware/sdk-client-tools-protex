@@ -229,9 +229,9 @@ public class ProtexServerProxy implements Closeable {
 
         if (logInfo) {
             // Support legacy behavior
-            logger.info("Proxy initialized - SDK version 7.2");
+            logger.info("Proxy initialized - SDK version 7.4");
         } else {
-            logger.debug("Proxy initialized - SDK version 7.2");
+            logger.debug("Proxy initialized - SDK version 7.4");
         }
     }
 
