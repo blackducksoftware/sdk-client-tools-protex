@@ -93,8 +93,8 @@ public class SampleListLicensesInPagesOf25 extends BDProtexSample {
                         System.out.println("License: " + license.getName() + " (" + license.getLicenseId() + ")");
                     }
                 }
-                pageFilter = (LicenseInfoPageFilter) PageFilterFactory.getNextPage(pageFilter);
-            } while (licenses.size() >= pageSize - 1);
+                pageFilter = PageFilterFactory.getNextPage(pageFilter);
+            } while ((licenses != null) && (licenses.size() >= pageSize - 1));
         } catch (Exception e) {
             System.err.println("SampleListLicensesInPagesOf25 failed");
             e.printStackTrace(System.err);
