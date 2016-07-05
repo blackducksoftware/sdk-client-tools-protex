@@ -1,999 +1,902 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="DiscoveryApiService"
-	targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:discovery"
-	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
-	xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:discovery"
-	xmlns:ns1="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
-	<wsdl:types>
-		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-			xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common"
-			xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault"
-			targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:license"
-			version="1.0">
-			<xs:complexType name="licenseInfo">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="licenseId" type="xs:string" />
-					<xs:element minOccurs="0" name="name" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-		</xs:schema>
-		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-			xmlns:codetree="urn:protex.blackducksoftware.com:sdk:v7.0:codetree"
-			xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common"
-			xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:license="urn:protex.blackducksoftware.com:sdk:v7.0:license"
-			xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:discovery"
-			elementFormDefault="unqualified"
-			targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:discovery"
-			version="1.0">
-			<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:common" />
-			<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:codetree" />
-			<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:license" />
-			<xs:element name="deleteRejectedDiscoveries" type="tns:deleteRejectedDiscoveries" />
-			<xs:element name="deleteRejectedDiscoveriesResponse" type="tns:deleteRejectedDiscoveriesResponse" />
-			<xs:element name="getCodeMatchDiscoveries" type="tns:getCodeMatchDiscoveries" />
-			<xs:element name="getCodeMatchDiscoveriesResponse" type="tns:getCodeMatchDiscoveriesResponse" />
-			<xs:element name="getCodeMatchSourceInfo" type="tns:getCodeMatchSourceInfo" />
-			<xs:element name="getCodeMatchSourceInfoResponse" type="tns:getCodeMatchSourceInfoResponse" />
-			<xs:element name="getDependencyDiscoveries" type="tns:getDependencyDiscoveries" />
-			<xs:element name="getDependencyDiscoveriesResponse" type="tns:getDependencyDiscoveriesResponse" />
-			<xs:element name="getDiscoveredDiscoveryTypes" type="tns:getDiscoveredDiscoveryTypes" />
-			<xs:element name="getDiscoveredDiscoveryTypesResponse"
-				type="tns:getDiscoveredDiscoveryTypesResponse" />
-			<xs:element name="getFileDiscoveryPatternDiscoveries"
-				type="tns:getFileDiscoveryPatternDiscoveries" />
-			<xs:element name="getFileDiscoveryPatternDiscoveriesResponse"
-				type="tns:getFileDiscoveryPatternDiscoveriesResponse" />
-			<xs:element name="getLastAnalysisCodeTreeInfo" type="tns:getLastAnalysisCodeTreeInfo" />
-			<xs:element name="getLastAnalysisCodeTreeInfoResponse"
-				type="tns:getLastAnalysisCodeTreeInfoResponse" />
-			<xs:element name="getLastAnalysisEnvironmentInfo" type="tns:getLastAnalysisEnvironmentInfo" />
-			<xs:element name="getLastAnalysisEnvironmentInfoResponse"
-				type="tns:getLastAnalysisEnvironmentInfoResponse" />
-			<xs:element name="getLastAnalysisInfo" type="tns:getLastAnalysisInfo" />
-			<xs:element name="getLastAnalysisInfoResponse" type="tns:getLastAnalysisInfoResponse" />
-			<xs:element name="getStringSearchDiscoveries" type="tns:getStringSearchDiscoveries" />
-			<xs:element name="getStringSearchDiscoveriesResponse"
-				type="tns:getStringSearchDiscoveriesResponse" />
-			<xs:element name="getStringSearchMatches" type="tns:getStringSearchMatches" />
-			<xs:element name="getStringSearchMatchesResponse" type="tns:getStringSearchMatchesResponse" />
-			<xs:complexType name="getStringSearchMatches">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="projectId" type="xs:string" />
-					<xs:element minOccurs="0" name="stringSearchDiscovery"
-						type="tns:stringSearchDiscovery" />
-					<xs:element minOccurs="0" name="contextCharCount" type="xs:int" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="stringSearchDiscovery">
-				<xs:complexContent>
-					<xs:extension base="tns:discovery">
-						<xs:sequence>
-							<xs:element maxOccurs="unbounded" minOccurs="0"
-								name="matchLocations" nillable="true" type="tns:stringSearchMatchLocation" />
-							<xs:element minOccurs="0" name="stringSearchId" type="xs:string" />
-							<xs:element minOccurs="0" name="stringSearchPatternOriginType"
-								type="common:stringSearchPatternOriginType" />
-						</xs:sequence>
-					</xs:extension>
-				</xs:complexContent>
-			</xs:complexType>
-			<xs:complexType abstract="true" name="discovery">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="discoveredDate" type="xs:dateTime" />
-					<xs:element minOccurs="0" name="discoveryType" type="tns:discoveryType" />
-					<xs:element minOccurs="0" name="filePath" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="stringSearchMatchLocation">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="firstLine" type="xs:int" />
-					<xs:element minOccurs="0" name="identificationStatus"
-						type="tns:identificationStatus" />
-					<xs:element minOccurs="0" name="matchLocationId" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getStringSearchMatchesResponse">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="return"
-						type="tns:stringSearchDiscoveryWithMatches" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="stringSearchDiscoveryWithMatches">
-				<xs:complexContent>
-					<xs:extension base="tns:discovery">
-						<xs:sequence>
-							<xs:element maxOccurs="unbounded" minOccurs="0" name="matches"
-								nillable="true" type="tns:stringSearchMatch" />
-							<xs:element minOccurs="0" name="stringSearchId" type="xs:string" />
-							<xs:element minOccurs="0" name="stringSearchPatternOriginType"
-								type="common:stringSearchPatternOriginType" />
-						</xs:sequence>
-					</xs:extension>
-				</xs:complexContent>
-			</xs:complexType>
-			<xs:complexType name="stringSearchMatch">
-				<xs:complexContent>
-					<xs:extension base="tns:stringSearchMatchLocation">
-						<xs:sequence>
-							<xs:element minOccurs="0" name="context" type="xs:base64Binary" />
-							<xs:element maxOccurs="unbounded" minOccurs="0"
-								name="contextHighlights" nillable="true" type="tns:highlight" />
-							<xs:element minOccurs="0" name="firstPos" type="xs:int" />
-							<xs:element minOccurs="0" name="lastLine" type="xs:int" />
-							<xs:element minOccurs="0" name="lastPos" type="xs:int" />
-							<xs:element minOccurs="0" name="match" type="xs:base64Binary" />
-						</xs:sequence>
-					</xs:extension>
-				</xs:complexContent>
-			</xs:complexType>
-			<xs:complexType name="highlight">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="firstIndex" type="xs:int" />
-					<xs:element minOccurs="0" name="lastIndex" type="xs:int" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getLastAnalysisCodeTreeInfo">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="projectId" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getLastAnalysisCodeTreeInfoResponse">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="return"
-						type="tns:analysisCodeTreeInfo" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="analysisCodeTreeInfo">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="analyzedBytes" type="xs:long" />
-					<xs:element minOccurs="0" name="analyzedBytesDelta"
-						type="xs:long" />
-					<xs:element minOccurs="0" name="analyzedFileCount" type="xs:int" />
-					<xs:element minOccurs="0" name="analyzedFileCountDelta"
-						type="xs:int" />
-					<xs:element minOccurs="0" name="skippedBytes" type="xs:long" />
-					<xs:element minOccurs="0" name="skippedFileCount" type="xs:int" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getLastAnalysisInfo">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="projectId" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getLastAnalysisInfoResponse">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="return" type="tns:analysisInfo" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="analysisInfo">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="analysisFinishedDate"
-						type="xs:dateTime" />
-					<xs:element minOccurs="0" name="analysisStartedDate"
-						type="xs:dateTime" />
-					<xs:element minOccurs="0" name="analyzedBy" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getDependencyDiscoveries">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="projectId" type="xs:string" />
-					<xs:element maxOccurs="unbounded" minOccurs="0" name="nodes"
-						type="codetree:codeTreeNode" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getDependencyDiscoveriesResponse">
-				<xs:sequence>
-					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
-						type="tns:dependencyDiscovery" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="dependencyDiscovery">
-				<xs:complexContent>
-					<xs:extension base="tns:discovery">
-						<xs:sequence>
-							<xs:element minOccurs="0" name="dependencyId" type="xs:string" />
-							<xs:element minOccurs="0" name="dependencyType" type="tns:dependencyType" />
-							<xs:element minOccurs="0" name="firstLine" type="xs:int" />
-							<xs:element minOccurs="0" name="identificationStatus"
-								type="tns:identificationStatus" />
-						</xs:sequence>
-					</xs:extension>
-				</xs:complexContent>
-			</xs:complexType>
-			<xs:complexType name="getStringSearchDiscoveries">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="projectId" type="xs:string" />
-					<xs:element maxOccurs="unbounded" minOccurs="0" name="nodes"
-						type="codetree:codeTreeNode" />
-					<xs:element maxOccurs="unbounded" minOccurs="0"
-						name="patternTypes" type="common:stringSearchPatternOriginType" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getStringSearchDiscoveriesResponse">
-				<xs:sequence>
-					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
-						type="tns:stringSearchDiscovery" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getCodeMatchSourceInfo">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="projectId" type="xs:string" />
-					<xs:element maxOccurs="unbounded" minOccurs="0" name="nodes"
-						type="codetree:codeTreeNode" />
-					<xs:element maxOccurs="unbounded" minOccurs="0"
-						name="filterByCodeMatchType" type="tns:codeMatchType" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getCodeMatchSourceInfoResponse">
-				<xs:sequence>
-					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
-						type="tns:discoverySourceInfo" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="discoverySourceInfo">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="componentSnippet" type="common:snippet" />
-					<xs:element minOccurs="0" name="componentSourcePath"
-						type="xs:string" />
-					<xs:element minOccurs="0" name="componentSourceUrl"
-						type="xs:string" />
-					<xs:element minOccurs="0" name="discoveredComponentKey"
-						type="common:componentKey" />
-					<xs:element minOccurs="0" name="discoveryType" type="tns:discoveryType" />
-					<xs:element minOccurs="0" name="projectPath" type="xs:string" />
-					<xs:element minOccurs="0" name="projectSnippet" type="common:snippet" />
-					<xs:element minOccurs="0" name="projectSourceUrl" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getLastAnalysisEnvironmentInfo">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="projectId" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getLastAnalysisEnvironmentInfoResponse">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="return"
-						type="tns:analysisEnvironmentInfo" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="analysisEnvironmentInfo">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="analysisReleaseDescription"
-						type="xs:string" />
-					<xs:element minOccurs="0" name="bdsBasicDb" type="xs:string" />
-					<xs:element minOccurs="0" name="bdsCustomDb" type="xs:string" />
-					<xs:element minOccurs="0" name="clientLibrary" type="xs:string" />
-					<xs:element minOccurs="0" name="fingerprintBasicDb"
-						type="xs:string" />
-					<xs:element minOccurs="0" name="fingerprintCustomDb"
-						type="xs:string" />
-					<xs:element minOccurs="0" name="hostname" type="xs:string" />
-					<xs:element minOccurs="0" name="osArchitecture" type="xs:string" />
-					<xs:element minOccurs="0" name="osName" type="xs:string" />
-					<xs:element minOccurs="0" name="osUserCountry" type="xs:string" />
-					<xs:element minOccurs="0" name="osUserLanguage" type="xs:string" />
-					<xs:element minOccurs="0" name="osUserName" type="xs:string" />
-					<xs:element minOccurs="0" name="osUserTz" type="xs:string" />
-					<xs:element minOccurs="0" name="releaseDescription"
-						type="xs:string" />
-					<xs:element minOccurs="0" name="serverLibrary" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getDiscoveredDiscoveryTypes">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="projectId" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getDiscoveredDiscoveryTypesResponse">
-				<xs:sequence>
-					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
-						type="tns:discoveryType" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getFileDiscoveryPatternDiscoveries">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="projectId" type="xs:string" />
-					<xs:element maxOccurs="unbounded" minOccurs="0" name="nodes"
-						type="codetree:codeTreeNode" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getFileDiscoveryPatternDiscoveriesResponse">
-				<xs:sequence>
-					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
-						type="tns:fileDiscoveryPatternDiscovery" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="fileDiscoveryPatternDiscovery">
-				<xs:complexContent>
-					<xs:extension base="tns:discovery">
-						<xs:sequence>
-							<xs:element minOccurs="0" name="identificationStatus"
-								type="tns:identificationStatus" />
-						</xs:sequence>
-					</xs:extension>
-				</xs:complexContent>
-			</xs:complexType>
-			<xs:complexType name="deleteRejectedDiscoveries">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="arg0" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="deleteRejectedDiscoveriesResponse">
-				<xs:sequence />
-			</xs:complexType>
-			<xs:complexType name="getCodeMatchDiscoveries">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="projectId" type="xs:string" />
-					<xs:element maxOccurs="unbounded" minOccurs="0"
-						name="partialCodeTree" type="codetree:codeTreeNode" />
-					<xs:element maxOccurs="unbounded" minOccurs="0"
-						name="filterByCodeMatchType" type="tns:codeMatchType" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="getCodeMatchDiscoveriesResponse">
-				<xs:sequence>
-					<xs:element maxOccurs="unbounded" minOccurs="0" name="return"
-						type="tns:codeMatchDiscovery" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="codeMatchDiscovery">
-				<xs:complexContent>
-					<xs:extension base="tns:discovery">
-						<xs:sequence>
-							<xs:element minOccurs="0" name="codeMatchType" type="tns:codeMatchType" />
-							<xs:element minOccurs="0" name="discoveredComponentKey"
-								type="common:componentKey" />
-							<xs:element minOccurs="0" name="hasComponentLicenseConflict"
-								type="xs:boolean" />
-							<xs:element minOccurs="0" name="hasDeclaredLicenseConflict"
-								type="xs:boolean" />
-							<xs:element minOccurs="0" name="identificationStatus"
-								type="tns:identificationStatus" />
-							<xs:element minOccurs="0" name="matchRatioAsPercent"
-								type="xs:int" />
-							<xs:element minOccurs="0" name="matchingFileLocation"
-								type="tns:codeMatchLocation" />
-							<xs:element minOccurs="0" name="matchingLicenseInfo"
-								type="license:licenseInfo" />
-							<xs:element minOccurs="0" name="matchingSourceInfo"
-								type="tns:codeMatchSourceInfo" />
-							<xs:element minOccurs="0" name="sourceFileLocation"
-								type="tns:codeMatchLocation" />
-						</xs:sequence>
-					</xs:extension>
-				</xs:complexContent>
-			</xs:complexType>
-			<xs:complexType name="codeMatchLocation">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="filePath" type="xs:string" />
-					<xs:element minOccurs="0" name="snippet" type="common:snippet" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="codeMatchSourceInfo">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="firstLine" type="xs:int" />
-					<xs:element minOccurs="0" name="lineCount" type="xs:int" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:simpleType name="identificationStatus">
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="PENDING_IDENTIFICATION" />
-					<xs:enumeration value="DECLARED" />
-					<xs:enumeration value="PARENT_FOLDER_DECLARED" />
-					<xs:enumeration value="DECLARED_NON_PRECISION" />
-					<xs:enumeration value="DECLARED_NON_PRECISION_FOLDER" />
-					<xs:enumeration value="DEPENDENCY_IDENTIFIED_FILE" />
-					<xs:enumeration value="DEPENDENCY_IDENTIFIED_FOLDER" />
-					<xs:enumeration value="DEPENDENCY_IDENTIFIED_PARENT_FILE" />
-					<xs:enumeration value="DEPENDENCY_IDENTIFIED_PARENT_FOLDER" />
-					<xs:enumeration value="STRING_SEARCH_IDENTIFIED_FILE" />
-					<xs:enumeration value="STRING_SEARCH_IDENTIFIED_FOLDER" />
-					<xs:enumeration value="CODE_MATCH_IDENTIFIED_FILE" />
-					<xs:enumeration value="CODE_MATCH_IDENTIFIED_FOLDER" />
-					<xs:enumeration value="CODE_MATCH_IDENTIFIED_FILE_GENERIC_VERSION" />
-					<xs:enumeration value="CODE_MATCH_IDENTIFIED_FOLDER_GENERIC_VERSION" />
-					<xs:enumeration value="CODE_MATCH_IDENTIFIED_FILE_SPECIFIC_VERSION" />
-					<xs:enumeration value="CODE_MATCH_IDENTIFIED_FOLDER_SPECIFIC_VERSION" />
-					<xs:enumeration value="IDENTIFIED_SIDE_EFFECT" />
-					<xs:enumeration value="CODE_MATCH_EXCLUDED_FILE" />
-					<xs:enumeration value="CODE_MATCH_EXCLUDED_FOLDER" />
-					<xs:enumeration value="CODE_MATCH_EXCLUDED_FILE_GENERIC" />
-					<xs:enumeration value="CODE_MATCH_EXCLUDED_FOLDER_GENERIC" />
-					<xs:enumeration value="CODE_MATCH_IDENTIFIED_SNIPPET_NON_PRECISION" />
-					<xs:enumeration
-						value="CODE_MATCH_IDENTIFIED_SNIPPET_NON_PRECISION_SIDE_EFFECT" />
-					<xs:enumeration value="CODE_MATCH_IDENTIFIED_NON_PRECISION_FILE" />
-					<xs:enumeration value="CODE_MATCH_IDENTIFIED_NON_PRECISION_FOLDER" />
-					<xs:enumeration value="CODE_MATCH_IDENTIFIED_NON_PRECISION_FILE_GENERIC" />
-					<xs:enumeration
-						value="CODE_MATCH_IDENTIFIED_NON_PRECISION_FOLDER_GENERIC" />
-					<xs:enumeration
-						value="CODE_MATCH_IDENTIFIED_NON_PRECISION_FILE_SPECIFIC_VERSION" />
-					<xs:enumeration
-						value="CODE_MATCH_IDENTIFIED_NON_PRECISION_FOLDER_SPECIFIC_VERSION" />
-				</xs:restriction>
-			</xs:simpleType>
-			<xs:simpleType name="discoveryType">
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="SNIPPET" />
-					<xs:enumeration value="FILE" />
-					<xs:enumeration value="FILE_NAME_IDENTITY" />
-					<xs:enumeration value="STRING_SEARCH" />
-					<xs:enumeration value="STRING_SEARCH_REGULAR_EXPRESSION" />
-					<xs:enumeration value="DEPENDENCY_JAVA_PACKAGE" />
-					<xs:enumeration value="DEPENDENCY_JAVA_IMPORT" />
-					<xs:enumeration value="DEPENDENCY_NON_JAVA_SOURCE" />
-					<xs:enumeration value="DEPENDENCY_NON_JAVA_BINARY" />
-				</xs:restriction>
-			</xs:simpleType>
-			<xs:simpleType name="dependencyType">
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="DEPENDENCY_JAVA_PACKAGE" />
-					<xs:enumeration value="DEPENDENCY_JAVA_IMPORT" />
-					<xs:enumeration value="DEPENDENCY_NON_JAVA_SOURCE" />
-					<xs:enumeration value="DEPENDENCY_NON_JAVA_BINARY" />
-				</xs:restriction>
-			</xs:simpleType>
-			<xs:simpleType name="codeMatchType">
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="PRECISION" />
-					<xs:enumeration value="GENERIC" />
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:schema>
-		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-			targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:common"
-			version="1.0">
-			<xs:complexType name="snippet">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="firstLine" type="xs:int" />
-					<xs:element minOccurs="0" name="lastLine" type="xs:int" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="componentKey">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="componentId" type="xs:string" />
-					<xs:element minOccurs="0" name="versionId" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:simpleType name="stringSearchPatternOriginType">
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="STANDARD" />
-					<xs:enumeration value="CUSTOM" />
-					<xs:enumeration value="PROJECT_LOCAL" />
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:schema>
-		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-			xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:codetree"
-			targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:codetree"
-			version="1.0">
-			<xs:complexType name="codeTreeNode">
-				<xs:complexContent>
-					<xs:extension base="tns:sourceNode">
-						<xs:sequence>
-							<xs:element maxOccurs="unbounded" minOccurs="0"
-								name="nodeCounts" nillable="true" type="tns:nodeCount" />
-						</xs:sequence>
-					</xs:extension>
-				</xs:complexContent>
-			</xs:complexType>
-			<xs:complexType name="sourceNode">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="name" type="xs:string" />
-					<xs:element minOccurs="0" name="nodeType" type="tns:codeTreeNodeType" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:complexType name="nodeCount">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="count" type="xs:long" />
-					<xs:element minOccurs="0" name="countType" type="tns:nodeCountType" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:simpleType name="nodeCountType">
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="VIOLATIONS" />
-					<xs:enumeration value="LICENSE_CONFLICTS" />
-					<xs:enumeration value="DECLARED" />
-					<xs:enumeration value="NO_ISSUES" />
-					<xs:enumeration value="PENDING_REVIEW" />
-					<xs:enumeration value="APPROVED" />
-					<xs:enumeration value="DISAPPROVED" />
-					<xs:enumeration value="CODE_MATCH_IDENTIFIED" />
-					<xs:enumeration value="DEPENDENCY_IDENTIFIED" />
-					<xs:enumeration value="STRING_SEARCH_IDENTIFIED" />
-					<xs:enumeration value="FILES" />
-					<xs:enumeration value="FOLDERS" />
-					<xs:enumeration value="DISCOVERIES" />
-					<xs:enumeration value="PENDING_ID_ALL" />
-					<xs:enumeration value="PENDING_ID_CODE_MATCH" />
-					<xs:enumeration value="PENDING_ID_STRING_SEARCH" />
-					<xs:enumeration value="PENDING_ID_DEPENDENCY" />
-					<xs:enumeration value="NO_DISCOVERIES" />
-					<xs:enumeration value="PENDING_ID_FILE_PATTERN" />
-					<xs:enumeration value="DISCOVERED_COMPONENTS" />
-					<xs:enumeration value="DISCOVERED_LICENSES" />
-					<xs:enumeration value="MANUALLY_IDENTIFIED_FILES" />
-					<xs:enumeration value="RAPID_IDENTIFIED_FILES" />
-					<xs:enumeration value="ANALYZED_FILE_BYTES" />
-				</xs:restriction>
-			</xs:simpleType>
-			<xs:simpleType name="codeTreeNodeType">
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="FILE" />
-					<xs:enumeration value="EXPANDED_ARCHIVE" />
-					<xs:enumeration value="FOLDER" />
-				</xs:restriction>
-			</xs:simpleType>
-		</xs:schema>
-		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-			xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:blackducksoftware.com:sdk:v7.0:fault"
-			attributeFormDefault="unqualified" elementFormDefault="unqualified"
-			targetNamespace="urn:blackducksoftware.com:sdk:v7.0:fault">
-			<xs:element name="sdkFaultDetails" type="tns:sdkFaultDetails" />
-			<xs:complexType name="sdkFaultDetails">
-				<xs:sequence>
-					<xs:element minOccurs="0" name="errorCode" type="tns:errorCode" />
-					<xs:element minOccurs="0" name="message" type="xs:string" />
-				</xs:sequence>
-			</xs:complexType>
-			<xs:simpleType name="errorCode">
-				<xs:restriction base="xs:string">
-					<xs:enumeration value="SERVER_REGISTRATION_ERROR" />
-					<xs:enumeration value="SERVER_PERFORMING_UPDATE" />
-					<xs:enumeration value="NO_ANALYSIS_RUNNING" />
-					<xs:enumeration value="ANALYSIS_ALREADY_RUNNING" />
-					<xs:enumeration value="INVALID_SOURCE_LOCATION_FOR_SCAN" />
-					<xs:enumeration value="PROJECT_COULD_NOT_BE_LOCKED" />
-					<xs:enumeration value="LICENSE_NAME_TOO_LONG" />
-					<xs:enumeration value="LICENSE_TYPE_STANDARD_CANT_CHANGE_NAME" />
-					<xs:enumeration value="TAG_NOT_FOUND" />
-					<xs:enumeration value="OBLIGATION_IS_REFERENCED" />
-					<xs:enumeration value="OBLIGATION_NOT_ASSIGNED" />
-					<xs:enumeration value="DUPLICATE_LICENSE_NAME" />
-					<xs:enumeration value="LICENSE_NOT_FOUND" />
-					<xs:enumeration value="LICENSE_IN_USE" />
-					<xs:enumeration value="CAN_NOT_RESET_CUSTOM_LICENSE" />
-					<xs:enumeration value="DUPLICATE_OBLIGATION_CATEGORY" />
-					<xs:enumeration value="OBLIGATION_CATEGORY_NOT_FOUND" />
-					<xs:enumeration value="OBLIGATION_CATEGORY_IN_USE" />
-					<xs:enumeration value="OBLIGATION_CATEGORY_CAN_NOT_BE_DELETED" />
-					<xs:enumeration value="DUPLICATE_OBLIGATION_NAME" />
-					<xs:enumeration value="DUPLICATE_OBLIGATION_ASSIGNMENT" />
-					<xs:enumeration value="INVALID_OBLIGATION_NAME" />
-					<xs:enumeration value="OBLIGATION_NOT_FOUND" />
-					<xs:enumeration value="OBLIGATION_IN_USE_BY_PROJECTS" />
-					<xs:enumeration value="OBLIGATION_IN_USE_BY_LICENSES" />
-					<xs:enumeration value="RAPID_ID_CONFIGURATION_NOT_FOUND" />
-					<xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_NAME" />
-					<xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_ASSOCIATION" />
-					<xs:enumeration value="RAPID_ID_OPERATION_TYPE_DUPLICATE" />
-					<xs:enumeration value="LEARNED_IDENTIFICATION_NOT_FOUND" />
-					<xs:enumeration value="USER_NOT_ASSIGNED_TO_PROJECT" />
-					<xs:enumeration value="UNKNOWN_ANALYSIS_DATABASE_OPTION" />
-					<xs:enumeration
-						value="STRING_SEARCH_PATTERN_UPDATE_OF_STANDARD_PATTERN_NOT_ALLOWED" />
-					<xs:enumeration value="CUSTOM_COMPONENT_IN_USE" />
-					<xs:enumeration value="CUSTOM_COMPONENT_HAS_NO_SOURCE" />
-					<xs:enumeration value="DUPLICATE_TEMPLATE_TITLE" />
-					<xs:enumeration value="REPORT_TEMPLATE_NOT_FOUND" />
-					<xs:enumeration value="DEFAULT_REPORT_TEMPLATE_NOT_SET" />
-					<xs:enumeration value="DUPLICATE_PROJECT_NAME" />
-					<xs:enumeration value="PROJECT_ANALYSIS_LOCAL_SOURCE_NOT_SUPPORTED" />
-					<xs:enumeration value="OPTIONS_SETTING_NOT_ALLOWED" />
-					<xs:enumeration
-						value="OPTIONS_CANNOT_BE_FORCED_FOR_LOCAL_SEARCH_SETTINGS" />
-					<xs:enumeration value="DUPLICATE_STRING_SEARCH_PATTERN_NAME" />
-					<xs:enumeration value="DUPLICATE_FILE_DISCOVERY_PATTERN_NAME" />
-					<xs:enumeration value="LINKING_PROJECTS_FORCES_CLONING_OF_WORK_RESULTS" />
-					<xs:enumeration value="PROJECT_NOT_YET_ANALYZED" />
-					<xs:enumeration value="DUPLICATE_USER_ASSIGNMENT" />
-					<xs:enumeration value="PROJECT_NAME_TOO_LONG" />
-					<xs:enumeration value="INVALID_PROJECT_NAME" />
-					<xs:enumeration value="PROJECT_NOT_FOUND" />
-					<xs:enumeration value="PROJECT_SYNCID_INVALID" />
-					<xs:enumeration value="LINKING_GLOBALLY_DISABLED" />
-					<xs:enumeration value="PROJECT_IN_USE" />
-					<xs:enumeration value="STRING_SEARCH_PATTERN_NAME_TOO_LONG" />
-					<xs:enumeration value="ROLE_NOT_FOUND" />
-					<xs:enumeration value="MINIMUM_ONE_ADMIN_USER" />
-					<xs:enumeration value="REMOVE_SELF_AS_ADMIN_USER" />
-					<xs:enumeration value="DUPLICATE_EMAIL_ADDRESS" />
-					<xs:enumeration value="EMAIL_TOO_LONG" />
-					<xs:enumeration value="FIRST_NAME_TOO_LONG" />
-					<xs:enumeration value="LAST_NAME_TOO_LONG" />
-					<xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_TOO_LONG" />
-					<xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_DUPLICATE" />
-					<xs:enumeration value="INVALID_EMAIL_ADDRESS" />
-					<xs:enumeration value="USER_NOT_FOUND" />
-					<xs:enumeration value="PASSWORD_TOO_SHORT" />
-					<xs:enumeration value="PASSWORD_TOO_LONG" />
-					<xs:enumeration value="STRING_SEARCH_DISCOVERY_NOT_FOUND" />
-					<xs:enumeration value="STRING_SEARCH_REQUIRES_UPLOADED_SOURCE" />
-					<xs:enumeration value="USAGE_LEVEL_INVALID_FOR_GIVEN_ID" />
-					<xs:enumeration value="CANNOT_COPY_ID_PROJECT_SYNCHRONIZED" />
-					<xs:enumeration value="CODE_TREE_PATH_NOT_FOUND" />
-					<xs:enumeration value="CODE_TREE_GUARANTEED_EMPTY_RESULT" />
-					<xs:enumeration value="NO_FILE_CONTENT" />
-					<xs:enumeration value="CODE_TREE_PARENT_PATH_NOT_FOUND" />
-					<xs:enumeration value="DUPLICATE_COMPONENT_NAME" />
-					<xs:enumeration value="COMPONENT_NAME_TOO_LONG" />
-					<xs:enumeration value="INVALID_COMPONENT_NAME" />
-					<xs:enumeration value="COMPONENT_NOT_FOUND" />
-					<xs:enumeration value="COMPONENT_VERSION_NOT_FOUND" />
-					<xs:enumeration value="OPTION_IS_FORCED" />
-					<xs:enumeration value="FILE_DISCOVERY_PATTERN_NOT_FOUND" />
-					<xs:enumeration value="STRING_SEARCH_PATTERN_NOT_FOUND" />
-					<xs:enumeration value="UNEXPECTED_EXCEPTION_ERROR" />
-					<xs:enumeration value="UNKNOWN_REPORT_SECTION_ERROR" />
-					<xs:enumeration value="PROTEX_FILE_SOURCE_NOT_AVAILABLE" />
-					<xs:enumeration value="NOT_A_FILE_PATH" />
-					<xs:enumeration value="ARGUMENT_VALUE_INVALID" />
-					<xs:enumeration value="METHOD_NOT_YET_IMPLEMENTED" />
-					<xs:enumeration value="ARGUMENT_NOT_YET_IMPLEMENTED" />
-					<xs:enumeration value="ARGUMENT_VALUE_NOT_YET_IMPLEMENTED" />
-					<xs:enumeration value="INVALID_CREDENTIALS" />
-					<xs:enumeration value="INSUFFICIENT_PERMISSION" />
-					<xs:enumeration value="UNKNOWN_ERROR" />
-					<xs:enumeration value="BOM_REFRESH_NOT_FINISHED" />
-					<xs:enumeration value="BOM_COMPONENT_PROJECT_CANT_UPDATE" />
-					<xs:enumeration
-						value="UPDATE_BOM_COMPONENT_VERSION_NAME_OF_COMPONENT_VERSION_PROHIBITED" />
-					<xs:enumeration value="TODO_CONVERT_EXCEPTION" />
-					<xs:enumeration value="UNEXPECTED_RETURN_VALUE_ERROR" />
-					<xs:enumeration value="OUT_OF_MEMORY_ERROR" />
-					<xs:enumeration value="NO_SESSION_ID" />
-					<xs:enumeration value="INVALID_SORT_KEY" />
-					<xs:enumeration value="CAN_NOT_OPEN_TEMP_FILE" />
-					<xs:enumeration
-						value="CODEMATCH_SELF_IDENTIFICATION_MUST_MATCH_DECLARED_LICENSE" />
-					<xs:enumeration value="IDENTIFICATION_NOT_FOUND" />
-					<xs:enumeration value="IDENTIFICATION_LEARNING_CONFLICT" />
-					<xs:enumeration value="EXTERNAL_NAMESPACE_NAME_TOO_LONG" />
-					<xs:enumeration value="DUPLICATE_EXTERNAL_NAMESPACE_KEY" />
-					<xs:enumeration value="EXTERNAL_NAMESPACE_NOT_FOUND" />
-					<xs:enumeration value="EXTERNAL_ID_MAPPING_NOT_FOUND" />
-					<xs:enumeration value="DUPLICATE_EXTERNAL_ID_MAPPING" />
-					<xs:enumeration value="TEMPLATE_NOT_FOUND" />
-					<xs:enumeration value="DUPLICATE_VERSION_NAME" />
-				</xs:restriction>
-			</xs:simpleType>
-			<xs:element name="SdkFault" nillable="true" type="tns:sdkFaultDetails" />
-		</xs:schema>
-	</wsdl:types>
-	<wsdl:message name="getDependencyDiscoveriesResponse">
-		<wsdl:part name="parameters" element="tns:getDependencyDiscoveriesResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getCodeMatchDiscoveriesResponse">
-		<wsdl:part name="parameters" element="tns:getCodeMatchDiscoveriesResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getDependencyDiscoveries">
-		<wsdl:part name="parameters" element="tns:getDependencyDiscoveries">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getStringSearchDiscoveries">
-		<wsdl:part name="parameters" element="tns:getStringSearchDiscoveries">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getStringSearchMatchesResponse">
-		<wsdl:part name="parameters" element="tns:getStringSearchMatchesResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getLastAnalysisInfoResponse">
-		<wsdl:part name="parameters" element="tns:getLastAnalysisInfoResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getLastAnalysisEnvironmentInfo">
-		<wsdl:part name="parameters" element="tns:getLastAnalysisEnvironmentInfo">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getDiscoveredDiscoveryTypes">
-		<wsdl:part name="parameters" element="tns:getDiscoveredDiscoveryTypes">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getFileDiscoveryPatternDiscoveries">
-		<wsdl:part name="parameters" element="tns:getFileDiscoveryPatternDiscoveries">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getStringSearchMatches">
-		<wsdl:part name="parameters" element="tns:getStringSearchMatches">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getCodeMatchSourceInfoResponse">
-		<wsdl:part name="parameters" element="tns:getCodeMatchSourceInfoResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getLastAnalysisCodeTreeInfo">
-		<wsdl:part name="parameters" element="tns:getLastAnalysisCodeTreeInfo">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getStringSearchDiscoveriesResponse">
-		<wsdl:part name="parameters" element="tns:getStringSearchDiscoveriesResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getLastAnalysisInfo">
-		<wsdl:part name="parameters" element="tns:getLastAnalysisInfo">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getFileDiscoveryPatternDiscoveriesResponse">
-		<wsdl:part name="parameters"
-			element="tns:getFileDiscoveryPatternDiscoveriesResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="SdkFault">
-		<wsdl:part name="SdkFault" element="ns1:SdkFault">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getCodeMatchSourceInfo">
-		<wsdl:part name="parameters" element="tns:getCodeMatchSourceInfo">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getLastAnalysisEnvironmentInfoResponse">
-		<wsdl:part name="parameters" element="tns:getLastAnalysisEnvironmentInfoResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="deleteRejectedDiscoveries">
-		<wsdl:part name="parameters" element="tns:deleteRejectedDiscoveries">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getDiscoveredDiscoveryTypesResponse">
-		<wsdl:part name="parameters" element="tns:getDiscoveredDiscoveryTypesResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="deleteRejectedDiscoveriesResponse">
-		<wsdl:part name="parameters" element="tns:deleteRejectedDiscoveriesResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getLastAnalysisCodeTreeInfoResponse">
-		<wsdl:part name="parameters" element="tns:getLastAnalysisCodeTreeInfoResponse">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:message name="getCodeMatchDiscoveries">
-		<wsdl:part name="parameters" element="tns:getCodeMatchDiscoveries">
-		</wsdl:part>
-	</wsdl:message>
-	<wsdl:portType name="DiscoveryApi">
-		<wsdl:operation name="getStringSearchMatches">
-			<wsdl:input name="getStringSearchMatches" message="tns:getStringSearchMatches">
-			</wsdl:input>
-			<wsdl:output name="getStringSearchMatchesResponse"
-				message="tns:getStringSearchMatchesResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getLastAnalysisCodeTreeInfo">
-			<wsdl:input name="getLastAnalysisCodeTreeInfo" message="tns:getLastAnalysisCodeTreeInfo">
-			</wsdl:input>
-			<wsdl:output name="getLastAnalysisCodeTreeInfoResponse"
-				message="tns:getLastAnalysisCodeTreeInfoResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getLastAnalysisInfo">
-			<wsdl:input name="getLastAnalysisInfo" message="tns:getLastAnalysisInfo">
-			</wsdl:input>
-			<wsdl:output name="getLastAnalysisInfoResponse" message="tns:getLastAnalysisInfoResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getDependencyDiscoveries">
-			<wsdl:input name="getDependencyDiscoveries" message="tns:getDependencyDiscoveries">
-			</wsdl:input>
-			<wsdl:output name="getDependencyDiscoveriesResponse"
-				message="tns:getDependencyDiscoveriesResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getStringSearchDiscoveries">
-			<wsdl:input name="getStringSearchDiscoveries" message="tns:getStringSearchDiscoveries">
-			</wsdl:input>
-			<wsdl:output name="getStringSearchDiscoveriesResponse"
-				message="tns:getStringSearchDiscoveriesResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getCodeMatchSourceInfo">
-			<wsdl:input name="getCodeMatchSourceInfo" message="tns:getCodeMatchSourceInfo">
-			</wsdl:input>
-			<wsdl:output name="getCodeMatchSourceInfoResponse"
-				message="tns:getCodeMatchSourceInfoResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getLastAnalysisEnvironmentInfo">
-			<wsdl:input name="getLastAnalysisEnvironmentInfo" message="tns:getLastAnalysisEnvironmentInfo">
-			</wsdl:input>
-			<wsdl:output name="getLastAnalysisEnvironmentInfoResponse"
-				message="tns:getLastAnalysisEnvironmentInfoResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getDiscoveredDiscoveryTypes">
-			<wsdl:input name="getDiscoveredDiscoveryTypes" message="tns:getDiscoveredDiscoveryTypes">
-			</wsdl:input>
-			<wsdl:output name="getDiscoveredDiscoveryTypesResponse"
-				message="tns:getDiscoveredDiscoveryTypesResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getFileDiscoveryPatternDiscoveries">
-			<wsdl:input name="getFileDiscoveryPatternDiscoveries"
-				message="tns:getFileDiscoveryPatternDiscoveries">
-			</wsdl:input>
-			<wsdl:output name="getFileDiscoveryPatternDiscoveriesResponse"
-				message="tns:getFileDiscoveryPatternDiscoveriesResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="deleteRejectedDiscoveries">
-			<wsdl:input name="deleteRejectedDiscoveries" message="tns:deleteRejectedDiscoveries">
-			</wsdl:input>
-			<wsdl:output name="deleteRejectedDiscoveriesResponse"
-				message="tns:deleteRejectedDiscoveriesResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getCodeMatchDiscoveries">
-			<wsdl:input name="getCodeMatchDiscoveries" message="tns:getCodeMatchDiscoveries">
-			</wsdl:input>
-			<wsdl:output name="getCodeMatchDiscoveriesResponse"
-				message="tns:getCodeMatchDiscoveriesResponse">
-			</wsdl:output>
-			<wsdl:fault name="SdkFault" message="tns:SdkFault">
-			</wsdl:fault>
-		</wsdl:operation>
-	</wsdl:portType>
-	<wsdl:binding name="DiscoveryApiServiceSoapBinding" type="tns:DiscoveryApi">
-		<soap:binding style="document"
-			transport="http://schemas.xmlsoap.org/soap/http" />
-		<wsdl:operation name="getStringSearchMatches">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="getStringSearchMatches">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="getStringSearchMatchesResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getLastAnalysisCodeTreeInfo">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="getLastAnalysisCodeTreeInfo">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="getLastAnalysisCodeTreeInfoResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getLastAnalysisInfo">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="getLastAnalysisInfo">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="getLastAnalysisInfoResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getDependencyDiscoveries">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="getDependencyDiscoveries">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="getDependencyDiscoveriesResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getStringSearchDiscoveries">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="getStringSearchDiscoveries">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="getStringSearchDiscoveriesResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getCodeMatchSourceInfo">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="getCodeMatchSourceInfo">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="getCodeMatchSourceInfoResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getLastAnalysisEnvironmentInfo">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="getLastAnalysisEnvironmentInfo">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="getLastAnalysisEnvironmentInfoResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getDiscoveredDiscoveryTypes">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="getDiscoveredDiscoveryTypes">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="getDiscoveredDiscoveryTypesResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getFileDiscoveryPatternDiscoveries">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="getFileDiscoveryPatternDiscoveries">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="getFileDiscoveryPatternDiscoveriesResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="deleteRejectedDiscoveries">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="deleteRejectedDiscoveries">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="deleteRejectedDiscoveriesResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-		<wsdl:operation name="getCodeMatchDiscoveries">
-			<soap:operation soapAction="" style="document" />
-			<wsdl:input name="getCodeMatchDiscoveries">
-				<soap:body use="literal" />
-			</wsdl:input>
-			<wsdl:output name="getCodeMatchDiscoveriesResponse">
-				<soap:body use="literal" />
-			</wsdl:output>
-			<wsdl:fault name="SdkFault">
-				<soap:fault name="SdkFault" use="literal" />
-			</wsdl:fault>
-		</wsdl:operation>
-	</wsdl:binding>
-	<wsdl:service name="DiscoveryApiService">
-		<wsdl:port name="DiscoveryApiPort" binding="tns:DiscoveryApiServiceSoapBinding">
-			<soap:address location="http://localhost:9090/DiscoveryApiPort" />
-		</wsdl:port>
-	</wsdl:service>
+<wsdl:definitions name="DiscoveryApiService" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:discovery" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:discovery" xmlns:ns1="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
+  <wsdl:types>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:license" version="1.0">
+<xs:complexType name="licenseInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="licenseId" type="xs:string"/>
+<xs:element minOccurs="0" name="name" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:codetree="urn:protex.blackducksoftware.com:sdk:v7.0:codetree" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:license="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:discovery" elementFormDefault="unqualified" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:discovery" version="1.0">
+<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:common"/>
+<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:codetree"/>
+<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:license"/>
+<xs:element name="deleteRejectedDiscoveries" type="tns:deleteRejectedDiscoveries"/>
+<xs:element name="deleteRejectedDiscoveriesResponse" type="tns:deleteRejectedDiscoveriesResponse"/>
+<xs:element name="getCodeMatchDiscoveries" type="tns:getCodeMatchDiscoveries"/>
+<xs:element name="getCodeMatchDiscoveriesResponse" type="tns:getCodeMatchDiscoveriesResponse"/>
+<xs:element name="getCodeMatchSourceInfo" type="tns:getCodeMatchSourceInfo"/>
+<xs:element name="getCodeMatchSourceInfoResponse" type="tns:getCodeMatchSourceInfoResponse"/>
+<xs:element name="getDependencyDiscoveries" type="tns:getDependencyDiscoveries"/>
+<xs:element name="getDependencyDiscoveriesResponse" type="tns:getDependencyDiscoveriesResponse"/>
+<xs:element name="getDiscoveredDiscoveryTypes" type="tns:getDiscoveredDiscoveryTypes"/>
+<xs:element name="getDiscoveredDiscoveryTypesResponse" type="tns:getDiscoveredDiscoveryTypesResponse"/>
+<xs:element name="getFileDiscoveryPatternDiscoveries" type="tns:getFileDiscoveryPatternDiscoveries"/>
+<xs:element name="getFileDiscoveryPatternDiscoveriesResponse" type="tns:getFileDiscoveryPatternDiscoveriesResponse"/>
+<xs:element name="getLastAnalysisCodeTreeInfo" type="tns:getLastAnalysisCodeTreeInfo"/>
+<xs:element name="getLastAnalysisCodeTreeInfoResponse" type="tns:getLastAnalysisCodeTreeInfoResponse"/>
+<xs:element name="getLastAnalysisEnvironmentInfo" type="tns:getLastAnalysisEnvironmentInfo"/>
+<xs:element name="getLastAnalysisEnvironmentInfoResponse" type="tns:getLastAnalysisEnvironmentInfoResponse"/>
+<xs:element name="getLastAnalysisInfo" type="tns:getLastAnalysisInfo"/>
+<xs:element name="getLastAnalysisInfoResponse" type="tns:getLastAnalysisInfoResponse"/>
+<xs:element name="getStringSearchDiscoveries" type="tns:getStringSearchDiscoveries"/>
+<xs:element name="getStringSearchDiscoveriesResponse" type="tns:getStringSearchDiscoveriesResponse"/>
+<xs:element name="getStringSearchMatches" type="tns:getStringSearchMatches"/>
+<xs:element name="getStringSearchMatchesResponse" type="tns:getStringSearchMatchesResponse"/>
+<xs:complexType name="getStringSearchMatches">
+<xs:sequence>
+<xs:element minOccurs="0" name="projectId" type="xs:string"/>
+<xs:element minOccurs="0" name="stringSearchDiscovery" type="tns:stringSearchDiscovery"/>
+<xs:element minOccurs="0" name="contextCharCount" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="stringSearchDiscovery">
+<xs:complexContent>
+<xs:extension base="tns:discovery">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="matchLocations" nillable="true" type="tns:stringSearchMatchLocation"/>
+<xs:element minOccurs="0" name="stringSearchId" type="xs:string"/>
+<xs:element minOccurs="0" name="stringSearchPatternOriginType" type="common:stringSearchPatternOriginType"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType abstract="true" name="discovery">
+<xs:sequence>
+<xs:element minOccurs="0" name="discoveredDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="discoveryType" type="tns:discoveryType"/>
+<xs:element minOccurs="0" name="filePath" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="stringSearchMatchLocation">
+<xs:sequence>
+<xs:element minOccurs="0" name="firstLine" type="xs:int"/>
+<xs:element minOccurs="0" name="identificationStatus" type="tns:identificationStatus"/>
+<xs:element minOccurs="0" name="matchLocationId" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getStringSearchMatchesResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:stringSearchDiscoveryWithMatches"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="stringSearchDiscoveryWithMatches">
+<xs:complexContent>
+<xs:extension base="tns:discovery">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="matches" nillable="true" type="tns:stringSearchMatch"/>
+<xs:element minOccurs="0" name="stringSearchId" type="xs:string"/>
+<xs:element minOccurs="0" name="stringSearchPatternOriginType" type="common:stringSearchPatternOriginType"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="stringSearchMatch">
+<xs:complexContent>
+<xs:extension base="tns:stringSearchMatchLocation">
+<xs:sequence>
+<xs:element minOccurs="0" name="context" type="xs:base64Binary"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="contextHighlights" nillable="true" type="tns:highlight"/>
+<xs:element minOccurs="0" name="firstPos" type="xs:int"/>
+<xs:element minOccurs="0" name="lastLine" type="xs:int"/>
+<xs:element minOccurs="0" name="lastPos" type="xs:int"/>
+<xs:element minOccurs="0" name="match" type="xs:base64Binary"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="highlight">
+<xs:sequence>
+<xs:element minOccurs="0" name="firstIndex" type="xs:int"/>
+<xs:element minOccurs="0" name="lastIndex" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getLastAnalysisCodeTreeInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="projectId" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getLastAnalysisCodeTreeInfoResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:analysisCodeTreeInfo"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="analysisCodeTreeInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="analyzedBytes" type="xs:long"/>
+<xs:element minOccurs="0" name="analyzedBytesDelta" type="xs:long"/>
+<xs:element minOccurs="0" name="analyzedFileCount" type="xs:int"/>
+<xs:element minOccurs="0" name="analyzedFileCountDelta" type="xs:int"/>
+<xs:element minOccurs="0" name="skippedBytes" type="xs:long"/>
+<xs:element minOccurs="0" name="skippedFileCount" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getLastAnalysisInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="projectId" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getLastAnalysisInfoResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:analysisInfo"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="analysisInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="analysisFinishedDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="analysisStartedDate" type="xs:dateTime"/>
+<xs:element minOccurs="0" name="analyzedBy" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getDependencyDiscoveries">
+<xs:sequence>
+<xs:element minOccurs="0" name="projectId" type="xs:string"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="nodes" type="codetree:codeTreeNode"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getDependencyDiscoveriesResponse">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:dependencyDiscovery"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="dependencyDiscovery">
+<xs:complexContent>
+<xs:extension base="tns:discovery">
+<xs:sequence>
+<xs:element minOccurs="0" name="dependencyId" type="xs:string"/>
+<xs:element minOccurs="0" name="dependencyType" type="tns:dependencyType"/>
+<xs:element minOccurs="0" name="firstLine" type="xs:int"/>
+<xs:element minOccurs="0" name="identificationStatus" type="tns:identificationStatus"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="getStringSearchDiscoveries">
+<xs:sequence>
+<xs:element minOccurs="0" name="projectId" type="xs:string"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="nodes" type="codetree:codeTreeNode"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="patternTypes" type="common:stringSearchPatternOriginType"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getStringSearchDiscoveriesResponse">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:stringSearchDiscovery"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getCodeMatchSourceInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="projectId" type="xs:string"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="nodes" type="codetree:codeTreeNode"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="filterByCodeMatchType" type="tns:codeMatchType"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getCodeMatchSourceInfoResponse">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:discoverySourceInfo"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="discoverySourceInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="componentSnippet" type="common:snippet"/>
+<xs:element minOccurs="0" name="componentSourcePath" type="xs:string"/>
+<xs:element minOccurs="0" name="componentSourceUrl" type="xs:string"/>
+<xs:element minOccurs="0" name="discoveredComponentKey" type="common:componentKey"/>
+<xs:element minOccurs="0" name="discoveryType" type="tns:discoveryType"/>
+<xs:element minOccurs="0" name="projectPath" type="xs:string"/>
+<xs:element minOccurs="0" name="projectSnippet" type="common:snippet"/>
+<xs:element minOccurs="0" name="projectSourceUrl" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getLastAnalysisEnvironmentInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="projectId" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getLastAnalysisEnvironmentInfoResponse">
+<xs:sequence>
+<xs:element minOccurs="0" name="return" type="tns:analysisEnvironmentInfo"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="analysisEnvironmentInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="analysisReleaseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="bdsBasicDb" type="xs:string"/>
+<xs:element minOccurs="0" name="bdsCustomDb" type="xs:string"/>
+<xs:element minOccurs="0" name="clientLibrary" type="xs:string"/>
+<xs:element minOccurs="0" name="fingerprintBasicDb" type="xs:string"/>
+<xs:element minOccurs="0" name="fingerprintCustomDb" type="xs:string"/>
+<xs:element minOccurs="0" name="hostname" type="xs:string"/>
+<xs:element minOccurs="0" name="osArchitecture" type="xs:string"/>
+<xs:element minOccurs="0" name="osName" type="xs:string"/>
+<xs:element minOccurs="0" name="osUserCountry" type="xs:string"/>
+<xs:element minOccurs="0" name="osUserLanguage" type="xs:string"/>
+<xs:element minOccurs="0" name="osUserName" type="xs:string"/>
+<xs:element minOccurs="0" name="osUserTz" type="xs:string"/>
+<xs:element minOccurs="0" name="releaseDescription" type="xs:string"/>
+<xs:element minOccurs="0" name="serverLibrary" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getDiscoveredDiscoveryTypes">
+<xs:sequence>
+<xs:element minOccurs="0" name="projectId" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getDiscoveredDiscoveryTypesResponse">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:discoveryType"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getFileDiscoveryPatternDiscoveries">
+<xs:sequence>
+<xs:element minOccurs="0" name="projectId" type="xs:string"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="nodes" type="codetree:codeTreeNode"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getFileDiscoveryPatternDiscoveriesResponse">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:fileDiscoveryPatternDiscovery"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="fileDiscoveryPatternDiscovery">
+<xs:complexContent>
+<xs:extension base="tns:discovery">
+<xs:sequence>
+<xs:element minOccurs="0" name="identificationStatus" type="tns:identificationStatus"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="deleteRejectedDiscoveries">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="deleteRejectedDiscoveriesResponse">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="getCodeMatchDiscoveries">
+<xs:sequence>
+<xs:element minOccurs="0" name="projectId" type="xs:string"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="partialCodeTree" type="codetree:codeTreeNode"/>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="filterByCodeMatchType" type="tns:codeMatchType"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="getCodeMatchDiscoveriesResponse">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:codeMatchDiscovery"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="codeMatchDiscovery">
+<xs:complexContent>
+<xs:extension base="tns:discovery">
+<xs:sequence>
+<xs:element minOccurs="0" name="codeMatchType" type="tns:codeMatchType"/>
+<xs:element minOccurs="0" name="discoveredComponentKey" type="common:componentKey"/>
+<xs:element minOccurs="0" name="hasComponentLicenseConflict" type="xs:boolean"/>
+<xs:element minOccurs="0" name="hasDeclaredLicenseConflict" type="xs:boolean"/>
+<xs:element minOccurs="0" name="identificationStatus" type="tns:identificationStatus"/>
+<xs:element minOccurs="0" name="matchRatioAsPercent" type="xs:int"/>
+<xs:element minOccurs="0" name="matchingFileLocation" type="tns:codeMatchLocation"/>
+<xs:element minOccurs="0" name="matchingLicenseInfo" type="license:licenseInfo"/>
+<xs:element minOccurs="0" name="matchingSourceInfo" type="tns:codeMatchSourceInfo"/>
+<xs:element minOccurs="0" name="sourceFileLocation" type="tns:codeMatchLocation"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="codeMatchLocation">
+<xs:sequence>
+<xs:element minOccurs="0" name="filePath" type="xs:string"/>
+<xs:element minOccurs="0" name="snippet" type="common:snippet"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="codeMatchSourceInfo">
+<xs:sequence>
+<xs:element minOccurs="0" name="firstLine" type="xs:int"/>
+<xs:element minOccurs="0" name="lineCount" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="identificationStatus">
+<xs:restriction base="xs:string">
+<xs:enumeration value="PENDING_IDENTIFICATION"/>
+<xs:enumeration value="DECLARED"/>
+<xs:enumeration value="PARENT_FOLDER_DECLARED"/>
+<xs:enumeration value="DECLARED_NON_PRECISION"/>
+<xs:enumeration value="DECLARED_NON_PRECISION_FOLDER"/>
+<xs:enumeration value="DEPENDENCY_IDENTIFIED_FILE"/>
+<xs:enumeration value="DEPENDENCY_IDENTIFIED_FOLDER"/>
+<xs:enumeration value="DEPENDENCY_IDENTIFIED_PARENT_FILE"/>
+<xs:enumeration value="DEPENDENCY_IDENTIFIED_PARENT_FOLDER"/>
+<xs:enumeration value="STRING_SEARCH_IDENTIFIED_FILE"/>
+<xs:enumeration value="STRING_SEARCH_IDENTIFIED_FOLDER"/>
+<xs:enumeration value="CODE_MATCH_IDENTIFIED_FILE"/>
+<xs:enumeration value="CODE_MATCH_IDENTIFIED_FOLDER"/>
+<xs:enumeration value="CODE_MATCH_IDENTIFIED_FILE_GENERIC_VERSION"/>
+<xs:enumeration value="CODE_MATCH_IDENTIFIED_FOLDER_GENERIC_VERSION"/>
+<xs:enumeration value="CODE_MATCH_IDENTIFIED_FILE_SPECIFIC_VERSION"/>
+<xs:enumeration value="CODE_MATCH_IDENTIFIED_FOLDER_SPECIFIC_VERSION"/>
+<xs:enumeration value="IDENTIFIED_SIDE_EFFECT"/>
+<xs:enumeration value="CODE_MATCH_EXCLUDED_FILE"/>
+<xs:enumeration value="CODE_MATCH_EXCLUDED_FOLDER"/>
+<xs:enumeration value="CODE_MATCH_EXCLUDED_FILE_GENERIC"/>
+<xs:enumeration value="CODE_MATCH_EXCLUDED_FOLDER_GENERIC"/>
+<xs:enumeration value="CODE_MATCH_IDENTIFIED_SNIPPET_NON_PRECISION"/>
+<xs:enumeration value="CODE_MATCH_IDENTIFIED_SNIPPET_NON_PRECISION_SIDE_EFFECT"/>
+<xs:enumeration value="CODE_MATCH_IDENTIFIED_NON_PRECISION_FILE"/>
+<xs:enumeration value="CODE_MATCH_IDENTIFIED_NON_PRECISION_FOLDER"/>
+<xs:enumeration value="CODE_MATCH_IDENTIFIED_NON_PRECISION_FILE_GENERIC"/>
+<xs:enumeration value="CODE_MATCH_IDENTIFIED_NON_PRECISION_FOLDER_GENERIC"/>
+<xs:enumeration value="CODE_MATCH_IDENTIFIED_NON_PRECISION_FILE_SPECIFIC_VERSION"/>
+<xs:enumeration value="CODE_MATCH_IDENTIFIED_NON_PRECISION_FOLDER_SPECIFIC_VERSION"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="discoveryType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="SNIPPET"/>
+<xs:enumeration value="FILE"/>
+<xs:enumeration value="FILE_NAME_IDENTITY"/>
+<xs:enumeration value="STRING_SEARCH"/>
+<xs:enumeration value="STRING_SEARCH_REGULAR_EXPRESSION"/>
+<xs:enumeration value="DEPENDENCY_JAVA_PACKAGE"/>
+<xs:enumeration value="DEPENDENCY_JAVA_IMPORT"/>
+<xs:enumeration value="DEPENDENCY_NON_JAVA_SOURCE"/>
+<xs:enumeration value="DEPENDENCY_NON_JAVA_BINARY"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="dependencyType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="DEPENDENCY_JAVA_PACKAGE"/>
+<xs:enumeration value="DEPENDENCY_JAVA_IMPORT"/>
+<xs:enumeration value="DEPENDENCY_NON_JAVA_SOURCE"/>
+<xs:enumeration value="DEPENDENCY_NON_JAVA_BINARY"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="codeMatchType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="PRECISION"/>
+<xs:enumeration value="GENERIC"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:common" version="1.0">
+<xs:complexType name="snippet">
+<xs:sequence>
+<xs:element minOccurs="0" name="firstLine" type="xs:int"/>
+<xs:element minOccurs="0" name="lastLine" type="xs:int"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="componentKey">
+<xs:sequence>
+<xs:element minOccurs="0" name="componentId" type="xs:string"/>
+<xs:element minOccurs="0" name="versionId" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="stringSearchPatternOriginType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="STANDARD"/>
+<xs:enumeration value="CUSTOM"/>
+<xs:enumeration value="PROJECT_LOCAL"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:codetree" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:codetree" version="1.0">
+<xs:complexType name="codeTreeNode">
+<xs:complexContent>
+<xs:extension base="tns:sourceNode">
+<xs:sequence>
+<xs:element maxOccurs="unbounded" minOccurs="0" name="nodeCounts" nillable="true" type="tns:nodeCount"/>
+</xs:sequence>
+</xs:extension>
+</xs:complexContent>
+</xs:complexType>
+<xs:complexType name="sourceNode">
+<xs:sequence>
+<xs:element minOccurs="0" name="name" type="xs:string"/>
+<xs:element minOccurs="0" name="nodeType" type="tns:codeTreeNodeType"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="nodeCount">
+<xs:sequence>
+<xs:element minOccurs="0" name="count" type="xs:long"/>
+<xs:element minOccurs="0" name="countType" type="tns:nodeCountType"/>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="nodeCountType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="VIOLATIONS"/>
+<xs:enumeration value="LICENSE_CONFLICTS"/>
+<xs:enumeration value="DECLARED"/>
+<xs:enumeration value="NO_ISSUES"/>
+<xs:enumeration value="PENDING_REVIEW"/>
+<xs:enumeration value="APPROVED"/>
+<xs:enumeration value="DISAPPROVED"/>
+<xs:enumeration value="CODE_MATCH_IDENTIFIED"/>
+<xs:enumeration value="DEPENDENCY_IDENTIFIED"/>
+<xs:enumeration value="STRING_SEARCH_IDENTIFIED"/>
+<xs:enumeration value="FILES"/>
+<xs:enumeration value="FOLDERS"/>
+<xs:enumeration value="DISCOVERIES"/>
+<xs:enumeration value="PENDING_ID_ALL"/>
+<xs:enumeration value="PENDING_ID_CODE_MATCH"/>
+<xs:enumeration value="PENDING_ID_STRING_SEARCH"/>
+<xs:enumeration value="PENDING_ID_DEPENDENCY"/>
+<xs:enumeration value="NO_DISCOVERIES"/>
+<xs:enumeration value="PENDING_ID_FILE_PATTERN"/>
+<xs:enumeration value="DISCOVERED_COMPONENTS"/>
+<xs:enumeration value="DISCOVERED_LICENSES"/>
+<xs:enumeration value="MANUALLY_IDENTIFIED_FILES"/>
+<xs:enumeration value="RAPID_IDENTIFIED_FILES"/>
+<xs:enumeration value="ANALYZED_FILE_BYTES"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:simpleType name="codeTreeNodeType">
+<xs:restriction base="xs:string">
+<xs:enumeration value="FILE"/>
+<xs:enumeration value="EXPANDED_ARCHIVE"/>
+<xs:enumeration value="FOLDER"/>
+</xs:restriction>
+</xs:simpleType>
+</xs:schema>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:blackducksoftware.com:sdk:v7.0:fault" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="urn:blackducksoftware.com:sdk:v7.0:fault">
+<xs:element name="sdkFaultDetails" type="tns:sdkFaultDetails"/>
+<xs:complexType name="sdkFaultDetails">
+<xs:sequence>
+<xs:element minOccurs="0" name="errorCode" type="tns:errorCode"/>
+<xs:element minOccurs="0" name="message" type="xs:string"/>
+</xs:sequence>
+</xs:complexType>
+<xs:simpleType name="errorCode">
+<xs:restriction base="xs:string">
+<xs:enumeration value="SERVER_REGISTRATION_ERROR"/>
+<xs:enumeration value="SERVER_PERFORMING_UPDATE"/>
+<xs:enumeration value="NO_ANALYSIS_RUNNING"/>
+<xs:enumeration value="ANALYSIS_ALREADY_RUNNING"/>
+<xs:enumeration value="INVALID_SOURCE_LOCATION_FOR_SCAN"/>
+<xs:enumeration value="PROJECT_COULD_NOT_BE_LOCKED"/>
+<xs:enumeration value="LICENSE_NAME_TOO_LONG"/>
+<xs:enumeration value="LICENSE_TYPE_STANDARD_CANT_CHANGE_NAME"/>
+<xs:enumeration value="TAG_NOT_FOUND"/>
+<xs:enumeration value="OBLIGATION_IS_REFERENCED"/>
+<xs:enumeration value="OBLIGATION_NOT_ASSIGNED"/>
+<xs:enumeration value="DUPLICATE_LICENSE_NAME"/>
+<xs:enumeration value="LICENSE_NOT_FOUND"/>
+<xs:enumeration value="LICENSE_IN_USE"/>
+<xs:enumeration value="CAN_NOT_RESET_CUSTOM_LICENSE"/>
+<xs:enumeration value="DUPLICATE_OBLIGATION_CATEGORY"/>
+<xs:enumeration value="OBLIGATION_CATEGORY_NOT_FOUND"/>
+<xs:enumeration value="OBLIGATION_CATEGORY_IN_USE"/>
+<xs:enumeration value="OBLIGATION_CATEGORY_CAN_NOT_BE_DELETED"/>
+<xs:enumeration value="DUPLICATE_OBLIGATION_NAME"/>
+<xs:enumeration value="DUPLICATE_OBLIGATION_ASSIGNMENT"/>
+<xs:enumeration value="INVALID_OBLIGATION_NAME"/>
+<xs:enumeration value="OBLIGATION_NOT_FOUND"/>
+<xs:enumeration value="OBLIGATION_IN_USE_BY_PROJECTS"/>
+<xs:enumeration value="OBLIGATION_IN_USE_BY_LICENSES"/>
+<xs:enumeration value="RAPID_ID_CONFIGURATION_NOT_FOUND"/>
+<xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_NAME"/>
+<xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_ASSOCIATION"/>
+<xs:enumeration value="RAPID_ID_OPERATION_TYPE_DUPLICATE"/>
+<xs:enumeration value="LEARNED_IDENTIFICATION_NOT_FOUND"/>
+<xs:enumeration value="USER_NOT_ASSIGNED_TO_PROJECT"/>
+<xs:enumeration value="UNKNOWN_ANALYSIS_DATABASE_OPTION"/>
+<xs:enumeration value="STRING_SEARCH_PATTERN_UPDATE_OF_STANDARD_PATTERN_NOT_ALLOWED"/>
+<xs:enumeration value="CUSTOM_COMPONENT_IN_USE"/>
+<xs:enumeration value="CUSTOM_COMPONENT_HAS_NO_SOURCE"/>
+<xs:enumeration value="DUPLICATE_TEMPLATE_TITLE"/>
+<xs:enumeration value="REPORT_TEMPLATE_NOT_FOUND"/>
+<xs:enumeration value="DEFAULT_REPORT_TEMPLATE_NOT_SET"/>
+<xs:enumeration value="DUPLICATE_PROJECT_NAME"/>
+<xs:enumeration value="PROJECT_ANALYSIS_LOCAL_SOURCE_NOT_SUPPORTED"/>
+<xs:enumeration value="OPTIONS_SETTING_NOT_ALLOWED"/>
+<xs:enumeration value="OPTIONS_CANNOT_BE_FORCED_FOR_LOCAL_SEARCH_SETTINGS"/>
+<xs:enumeration value="DUPLICATE_STRING_SEARCH_PATTERN_NAME"/>
+<xs:enumeration value="DUPLICATE_FILE_DISCOVERY_PATTERN_NAME"/>
+<xs:enumeration value="LINKING_PROJECTS_FORCES_CLONING_OF_WORK_RESULTS"/>
+<xs:enumeration value="PROJECT_NOT_YET_ANALYZED"/>
+<xs:enumeration value="DUPLICATE_USER_ASSIGNMENT"/>
+<xs:enumeration value="PROJECT_NAME_TOO_LONG"/>
+<xs:enumeration value="INVALID_PROJECT_NAME"/>
+<xs:enumeration value="PROJECT_NOT_FOUND"/>
+<xs:enumeration value="PROJECT_SYNCID_INVALID"/>
+<xs:enumeration value="LINKING_GLOBALLY_DISABLED"/>
+<xs:enumeration value="PROJECT_IN_USE"/>
+<xs:enumeration value="STRING_SEARCH_PATTERN_NAME_TOO_LONG"/>
+<xs:enumeration value="ROLE_NOT_FOUND"/>
+<xs:enumeration value="MINIMUM_ONE_ADMIN_USER"/>
+<xs:enumeration value="REMOVE_SELF_AS_ADMIN_USER"/>
+<xs:enumeration value="DUPLICATE_EMAIL_ADDRESS"/>
+<xs:enumeration value="EMAIL_TOO_LONG"/>
+<xs:enumeration value="FIRST_NAME_TOO_LONG"/>
+<xs:enumeration value="LAST_NAME_TOO_LONG"/>
+<xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_TOO_LONG"/>
+<xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_DUPLICATE"/>
+<xs:enumeration value="INVALID_EMAIL_ADDRESS"/>
+<xs:enumeration value="USER_NOT_FOUND"/>
+<xs:enumeration value="PASSWORD_TOO_SHORT"/>
+<xs:enumeration value="PASSWORD_TOO_LONG"/>
+<xs:enumeration value="STRING_SEARCH_DISCOVERY_NOT_FOUND"/>
+<xs:enumeration value="STRING_SEARCH_REQUIRES_UPLOADED_SOURCE"/>
+<xs:enumeration value="USAGE_LEVEL_INVALID_FOR_GIVEN_ID"/>
+<xs:enumeration value="CANNOT_COPY_ID_PROJECT_SYNCHRONIZED"/>
+<xs:enumeration value="CODE_TREE_PATH_NOT_FOUND"/>
+<xs:enumeration value="CODE_TREE_GUARANTEED_EMPTY_RESULT"/>
+<xs:enumeration value="NO_FILE_CONTENT"/>
+<xs:enumeration value="CODE_TREE_PARENT_PATH_NOT_FOUND"/>
+<xs:enumeration value="DUPLICATE_COMPONENT_NAME"/>
+<xs:enumeration value="COMPONENT_NAME_TOO_LONG"/>
+<xs:enumeration value="INVALID_COMPONENT_NAME"/>
+<xs:enumeration value="COMPONENT_NOT_FOUND"/>
+<xs:enumeration value="COMPONENT_VERSION_NOT_FOUND"/>
+<xs:enumeration value="OPTION_IS_FORCED"/>
+<xs:enumeration value="FILE_DISCOVERY_PATTERN_NOT_FOUND"/>
+<xs:enumeration value="STRING_SEARCH_PATTERN_NOT_FOUND"/>
+<xs:enumeration value="UNEXPECTED_EXCEPTION_ERROR"/>
+<xs:enumeration value="UNKNOWN_REPORT_SECTION_ERROR"/>
+<xs:enumeration value="PROTEX_FILE_SOURCE_NOT_AVAILABLE"/>
+<xs:enumeration value="NOT_A_FILE_PATH"/>
+<xs:enumeration value="ARGUMENT_VALUE_INVALID"/>
+<xs:enumeration value="METHOD_NOT_YET_IMPLEMENTED"/>
+<xs:enumeration value="ARGUMENT_NOT_YET_IMPLEMENTED"/>
+<xs:enumeration value="ARGUMENT_VALUE_NOT_YET_IMPLEMENTED"/>
+<xs:enumeration value="INVALID_CREDENTIALS"/>
+<xs:enumeration value="INSUFFICIENT_PERMISSION"/>
+<xs:enumeration value="UNKNOWN_ERROR"/>
+<xs:enumeration value="BOM_REFRESH_NOT_FINISHED"/>
+<xs:enumeration value="BOM_COMPONENT_PROJECT_CANT_UPDATE"/>
+<xs:enumeration value="UPDATE_BOM_COMPONENT_VERSION_NAME_OF_COMPONENT_VERSION_PROHIBITED"/>
+<xs:enumeration value="TODO_CONVERT_EXCEPTION"/>
+<xs:enumeration value="UNEXPECTED_RETURN_VALUE_ERROR"/>
+<xs:enumeration value="OUT_OF_MEMORY_ERROR"/>
+<xs:enumeration value="NO_SESSION_ID"/>
+<xs:enumeration value="INVALID_SORT_KEY"/>
+<xs:enumeration value="CAN_NOT_OPEN_TEMP_FILE"/>
+<xs:enumeration value="CODEMATCH_SELF_IDENTIFICATION_MUST_MATCH_DECLARED_LICENSE"/>
+<xs:enumeration value="IDENTIFICATION_NOT_FOUND"/>
+<xs:enumeration value="IDENTIFICATION_LEARNING_CONFLICT"/>
+<xs:enumeration value="EXTERNAL_NAMESPACE_NAME_TOO_LONG"/>
+<xs:enumeration value="DUPLICATE_EXTERNAL_NAMESPACE_KEY"/>
+<xs:enumeration value="EXTERNAL_NAMESPACE_NOT_FOUND"/>
+<xs:enumeration value="EXTERNAL_ID_MAPPING_NOT_FOUND"/>
+<xs:enumeration value="DUPLICATE_EXTERNAL_ID_MAPPING"/>
+<xs:enumeration value="TEMPLATE_NOT_FOUND"/>
+<xs:enumeration value="DUPLICATE_VERSION_NAME"/>
+</xs:restriction>
+</xs:simpleType>
+<xs:element name="SdkFault" nillable="true" type="tns:sdkFaultDetails"/>
+</xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getDependencyDiscoveriesResponse">
+    <wsdl:part name="parameters" element="tns:getDependencyDiscoveriesResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCodeMatchDiscoveriesResponse">
+    <wsdl:part name="parameters" element="tns:getCodeMatchDiscoveriesResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDependencyDiscoveries">
+    <wsdl:part name="parameters" element="tns:getDependencyDiscoveries">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getStringSearchDiscoveries">
+    <wsdl:part name="parameters" element="tns:getStringSearchDiscoveries">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getStringSearchMatchesResponse">
+    <wsdl:part name="parameters" element="tns:getStringSearchMatchesResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLastAnalysisInfoResponse">
+    <wsdl:part name="parameters" element="tns:getLastAnalysisInfoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLastAnalysisEnvironmentInfo">
+    <wsdl:part name="parameters" element="tns:getLastAnalysisEnvironmentInfo">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDiscoveredDiscoveryTypes">
+    <wsdl:part name="parameters" element="tns:getDiscoveredDiscoveryTypes">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getFileDiscoveryPatternDiscoveries">
+    <wsdl:part name="parameters" element="tns:getFileDiscoveryPatternDiscoveries">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getStringSearchMatches">
+    <wsdl:part name="parameters" element="tns:getStringSearchMatches">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCodeMatchSourceInfoResponse">
+    <wsdl:part name="parameters" element="tns:getCodeMatchSourceInfoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLastAnalysisCodeTreeInfo">
+    <wsdl:part name="parameters" element="tns:getLastAnalysisCodeTreeInfo">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getStringSearchDiscoveriesResponse">
+    <wsdl:part name="parameters" element="tns:getStringSearchDiscoveriesResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLastAnalysisInfo">
+    <wsdl:part name="parameters" element="tns:getLastAnalysisInfo">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getFileDiscoveryPatternDiscoveriesResponse">
+    <wsdl:part name="parameters" element="tns:getFileDiscoveryPatternDiscoveriesResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SdkFault">
+    <wsdl:part name="SdkFault" element="ns1:SdkFault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCodeMatchSourceInfo">
+    <wsdl:part name="parameters" element="tns:getCodeMatchSourceInfo">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLastAnalysisEnvironmentInfoResponse">
+    <wsdl:part name="parameters" element="tns:getLastAnalysisEnvironmentInfoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteRejectedDiscoveries">
+    <wsdl:part name="parameters" element="tns:deleteRejectedDiscoveries">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getDiscoveredDiscoveryTypesResponse">
+    <wsdl:part name="parameters" element="tns:getDiscoveredDiscoveryTypesResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="deleteRejectedDiscoveriesResponse">
+    <wsdl:part name="parameters" element="tns:deleteRejectedDiscoveriesResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLastAnalysisCodeTreeInfoResponse">
+    <wsdl:part name="parameters" element="tns:getLastAnalysisCodeTreeInfoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getCodeMatchDiscoveries">
+    <wsdl:part name="parameters" element="tns:getCodeMatchDiscoveries">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:portType name="DiscoveryApi">
+    <wsdl:operation name="getStringSearchMatches">
+      <wsdl:input name="getStringSearchMatches" message="tns:getStringSearchMatches">
+    </wsdl:input>
+      <wsdl:output name="getStringSearchMatchesResponse" message="tns:getStringSearchMatchesResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLastAnalysisCodeTreeInfo">
+      <wsdl:input name="getLastAnalysisCodeTreeInfo" message="tns:getLastAnalysisCodeTreeInfo">
+    </wsdl:input>
+      <wsdl:output name="getLastAnalysisCodeTreeInfoResponse" message="tns:getLastAnalysisCodeTreeInfoResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLastAnalysisInfo">
+      <wsdl:input name="getLastAnalysisInfo" message="tns:getLastAnalysisInfo">
+    </wsdl:input>
+      <wsdl:output name="getLastAnalysisInfoResponse" message="tns:getLastAnalysisInfoResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDependencyDiscoveries">
+      <wsdl:input name="getDependencyDiscoveries" message="tns:getDependencyDiscoveries">
+    </wsdl:input>
+      <wsdl:output name="getDependencyDiscoveriesResponse" message="tns:getDependencyDiscoveriesResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getStringSearchDiscoveries">
+      <wsdl:input name="getStringSearchDiscoveries" message="tns:getStringSearchDiscoveries">
+    </wsdl:input>
+      <wsdl:output name="getStringSearchDiscoveriesResponse" message="tns:getStringSearchDiscoveriesResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCodeMatchSourceInfo">
+      <wsdl:input name="getCodeMatchSourceInfo" message="tns:getCodeMatchSourceInfo">
+    </wsdl:input>
+      <wsdl:output name="getCodeMatchSourceInfoResponse" message="tns:getCodeMatchSourceInfoResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLastAnalysisEnvironmentInfo">
+      <wsdl:input name="getLastAnalysisEnvironmentInfo" message="tns:getLastAnalysisEnvironmentInfo">
+    </wsdl:input>
+      <wsdl:output name="getLastAnalysisEnvironmentInfoResponse" message="tns:getLastAnalysisEnvironmentInfoResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDiscoveredDiscoveryTypes">
+      <wsdl:input name="getDiscoveredDiscoveryTypes" message="tns:getDiscoveredDiscoveryTypes">
+    </wsdl:input>
+      <wsdl:output name="getDiscoveredDiscoveryTypesResponse" message="tns:getDiscoveredDiscoveryTypesResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getFileDiscoveryPatternDiscoveries">
+      <wsdl:input name="getFileDiscoveryPatternDiscoveries" message="tns:getFileDiscoveryPatternDiscoveries">
+    </wsdl:input>
+      <wsdl:output name="getFileDiscoveryPatternDiscoveriesResponse" message="tns:getFileDiscoveryPatternDiscoveriesResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteRejectedDiscoveries">
+      <wsdl:input name="deleteRejectedDiscoveries" message="tns:deleteRejectedDiscoveries">
+    </wsdl:input>
+      <wsdl:output name="deleteRejectedDiscoveriesResponse" message="tns:deleteRejectedDiscoveriesResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCodeMatchDiscoveries">
+      <wsdl:input name="getCodeMatchDiscoveries" message="tns:getCodeMatchDiscoveries">
+    </wsdl:input>
+      <wsdl:output name="getCodeMatchDiscoveriesResponse" message="tns:getCodeMatchDiscoveriesResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="DiscoveryApiServiceSoapBinding" type="tns:DiscoveryApi">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getStringSearchMatches">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getStringSearchMatches">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getStringSearchMatchesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLastAnalysisCodeTreeInfo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getLastAnalysisCodeTreeInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getLastAnalysisCodeTreeInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLastAnalysisInfo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getLastAnalysisInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getLastAnalysisInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDependencyDiscoveries">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getDependencyDiscoveries">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getDependencyDiscoveriesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getStringSearchDiscoveries">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getStringSearchDiscoveries">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getStringSearchDiscoveriesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCodeMatchSourceInfo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getCodeMatchSourceInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCodeMatchSourceInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLastAnalysisEnvironmentInfo">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getLastAnalysisEnvironmentInfo">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getLastAnalysisEnvironmentInfoResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getDiscoveredDiscoveryTypes">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getDiscoveredDiscoveryTypes">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getDiscoveredDiscoveryTypesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getFileDiscoveryPatternDiscoveries">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getFileDiscoveryPatternDiscoveries">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getFileDiscoveryPatternDiscoveriesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="deleteRejectedDiscoveries">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="deleteRejectedDiscoveries">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="deleteRejectedDiscoveriesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getCodeMatchDiscoveries">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getCodeMatchDiscoveries">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getCodeMatchDiscoveriesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="DiscoveryApiService">
+    <wsdl:port name="DiscoveryApiPort" binding="tns:DiscoveryApiServiceSoapBinding">
+      <soap:address location="http://localhost:9090/DiscoveryApiPort"/>
+    </wsdl:port>
+  </wsdl:service>
 </wsdl:definitions>

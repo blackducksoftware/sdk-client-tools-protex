@@ -74,13 +74,13 @@ public class SampleGetCustomComponentByName extends BDProtexSample {
 
             try {
                 List<Component> components = componentApi.getComponentsByName(ccName, null);
-                if (components != null || components.size() == 1) {
+                if (components != null && components.size() == 1) {
                     customComponent = components.get(0);
                 } else {
-                    throw new RuntimeException("getCustomComponentByName() failed - multiple versions found with same name");
+                    throw new RuntimeException("ComponentApi.getComponentsByName() failed - " + (components != null ? "multiple" : "no") + " versions found");
                 }
             } catch (SdkFault e) {
-                System.err.println("getCustomComponentByName() failed: " + e.getMessage());
+                System.err.println("ComponentApi.getComponentsByName() failed: " + e.getMessage());
                 throw new RuntimeException(e);
             }
 
