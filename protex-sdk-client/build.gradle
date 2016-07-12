@@ -82,3 +82,7 @@ generateClient << {
 }
 
 compileJava.dependsOn generateClient
+
+stageDevelopment{
+    dependsOn generateClient
+}
