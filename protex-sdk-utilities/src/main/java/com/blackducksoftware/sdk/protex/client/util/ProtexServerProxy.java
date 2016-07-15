@@ -1233,7 +1233,7 @@ public class ProtexServerProxy implements Closeable {
         REPORT("report", ReportApi.class),
         ROLE("role", RoleApi.class),
         USER("user", UserApi.class),
-        SYNCHRONIZATION("synchronization", SynchronizationApi.class), ;
+        SYNCHRONIZATION("synchronization", SynchronizationApi.class);
 
         /** The URL which references the WSDL file on a protex server for the API */
         private final String serviceStub;
