@@ -2,9 +2,12 @@ package com.blackducksoftware.sdk.protex.client.examples.report;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import com.blackducksoftware.sdk.fault.SdkFault;
 import com.blackducksoftware.sdk.protex.client.examples.BDProtexSample;
@@ -144,23 +147,54 @@ public class SampleReportDataIdentifiedFiles extends BDProtexSample {
                     } else if (IdentificationType.STRING_SEARCH.equals(id.getType())) {
                         StringSearchIdentification ssId = (StringSearchIdentification) id;
 
-                        StringBuilder fileLines = new StringBuilder();
-                        StringBuilder comments = new StringBuilder();
+                        Collections.sort(ssId.getMatchLocations(), new Comparator<IdentifiedStringSearchMatchLocation>() {
+                            @Override
+                            public int compare(IdentifiedStringSearchMatchLocation hit1, IdentifiedStringSearchMatchLocation hit2) {
+                                return hit1.getFirstLine().compareTo(hit2.getFirstLine());
+                            }
+                        });
+
+                        StringJoiner fileLines = new StringJoiner();
+                        Map<String, List<String>> commentsMap = new LinkedHashMap<String, List<String>>();
 
                         for (IdentifiedStringSearchMatchLocation hit : ssId.getMatchLocations()) {
-                            if (fileLines.length() > 0) {
-                                fileLines.append(", ");
+                            String lineStr = toString(hit.getFirstLine());
+                            fileLines.append(lineStr);
+
+                            String oneComment = hit.getIdentificationComment();
+                            if ((oneComment != null) && !oneComment.isEmpty()) {
+                                List<String> commentLines = commentsMap.get(oneComment);
+
+                                if (commentLines == null) {
+                                    commentLines = new ArrayList<String>();
+                                    commentsMap.put(oneComment, commentLines);
+                                }
+
+                                commentLines.add(lineStr);
                             }
-                            if (comments.length() > 0) {
-                                comments.append(", ");
-                            }
-                            fileLines.append(hit.getFirstLine());
-                            comments.append(hit.getIdentificationComment());
                         }
 
                         fileLine = fileLines.toString();
                         discovery = ssId.getStringSearchId();
-                        comment = comments.toString();
+
+                        if ((commentsMap.size() == 1) && (commentsMap.values().iterator().next().size() == ssId.getMatchLocations().size())) {
+                            comment = commentsMap.keySet().iterator().next();
+
+                        } else {
+                            StringJoiner comments = new StringJoiner();
+
+                            for (Entry<String, List<String>> commentsEntry : commentsMap.entrySet()) {
+                                StringJoiner commentLines = new StringJoiner();
+
+                                for (String lineStr : commentsEntry.getValue()) {
+                                    commentLines.append(lineStr);
+                                }
+
+                                comments.append("(", commentLines, ") ", commentsEntry.getKey());
+                            }
+
+                            comment = comments.toString();
+                        }
 
                     } else if (IdentificationType.DEPENDENCY.equals(id.getType())) {
                         DependencyIdentification dpId = (DependencyIdentification) id;
@@ -213,6 +247,65 @@ public class SampleReportDataIdentifiedFiles extends BDProtexSample {
         }
 
         return componentInfo;
+    }
+
+    private static class StringJoiner {
+
+        private final StringBuilder builder = new StringBuilder();
+
+        private final String joiner;
+
+        public StringJoiner() {
+            this(", ");
+        }
+
+        public StringJoiner(String joiner) {
+            this.joiner = joiner;
+        }
+
+        public int length() {
+            return builder.length();
+        }
+
+        public boolean isEmpty() {
+            return length() == 0;
+        }
+
+        public StringJoiner append(Object obj) {
+            String s = SampleReportDataIdentifiedFiles.toString(obj);
+            if ((s != null) && !s.isEmpty()) {
+                join();
+                builder.append(s);
+            }
+            return this;
+        }
+
+        public StringJoiner append(Object... objs) {
+            boolean join = true;
+            for (Object obj : objs) {
+                String s = SampleReportDataIdentifiedFiles.toString(obj);
+                if ((s != null) && !s.isEmpty()) {
+                    if (join) {
+                        join();
+                        join = false;
+                    }
+                    builder.append(s);
+                }
+            }
+            return this;
+        }
+
+        protected void join() {
+            if (!isEmpty()) {
+                builder.append(joiner);
+            }
+        }
+
+        @Override
+        public String toString() {
+            return builder.toString();
+        }
+
     }
 
 }
