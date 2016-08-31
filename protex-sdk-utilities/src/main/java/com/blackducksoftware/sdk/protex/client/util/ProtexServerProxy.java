@@ -1217,14 +1217,15 @@ public class ProtexServerProxy implements Closeable {
      *            The URL which corresponds to the communication point for the port object
      * @return An instance of the port object mapped to the specified class
      */
-    private static <T> Object getPortFromUrl(Class<T> serviceClass, String serviceUrl) {
+    @SuppressWarnings("unchecked")
+    private static <T> T getPortFromUrl(Class<T> serviceClass, String serviceUrl) {
         JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
         factory.setServiceClass(serviceClass);
         factory.setAddress(serviceUrl);
 
         logger.debug("getPortFromUrl: Service Url={}", serviceUrl);
 
-        return factory.create();
+        return (T) factory.create();
     }
 
     /**
