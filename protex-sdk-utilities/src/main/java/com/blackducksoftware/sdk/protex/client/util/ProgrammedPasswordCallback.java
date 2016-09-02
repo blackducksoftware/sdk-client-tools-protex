@@ -28,7 +28,6 @@ import javax.security.auth.callback.UnsupportedCallbackException;
 
 import org.apache.ws.security.WSPasswordCallback;
 
-
 public class ProgrammedPasswordCallback implements CallbackHandler {
 
     private final CallbackHandler callbackHandler;
@@ -39,20 +38,20 @@ public class ProgrammedPasswordCallback implements CallbackHandler {
 
     @Override
     public void handle(Callback[] callbacks) throws IOException, UnsupportedCallbackException {
-        WSPasswordCallback pc = null;
-
         if (callbacks != null) {
             for (Callback callback : callbacks) {
                 if (callback instanceof WSPasswordCallback) {
-                    pc = (WSPasswordCallback) callback;
+                    handle((WSPasswordCallback) callback);
                 } else {
                     throw new UnsupportedCallbackException(callback, "Unsupported callback type " + (callback != null ? callback.getClass().getName() : null)
                             + " provided. Only " + WSPasswordCallback.class.getName() + " is supported ");
                 }
             }
         }
+    }
 
-        String identifier = pc.getIdentifier();
+    protected void handle(WSPasswordCallback callback) throws IOException, UnsupportedCallbackException {
+        String identifier = callback.getIdentifier();
         NameCallback usernameCallback = new NameCallback("Username: ");
         PasswordCallback passwordCallback = new PasswordCallback("Password: ", false);
 
@@ -61,20 +60,17 @@ public class ProgrammedPasswordCallback implements CallbackHandler {
         String username = usernameCallback.getName();
 
         if (username == null) {
-            throw new UnsupportedCallbackException(pc,
-                    "Username not set in client. Call constructor method "
-                            + ProgrammedPasswordCallback.class.getName()
-                            + "(\"<your username>\", \"<your password>\")");
+            throw new UnsupportedCallbackException(callback, "Username not set in client. Call constructor method " + ProgrammedPasswordCallback.class.getName()
+                    + "(\"<your username>\", \"<your password>\")");
         }
 
         // set the password for our outgoing message.
         if (username.equals(identifier)) {
-            pc.setPassword(new String(passwordCallback.getPassword()));
+            callback.setPassword(new String(passwordCallback.getPassword()));
         } else {
-            throw new UnsupportedCallbackException(pc,
-                    "Password not set in client. Call constructor method "
-                            + ProgrammedPasswordCallback.class.getName()
-                            + "(\"<your username>\", \"<your password>\")");
+            throw new UnsupportedCallbackException(callback, "Password not set in client. Call constructor method " + ProgrammedPasswordCallback.class.getName()
+                    + "(\"<your username>\", \"<your password>\")");
         }
     }
+
 }
