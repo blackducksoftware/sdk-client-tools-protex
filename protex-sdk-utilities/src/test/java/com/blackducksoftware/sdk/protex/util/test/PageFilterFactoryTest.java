@@ -198,7 +198,7 @@ public class PageFilterFactoryTest {
 
         Assert.assertNotNull(pageFilter);
         Assert.assertEquals(pageFilter.getFirstRowIndex(), Integer.valueOf(0));
-        Assert.assertEquals(pageFilter.getLastRowIndex(), Integer.valueOf(10));
+        Assert.assertEquals(pageFilter.getLastRowIndex(), Integer.valueOf(9));
         Assert.assertEquals(pageFilter.getSortedColumn(), ComponentColumn.NAME);
         Assert.assertEquals(pageFilter.getSortType(), SortType.ALPHABETICAL_CASE_INSENSITIVE);
         Assert.assertTrue(pageFilter.isSortAscending());
@@ -213,7 +213,7 @@ public class PageFilterFactoryTest {
 
         Assert.assertNotNull(pageFilter);
         Assert.assertEquals(pageFilter.getFirstRowIndex(), Integer.valueOf(0));
-        Assert.assertEquals(pageFilter.getLastRowIndex(), Integer.valueOf(10));
+        Assert.assertEquals(pageFilter.getLastRowIndex(), Integer.valueOf(9));
         Assert.assertEquals(pageFilter.getSortedColumn(), LicenseInfoColumn.LICENSE_NAME);
         Assert.assertEquals(pageFilter.getSortType(), SortType.ALPHABETICAL_CASE_INSENSITIVE);
         Assert.assertTrue(pageFilter.isSortAscending());
@@ -225,8 +225,8 @@ public class PageFilterFactoryTest {
         pageFilter = PageFilterFactory.getNextPage(pageFilter);
 
         Assert.assertNotNull(pageFilter);
-        Assert.assertEquals(pageFilter.getFirstRowIndex(), Integer.valueOf(11));
-        Assert.assertEquals(pageFilter.getLastRowIndex(), Integer.valueOf(20));
+        Assert.assertEquals(pageFilter.getFirstRowIndex(), Integer.valueOf(10));
+        Assert.assertEquals(pageFilter.getLastRowIndex(), Integer.valueOf(19));
         Assert.assertEquals(pageFilter.getSortedColumn(), LicenseInfoColumn.LICENSE_NAME);
         Assert.assertEquals(pageFilter.getSortType(), SortType.ALPHABETICAL_CASE_INSENSITIVE);
         Assert.assertTrue(pageFilter.isSortAscending());
