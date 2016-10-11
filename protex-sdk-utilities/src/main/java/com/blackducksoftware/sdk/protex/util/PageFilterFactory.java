@@ -249,16 +249,13 @@ public final class PageFilterFactory {
      *            The type representing the page filter
      */
     public static <T extends PageFilter> T getNextPage(T pageFilter) {
-        int pageSize = 1;
+    	int startIndex = pageFilter.getFirstRowIndex();
+    	int endIndex = pageFilter.getLastRowIndex();   	
+    	
+        int pageSize = Math.max(1, endIndex - startIndex + 1);
 
-        if (pageFilter.getFirstRowIndex() == 0) {
-            pageSize = Math.max(1, pageFilter.getLastRowIndex() - pageFilter.getFirstRowIndex());
-        } else {
-            pageSize = Math.max(1, pageFilter.getLastRowIndex() - pageFilter.getFirstRowIndex() + 1);
-        }
-
-        pageFilter.setFirstRowIndex(pageFilter.getLastRowIndex() + 1);
-        pageFilter.setLastRowIndex(pageFilter.getFirstRowIndex() + pageSize - 1);
+        pageFilter.setFirstRowIndex(endIndex + 1);
+        pageFilter.setLastRowIndex(endIndex + pageSize);
 
         return pageFilter;
     }
@@ -304,7 +301,7 @@ public final class PageFilterFactory {
      */
     private static <T extends PageFilter> T getFirstPage(T pageFilter, int pageSize, boolean sortAssending) {
         pageFilter.setFirstRowIndex(0);
-        pageFilter.setLastRowIndex(pageSize);
+        pageFilter.setLastRowIndex(pageSize-1);
         pageFilter.setSortAscending(sortAssending);
         pageFilter.setSortType(SortType.ALPHABETICAL_CASE_INSENSITIVE);
 
