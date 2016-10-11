@@ -190,7 +190,7 @@ public class SampleReportDataCodeMatchesPrecision extends BDProtexSample {
                     }
 
                     System.out.println(String.format(rowFormat, codeMatchDiscovery.getFilePath(),
-                            thisFilesInfo.getLength(),
+                            thisFilesInfo != null ? thisFilesInfo.getLength() : "",
                             codeMatchDiscovery.getSourceFileLocation().getSnippet().getFirstLine(),
                             matchedSnippet.getFirstLine(), generalComponent.getComponentName(), versionName, licenseName,
                             status,

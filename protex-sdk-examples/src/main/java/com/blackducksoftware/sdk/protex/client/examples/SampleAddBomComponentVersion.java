@@ -102,13 +102,13 @@ public class SampleAddBomComponentVersion extends BDProtexSample {
 
             try {
                 List<Component> versions = componentApi.getComponentsByName(componentName, versionName);
-                if (versions != null || versions.size() == 1) {
+                if (versions != null && versions.size() == 1) {
                     version = versions.get(0);
                 } else {
-                    throw new RuntimeException("ComponentApi.getComponentByName() failed - multiple versions found with same name");
+                    throw new RuntimeException("ComponentApi.getComponentsByName() failed - " + (versions != null ? "multiple" : "no") + " versions found");
                 }
             } catch (SdkFault e) {
-                System.err.println("ComponentApi.getComponentByName() failed");
+                System.err.println("ComponentApi.getComponentsByName() failed: " + e.getMessage());
                 throw new RuntimeException(e);
             }
 

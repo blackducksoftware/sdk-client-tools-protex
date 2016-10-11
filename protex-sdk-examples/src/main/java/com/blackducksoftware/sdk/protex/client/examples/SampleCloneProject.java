@@ -110,11 +110,11 @@ public class SampleCloneProject extends BDProtexSample {
             try {
                 clonedProject = projectApi.getProjectById(clonedProjectId);
             } catch (Exception e) {
-                System.err.println("Failed to clone project " + clonedProject.getName() + " to " + clonedProjectName);
+                System.err.println("Failed to clone project " + project.getName() + " to " + clonedProjectName);
                 System.exit(1);
             }
             if (clonedProject == null) {
-                System.err.println("Failed to clone project " + clonedProject.getName() + " to " + clonedProjectName);
+                System.err.println("Failed to clone project " + project.getName() + " to " + clonedProjectName);
                 System.exit(1);
             }
 
