@@ -112,4 +112,86 @@ public class CodeTreeUtilities {
 
         return counts;
     }
+
+    /**
+     * Returns the longest common prefix of a group of strings.
+     *
+     * <p>
+     * Returns an empty string if there are no input strings.
+     * </p>
+     *
+     * @param strs
+     *            the strings
+     * @return the longest common prefix
+     */
+    private static String longestCommonPrefix(String... strs) {
+        if (strs.length == 0) {
+            return "";
+        }
+
+        if (strs.length == 1) {
+            return strs[0];
+        }
+
+        int end = 0;
+
+        charLoop: do {
+            char c = strs[0].charAt(end);
+
+            for (int i = 1; i < strs.length; i++) {
+                if ((strs[i].length() <= end) || (strs[i].charAt(end) != c)) {
+                    break charLoop;
+                }
+            }
+
+            end++;
+        } while (true);
+
+        return strs[0].substring(0, end);
+    }
+
+    /**
+     * Returns the longest common path of a group of path strings.
+     *
+     * <p>
+     * Expects a path separator of {@code '/'}. Result will not include a trailing {@code '/'} unless all input path
+     * strings are equal and have a trailing {@code '/'}. Returns an empty string if there are no input path strings.
+     * </p>
+     *
+     * @param paths
+     *            the path strings
+     * @return the longest common path
+     */
+    public static String longestCommonPath(String... paths) {
+        if (paths.length == 0) {
+            return "";
+        }
+
+        if (paths.length == 1) {
+            return paths[0];
+        }
+
+        String prefix = longestCommonPrefix(paths);
+        int prefixLength = prefix.length();
+        boolean mustBacktrack = false;
+
+        for (String path : paths) {
+            if ((path.length() > prefixLength) && (path.charAt(prefixLength) != '/')) {
+                mustBacktrack = true;
+                break;
+            }
+        }
+
+        String path;
+
+        if (mustBacktrack) {
+            int end = prefix.lastIndexOf('/');
+            path = end > 0 ? prefix.substring(0, end) : "";
+        } else {
+            path = prefix;
+        }
+
+        return path;
+    }
+
 }

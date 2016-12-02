@@ -1,3 +1,21 @@
+/*
+ * Black Duck Software Suite SDK
+ * Copyright (C) 2015  Black Duck Software, Inc.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+ */
 package com.blackducksoftware.sdk.protex.util.test;
 
 import java.util.Arrays;
@@ -198,7 +216,7 @@ public class PageFilterFactoryTest {
 
         Assert.assertNotNull(pageFilter);
         Assert.assertEquals(pageFilter.getFirstRowIndex(), Integer.valueOf(0));
-        Assert.assertEquals(pageFilter.getLastRowIndex(), Integer.valueOf(10));
+        Assert.assertEquals(pageFilter.getLastRowIndex(), Integer.valueOf(9));
         Assert.assertEquals(pageFilter.getSortedColumn(), ComponentColumn.NAME);
         Assert.assertEquals(pageFilter.getSortType(), SortType.ALPHABETICAL_CASE_INSENSITIVE);
         Assert.assertTrue(pageFilter.isSortAscending());
@@ -213,7 +231,7 @@ public class PageFilterFactoryTest {
 
         Assert.assertNotNull(pageFilter);
         Assert.assertEquals(pageFilter.getFirstRowIndex(), Integer.valueOf(0));
-        Assert.assertEquals(pageFilter.getLastRowIndex(), Integer.valueOf(10));
+        Assert.assertEquals(pageFilter.getLastRowIndex(), Integer.valueOf(9));
         Assert.assertEquals(pageFilter.getSortedColumn(), LicenseInfoColumn.LICENSE_NAME);
         Assert.assertEquals(pageFilter.getSortType(), SortType.ALPHABETICAL_CASE_INSENSITIVE);
         Assert.assertTrue(pageFilter.isSortAscending());
@@ -225,8 +243,8 @@ public class PageFilterFactoryTest {
         pageFilter = PageFilterFactory.getNextPage(pageFilter);
 
         Assert.assertNotNull(pageFilter);
-        Assert.assertEquals(pageFilter.getFirstRowIndex(), Integer.valueOf(11));
-        Assert.assertEquals(pageFilter.getLastRowIndex(), Integer.valueOf(20));
+        Assert.assertEquals(pageFilter.getFirstRowIndex(), Integer.valueOf(10));
+        Assert.assertEquals(pageFilter.getLastRowIndex(), Integer.valueOf(19));
         Assert.assertEquals(pageFilter.getSortedColumn(), LicenseInfoColumn.LICENSE_NAME);
         Assert.assertEquals(pageFilter.getSortType(), SortType.ALPHABETICAL_CASE_INSENSITIVE);
         Assert.assertTrue(pageFilter.isSortAscending());
