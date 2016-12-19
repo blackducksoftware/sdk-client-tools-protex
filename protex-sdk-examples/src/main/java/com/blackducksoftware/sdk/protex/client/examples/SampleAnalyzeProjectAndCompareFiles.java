@@ -40,6 +40,7 @@ import com.blackducksoftware.sdk.protex.component.ComponentApi;
 import com.blackducksoftware.sdk.protex.license.LicenseCategory;
 import com.blackducksoftware.sdk.protex.project.AnalysisSourceLocation;
 import com.blackducksoftware.sdk.protex.project.AnalysisSourceRepository;
+import com.blackducksoftware.sdk.protex.project.Project;
 import com.blackducksoftware.sdk.protex.project.ProjectApi;
 import com.blackducksoftware.sdk.protex.project.ProjectRequest;
 import com.blackducksoftware.sdk.protex.project.codetree.CodeTreeApi;
@@ -165,14 +166,30 @@ public class SampleAnalyzeProjectAndCompareFiles extends BDProtexSample {
             String projectId = null;
 
             try {
-                projectId = projectApi.createProject(projectRequest, LicenseCategory.PROPRIETARY);
-                projectApi.updateCaptureOptions(projectId, captureOptions);
-            } catch (SdkFault e) {
-                System.err.println("ProjectApi.createProject() failed");
-                throw new RuntimeException(e);
+                Project project = projectApi.getProjectByName(projectName);
+                AnalysisSourceLocation projectSourceLocation = project.getAnalysisSourceLocation();
+                if (sourceLocation.getHostname().equals(projectSourceLocation.getHostname())
+                        && sourceLocation.getRepository().equals(projectSourceLocation.getRepository())
+                        && sourceLocation.getSourcePath().equals(projectSourceLocation.getSourcePath())) {
+                    projectId = project.getProjectId();
+                    System.out.println("Existing project '" + projectName + "' found with source path '" + serverSourceDir + "'");
+                }
+            } catch (SdkFault e_) {
+                try {
+                    projectId = projectApi.createProject(projectRequest, LicenseCategory.PROPRIETARY);
+                    System.out.println("Project '" + projectName + "' created with source path '" + serverSourceDir + "'");
+                } catch (SdkFault e) {
+                    System.err.println("ProjectApi.createProject() failed");
+                    throw new RuntimeException(e);
+                }
             }
 
-            System.out.println("Project '" + projectName + "' created with source path '" + serverSourceDir + "'");
+            try {
+                projectApi.updateCaptureOptions(projectId, captureOptions);
+            } catch (SdkFault e) {
+                System.err.println("ProjectApi.updateCaptureOptions() failed");
+                throw new RuntimeException(e);
+            }
 
             // Start Analysis
             try {
@@ -222,7 +239,7 @@ public class SampleAnalyzeProjectAndCompareFiles extends BDProtexSample {
             // Get matches to read data about
             if (filesWithMatches.isEmpty()) {
                 System.out
-                .println("No files with pending ID code matches found to compare. Make sure code matches are set to marked as pending identification");
+                        .println("No files with pending ID code matches found to compare. Make sure code matches are set to marked as pending identification");
             } else {
                 List<CodeMatchDiscovery> discoveries = discoveryApi
                         .getCodeMatchDiscoveries(projectId, filesWithMatches, Arrays.asList(CodeMatchType.PRECISION));
