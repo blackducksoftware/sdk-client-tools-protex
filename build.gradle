@@ -73,6 +73,9 @@ subprojects {
 	        }
 	    }
     }
+    if (!project.tasks.findByName("stageDevelopment")){
+    	task stageDevelopment
+    }
 }
 
 configurations{
