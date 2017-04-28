@@ -63,6 +63,8 @@
 <xs:element name="getIdentificationOptionsResponse" type="tns:getIdentificationOptionsResponse"/>
 <xs:element name="getLearnedIdentifications" type="tns:getLearnedIdentifications"/>
 <xs:element name="getLearnedIdentificationsResponse" type="tns:getLearnedIdentificationsResponse"/>
+<xs:element name="getLocalComponentsPermitted" type="tns:getLocalComponentsPermitted"/>
+<xs:element name="getLocalComponentsPermittedResponse" type="tns:getLocalComponentsPermittedResponse"/>
 <xs:element name="getMinimumComponentRankCaptureOption" type="tns:getMinimumComponentRankCaptureOption"/>
 <xs:element name="getMinimumComponentRankCaptureOptionResponse" type="tns:getMinimumComponentRankCaptureOptionResponse"/>
 <xs:element name="getProjectSynchronizationOption" type="tns:getProjectSynchronizationOption"/>
@@ -115,6 +117,8 @@
 <xs:element name="updateFileDiscoveryPatternResponse" type="tns:updateFileDiscoveryPatternResponse"/>
 <xs:element name="updateIdentificationOptions" type="tns:updateIdentificationOptions"/>
 <xs:element name="updateIdentificationOptionsResponse" type="tns:updateIdentificationOptionsResponse"/>
+<xs:element name="updateLocalComponentsPermitted" type="tns:updateLocalComponentsPermitted"/>
+<xs:element name="updateLocalComponentsPermittedResponse" type="tns:updateLocalComponentsPermittedResponse"/>
 <xs:element name="updateMinimumComponentRankCaptureOption" type="tns:updateMinimumComponentRankCaptureOption"/>
 <xs:element name="updateMinimumComponentRankCaptureOptionResponse" type="tns:updateMinimumComponentRankCaptureOptionResponse"/>
 <xs:element name="updateProjectSynchronizationOption" type="tns:updateProjectSynchronizationOption"/>
@@ -277,6 +281,14 @@
 <xs:complexType name="dissociateRapidIdConfigurationResponse">
 <xs:sequence/>
 </xs:complexType>
+<xs:complexType name="getLocalComponentsPermitted">
+<xs:sequence/>
+</xs:complexType>
+<xs:complexType name="getLocalComponentsPermittedResponse">
+<xs:sequence>
+<xs:element name="return" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
 <xs:complexType name="setDefaultProprietaryLicense">
 <xs:sequence>
 <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
@@ -312,6 +324,14 @@
 <xs:sequence>
 <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="common:stringSearchPattern"/>
 </xs:sequence>
+</xs:complexType>
+<xs:complexType name="updateLocalComponentsPermitted">
+<xs:sequence>
+<xs:element minOccurs="0" name="arg0" type="xs:boolean"/>
+</xs:sequence>
+</xs:complexType>
+<xs:complexType name="updateLocalComponentsPermittedResponse">
+<xs:sequence/>
 </xs:complexType>
 <xs:complexType name="getSystemInformation">
 <xs:sequence/>
@@ -1256,6 +1276,10 @@
 <xs:enumeration value="SERVER_PERFORMING_UPDATE"/>
 <xs:enumeration value="NO_ANALYSIS_RUNNING"/>
 <xs:enumeration value="ANALYSIS_ALREADY_RUNNING"/>
+<xs:enumeration value="NO_ARCHIVING_JOB"/>
+<xs:enumeration value="ARCHIVING_JOB_ALREADY_RUNNING"/>
+<xs:enumeration value="ARCHIVING_UNABLE_TO_IMPORT"/>
+<xs:enumeration value="ARCHIVING_UNABLE_TO_WRITE_TO_TARGET"/>
 <xs:enumeration value="INVALID_SOURCE_LOCATION_FOR_SCAN"/>
 <xs:enumeration value="PROJECT_COULD_NOT_BE_LOCKED"/>
 <xs:enumeration value="LICENSE_NAME_TOO_LONG"/>
@@ -1418,12 +1442,20 @@
     <wsdl:part name="parameters" element="tns:updateMinimumComponentRankCaptureOption">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="getLocalComponentsPermitted">
+    <wsdl:part name="parameters" element="tns:getLocalComponentsPermitted">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="setDefaultProprietaryLicense">
     <wsdl:part name="parameters" element="tns:setDefaultProprietaryLicense">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="updateCodeLabelOptionResponse">
     <wsdl:part name="parameters" element="tns:updateCodeLabelOptionResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateLocalComponentsPermitted">
+    <wsdl:part name="parameters" element="tns:updateLocalComponentsPermitted">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="getSystemInformation">
@@ -1496,6 +1528,10 @@
   </wsdl:message>
   <wsdl:message name="getCodeLabelOptionResponse">
     <wsdl:part name="parameters" element="tns:getCodeLabelOptionResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLocalComponentsPermittedResponse">
+    <wsdl:part name="parameters" element="tns:getLocalComponentsPermittedResponse">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="suggestFileDiscoveryPatterns">
@@ -1660,6 +1696,10 @@
   </wsdl:message>
   <wsdl:message name="getAnonymousAccessPolicyResponse">
     <wsdl:part name="parameters" element="tns:getAnonymousAccessPolicyResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateLocalComponentsPermittedResponse">
+    <wsdl:part name="parameters" element="tns:updateLocalComponentsPermittedResponse">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="getDefaultProprietaryLicenseResponse">
@@ -1935,6 +1975,14 @@
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="getLocalComponentsPermitted">
+      <wsdl:input name="getLocalComponentsPermitted" message="tns:getLocalComponentsPermitted">
+    </wsdl:input>
+      <wsdl:output name="getLocalComponentsPermittedResponse" message="tns:getLocalComponentsPermittedResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="setDefaultProprietaryLicense">
       <wsdl:input name="setDefaultProprietaryLicense" message="tns:setDefaultProprietaryLicense">
     </wsdl:input>
@@ -1963,6 +2011,14 @@
       <wsdl:input name="suggestStringSearchPatterns" message="tns:suggestStringSearchPatterns">
     </wsdl:input>
       <wsdl:output name="suggestStringSearchPatternsResponse" message="tns:suggestStringSearchPatternsResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateLocalComponentsPermitted">
+      <wsdl:input name="updateLocalComponentsPermitted" message="tns:updateLocalComponentsPermitted">
+    </wsdl:input>
+      <wsdl:output name="updateLocalComponentsPermittedResponse" message="tns:updateLocalComponentsPermittedResponse">
     </wsdl:output>
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
@@ -2446,6 +2502,18 @@
         <soap:fault name="SdkFault" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="getLocalComponentsPermitted">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getLocalComponentsPermitted">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getLocalComponentsPermittedResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="updateRapidIdConfiguration">
       <soap:operation soapAction="" style="document"/>
       <wsdl:input name="updateRapidIdConfiguration">
@@ -2476,6 +2544,18 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="suggestStringSearchPatternsResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateLocalComponentsPermitted">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateLocalComponentsPermitted">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateLocalComponentsPermittedResponse">
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="SdkFault">
