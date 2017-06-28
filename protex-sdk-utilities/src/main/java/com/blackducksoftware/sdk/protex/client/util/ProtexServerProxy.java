@@ -51,6 +51,7 @@ import org.slf4j.LoggerFactory;
 
 import com.blackducksoftware.sdk.fault.ErrorCode;
 import com.blackducksoftware.sdk.fault.SdkFault;
+import com.blackducksoftware.sdk.protex.archiving.ArchivingApi;
 import com.blackducksoftware.sdk.protex.comparison.FileComparisonApi;
 import com.blackducksoftware.sdk.protex.component.ComponentApi;
 import com.blackducksoftware.sdk.protex.component.custom.CustomComponentManagementApi;
@@ -176,6 +177,9 @@ public class ProtexServerProxy implements Closeable {
 
     /** Internally cached reference to the sync server API on the server being interfaced with by this proxy */
     private SynchronizationApi synchronizationApi = null;
+
+    /** Internally cached reference to the archiving API on the server being interfaced with by this proxy */
+    private ArchivingApi archivingApi = null;
 
     /**
      * Creates a new proxy to interact with a Protex server via SDK entry points
@@ -902,6 +906,32 @@ public class ProtexServerProxy implements Closeable {
     }
 
     /**
+     * Gets an archiving API entry point
+     *
+     * <p>
+     * Uses the configured proxy default timeout for server communication
+     * </p>
+     *
+     * @return An archiving API entry point for SDK calls to the server
+     */
+    public ArchivingApi getArchivingApi() {
+        return getArchivingApi(defaultTimeout);
+    }
+
+    /**
+     * Gets an archiving API entry point
+     *
+     * @param timeout
+     *            The timeout to use when communicating with the server. Applies only to this instance (does not change
+     *            the default timeout)
+     * @return An archiving API entry point for SDK calls to the server
+     */
+    public ArchivingApi getArchivingApi(long timeout) {
+        archivingApi = getApiInstance(archivingApi, ProtexApi.ARCHIVING, timeout);
+        return archivingApi;
+    }
+
+    /**
      * Initialize the Authentication Properties, such as user name and password
      *
      * @param userName
@@ -1250,7 +1280,8 @@ public class ProtexServerProxy implements Closeable {
         REPORT("report", ReportApi.class),
         ROLE("role", RoleApi.class),
         USER("user", UserApi.class),
-        SYNCHRONIZATION("synchronization", SynchronizationApi.class);
+        SYNCHRONIZATION("synchronization", SynchronizationApi.class),
+        ARCHIVING("archiving", ArchivingApi.class);
 
         /** The URL which references the WSDL file on a Protex server for the API */
         private final String serviceStub;
