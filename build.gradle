@@ -22,6 +22,7 @@ subprojects {
 
 	repositories {
 		maven { url "http://jcenter.bintray.com" }
+		maven { url "https://maven.repository.redhat.com/ga/" }
 	}
 
 	task sourcesJar(type:Jar){
