@@ -68,6 +68,7 @@
 <xs:enumeration value="ANALYSIS_ALREADY_RUNNING"/>
 <xs:enumeration value="NO_ARCHIVING_JOB"/>
 <xs:enumeration value="ARCHIVING_JOB_ALREADY_RUNNING"/>
+<xs:enumeration value="ARCHIVING_JOB_ALREADY_COMPLETED"/>
 <xs:enumeration value="ARCHIVING_UNABLE_TO_IMPORT"/>
 <xs:enumeration value="ARCHIVING_UNABLE_TO_WRITE_TO_TARGET"/>
 <xs:enumeration value="INVALID_SOURCE_LOCATION_FOR_SCAN"/>
