@@ -67,13 +67,13 @@ public class SampleUpdateBomComponentIdentifications extends BDProtexSample {
         paramDescriptions.add(formatUsageDetail("project name",
                 "The name of an analyzed project, i.e. \"My Example Project\" (include the quotes, if the name contains spaces)"));
         paramDescriptions.add(formatUsageDetail("component name",
+                "The name for the component to be exist in BOM, i.e. \"Apache Tomcat\" (include the quotes, if the name contains spaces)"));
+        paramDescriptions.add(formatUsageDetail("version name",
+                "The name for the version of the component to be exist in BOM, i.e. \"6.0.24\" (include the quotes, if the name contains spaces)"));
+        paramDescriptions.add(formatUsageDetail("component name",
                 "The name for the component to be replaced in BOM, i.e. \"Apache Tomcat\" (include the quotes, if the name contains spaces)"));
         paramDescriptions.add(formatUsageDetail("version name",
                 "The name for the version of the component to be replaced in BOM, i.e. \"6.0.24\" (include the quotes, if the name contains spaces)"));
-        paramDescriptions.add(formatUsageDetail("component name",
-                "The name for the component to be added, i.e. \"Apache Tomcat\" (include the quotes, if the name contains spaces)"));
-        paramDescriptions.add(formatUsageDetail("version name",
-                "The name for the version of the component to be added, i.e. \"6.0.24\" (include the quotes, if the name contains spaces)"));
 
         outputUsageDetails(className, parameters, paramDescriptions);
     }
@@ -172,11 +172,11 @@ public class SampleUpdateBomComponentIdentifications extends BDProtexSample {
             try {
                 bomApi.updateBomComponentIdentification(projectId, version.getComponentKey(), bomCompRequest, BomRefreshMode.ASYNCHRONOUS);
             } catch (SdkFault e) {
-                System.err.println("BomApi.addBomComponent failed");
+                System.err.println("BomApi.updateBomComponentIdentification failed");
                 throw new RuntimeException(e);
             }
         } catch (Exception e) {
-            System.err.println("SampleAddBomComponentVersion failed");
+            System.err.println("SampleUpdateBomComponentIdentifications failed");
             e.printStackTrace(System.err);
             System.exit(-1);
         } finally {
