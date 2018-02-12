@@ -1,5 +1,6 @@
 ext.cxfVersion = '2.7.18.SP5-redhat-1' // 2.7.18.SP6-redhat-1 isn't in Maven Central yet.
 ext.cxfXjcRuntimeVersion = '2.7.0'
+ext.saajImplVersion = '1.3.28'
 ext.slf4jVersion = '1.7.5'
 ext.testngVersion = '6.8.5'
 ext.testSlf4jSimpleVersion = '1.7.7'
