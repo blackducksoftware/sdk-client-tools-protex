@@ -1,4 +1,4 @@
-	def wsdlSources = fileTree('src/main/config/wsdl').include('*.wsdl')
+def wsdlSources = fileTree('src/main/config/wsdl').include('*.wsdl')
 def wsdlBindings = fileTree('src/main/config').include('*bindings*')
 def generatedWsdlSources = file("${buildDir}/generated-sources/wsdl")
 
@@ -16,6 +16,10 @@ sourceSets {
 dependencies {
 	// The generated code references the CXF XJC runtime for date/time mapping
 	compile group: 'org.apache.cxf.xjc-utils', name: 'cxf-xjc-runtime', version: cxfXjcRuntimeVersion
+
+    // Explicitly include saaj and dependents for Java 9 compatibility
+    compile group: 'com.sun.xml.messaging.saaj', name: 'saaj-impl', version: saajImplVersion
+    compile group: 'org.jvnet.staxex', name: 'stax-ex', version: staxExVersion
 }
 
 // WSDL to Java ====================================================================================

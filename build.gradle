@@ -36,7 +36,7 @@ subprojects {
     }
     
     jar {
-    	from "${rootDir}/LICENSE.txt"
+        from "${rootDir}/LICENSE.txt"
     }
 
 	artifacts {
@@ -75,7 +75,7 @@ subprojects {
 	    }
     }
     if (!project.tasks.findByName("stageDevelopment")){
-    	task stageDevelopment
+    	    task stageDevelopment
     }
 }
 
