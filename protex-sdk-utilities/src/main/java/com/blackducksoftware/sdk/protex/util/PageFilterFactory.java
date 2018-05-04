@@ -47,7 +47,7 @@ import com.blackducksoftware.sdk.protex.user.UserColumn;
 import com.blackducksoftware.sdk.protex.user.UserPageFilter;
 
 /**
- * Convenience class to create and manage PageFilter objects
+ * Convenience class to create and manage PageFilter objects.
  *
  * PageFitler objects can be used to force particular sort orders as well as to limit the number of objects returned.
  * The main purpose of limiting the number of returned objects is performance and memory management on the client side
