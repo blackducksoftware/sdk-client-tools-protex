@@ -113,7 +113,7 @@ public class ProtexServerProxy implements Closeable {
     private long defaultTimeout = INDEFINITE_TIMEOUT;
 
     /** The default limit for returned list size */
-    private long maximumChildElements = 1000000;
+    private int maximumChildElements = 1000000;
 
     /** Any cookies to set on the HTTP request */
     private Map<String, List<String>> requestCookies = new HashMap<String, List<String>>();
@@ -363,7 +363,7 @@ public class ProtexServerProxy implements Closeable {
      * @param maximumChildElements
      *            The maximum number of elements allowed in returned lists
      */
-    public void setMaximumChildElements(long maximumChildElements) {
+    public void setMaximumChildElements(int maximumChildElements) {
         this.maximumChildElements = maximumChildElements;
     }
 
