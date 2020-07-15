@@ -1,1399 +1,1706 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions name="PolicyApiService" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:policy" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:policy" xmlns:ns1="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
   <wsdl:types>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:license="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:obligation="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:project" xmlns:user="urn:protex.blackducksoftware.com:sdk:v7.0:user" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:project" version="1.0">
-<xs:complexType name="analysisSourceLocation">
-<xs:sequence>
-<xs:element minOccurs="0" name="hostname" type="xs:string"/>
-<xs:element minOccurs="0" name="repository" type="tns:analysisSourceRepository"/>
-<xs:element minOccurs="0" name="sourcePath" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:simpleType name="analysisSourceRepository">
-<xs:restriction base="xs:string">
-<xs:enumeration value="REMOTE_SERVER"/>
-<xs:enumeration value="NETWORK_FOLDER"/>
-<xs:enumeration value="LOCAL_PROXY"/>
-</xs:restriction>
-</xs:simpleType>
+<xs:schema xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:license="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:obligation="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:project" xmlns:user="urn:protex.blackducksoftware.com:sdk:v7.0:user" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:project" version="1.0">
+
+  <xs:complexType name="analysisSourceLocation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="hostname" type="xs:string"/>
+      <xs:element minOccurs="0" name="repository" type="tns:analysisSourceRepository"/>
+      <xs:element minOccurs="0" name="sourcePath" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="analysisSourceRepository">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="REMOTE_SERVER"/>
+      <xs:enumeration value="NETWORK_FOLDER"/>
+      <xs:enumeration value="LOCAL_PROXY"/>
+    </xs:restriction>
+  </xs:simpleType>
+
 </xs:schema>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:license="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:discovery" xmlns:ns2="urn:protex.blackducksoftware.com:sdk:v7.0:identification" xmlns:ns3="urn:protex.blackducksoftware.com:sdk:v7.0:project" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:policy" elementFormDefault="unqualified" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:policy" version="1.0">
-<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:common"/>
-<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:discovery"/>
-<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:identification"/>
-<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:license"/>
-<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:project"/>
-<xs:element name="associateRapidIdConfiguration" type="tns:associateRapidIdConfiguration"/>
-<xs:element name="associateRapidIdConfigurationResponse" type="tns:associateRapidIdConfigurationResponse"/>
-<xs:element name="createFileDiscoveryPattern" type="tns:createFileDiscoveryPattern"/>
-<xs:element name="createFileDiscoveryPatternResponse" type="tns:createFileDiscoveryPatternResponse"/>
-<xs:element name="createRapidIdConfiguration" type="tns:createRapidIdConfiguration"/>
-<xs:element name="createRapidIdConfigurationResponse" type="tns:createRapidIdConfigurationResponse"/>
-<xs:element name="createStringSearchPattern" type="tns:createStringSearchPattern"/>
-<xs:element name="createStringSearchPatternResponse" type="tns:createStringSearchPatternResponse"/>
-<xs:element name="deleteFileDiscoveryPattern" type="tns:deleteFileDiscoveryPattern"/>
-<xs:element name="deleteFileDiscoveryPatternResponse" type="tns:deleteFileDiscoveryPatternResponse"/>
-<xs:element name="deleteRapidIdConfiguration" type="tns:deleteRapidIdConfiguration"/>
-<xs:element name="deleteRapidIdConfigurationResponse" type="tns:deleteRapidIdConfigurationResponse"/>
-<xs:element name="deleteStringSearchPattern" type="tns:deleteStringSearchPattern"/>
-<xs:element name="deleteStringSearchPatternResponse" type="tns:deleteStringSearchPatternResponse"/>
-<xs:element name="dissociateRapidIdConfiguration" type="tns:dissociateRapidIdConfiguration"/>
-<xs:element name="dissociateRapidIdConfigurationResponse" type="tns:dissociateRapidIdConfigurationResponse"/>
-<xs:element name="getAnalysisDatabaseOptions" type="tns:getAnalysisDatabaseOptions"/>
-<xs:element name="getAnalysisDatabaseOptionsResponse" type="tns:getAnalysisDatabaseOptionsResponse"/>
-<xs:element name="getAnonymousAccessPolicy" type="tns:getAnonymousAccessPolicy"/>
-<xs:element name="getAnonymousAccessPolicyResponse" type="tns:getAnonymousAccessPolicyResponse"/>
-<xs:element name="getCaptureOptions" type="tns:getCaptureOptions"/>
-<xs:element name="getCaptureOptionsResponse" type="tns:getCaptureOptionsResponse"/>
-<xs:element name="getCaseInsensitiveLdapPolicy" type="tns:getCaseInsensitiveLdapPolicy"/>
-<xs:element name="getCaseInsensitiveLdapPolicyResponse" type="tns:getCaseInsensitiveLdapPolicyResponse"/>
-<xs:element name="getCodeLabelOption" type="tns:getCodeLabelOption"/>
-<xs:element name="getCodeLabelOptionResponse" type="tns:getCodeLabelOptionResponse"/>
-<xs:element name="getDefaultOpenSourceLicense" type="tns:getDefaultOpenSourceLicense"/>
-<xs:element name="getDefaultOpenSourceLicenseResponse" type="tns:getDefaultOpenSourceLicenseResponse"/>
-<xs:element name="getDefaultProprietaryLicense" type="tns:getDefaultProprietaryLicense"/>
-<xs:element name="getDefaultProprietaryLicenseResponse" type="tns:getDefaultProprietaryLicenseResponse"/>
-<xs:element name="getFileDiscoveryPatternById" type="tns:getFileDiscoveryPatternById"/>
-<xs:element name="getFileDiscoveryPatternByIdResponse" type="tns:getFileDiscoveryPatternByIdResponse"/>
-<xs:element name="getFileDiscoveryPatternByPattern" type="tns:getFileDiscoveryPatternByPattern"/>
-<xs:element name="getFileDiscoveryPatternByPatternResponse" type="tns:getFileDiscoveryPatternByPatternResponse"/>
-<xs:element name="getFileDiscoveryPatterns" type="tns:getFileDiscoveryPatterns"/>
-<xs:element name="getFileDiscoveryPatternsResponse" type="tns:getFileDiscoveryPatternsResponse"/>
-<xs:element name="getIdentificationOptions" type="tns:getIdentificationOptions"/>
-<xs:element name="getIdentificationOptionsResponse" type="tns:getIdentificationOptionsResponse"/>
-<xs:element name="getLearnedIdentifications" type="tns:getLearnedIdentifications"/>
-<xs:element name="getLearnedIdentificationsResponse" type="tns:getLearnedIdentificationsResponse"/>
-<xs:element name="getLocalComponentsPermitted" type="tns:getLocalComponentsPermitted"/>
-<xs:element name="getLocalComponentsPermittedResponse" type="tns:getLocalComponentsPermittedResponse"/>
-<xs:element name="getMinimumComponentRankCaptureOption" type="tns:getMinimumComponentRankCaptureOption"/>
-<xs:element name="getMinimumComponentRankCaptureOptionResponse" type="tns:getMinimumComponentRankCaptureOptionResponse"/>
-<xs:element name="getProjectSynchronizationOption" type="tns:getProjectSynchronizationOption"/>
-<xs:element name="getProjectSynchronizationOptionResponse" type="tns:getProjectSynchronizationOptionResponse"/>
-<xs:element name="getRapidIdConfigurationAssociations" type="tns:getRapidIdConfigurationAssociations"/>
-<xs:element name="getRapidIdConfigurationAssociationsResponse" type="tns:getRapidIdConfigurationAssociationsResponse"/>
-<xs:element name="getRapidIdConfigurationById" type="tns:getRapidIdConfigurationById"/>
-<xs:element name="getRapidIdConfigurationByIdResponse" type="tns:getRapidIdConfigurationByIdResponse"/>
-<xs:element name="getRapidIdConfigurationByName" type="tns:getRapidIdConfigurationByName"/>
-<xs:element name="getRapidIdConfigurationByNameResponse" type="tns:getRapidIdConfigurationByNameResponse"/>
-<xs:element name="getRapidIdConfigurations" type="tns:getRapidIdConfigurations"/>
-<xs:element name="getRapidIdConfigurationsResponse" type="tns:getRapidIdConfigurationsResponse"/>
-<xs:element name="getRapidIdentificationOption" type="tns:getRapidIdentificationOption"/>
-<xs:element name="getRapidIdentificationOptionResponse" type="tns:getRapidIdentificationOptionResponse"/>
-<xs:element name="getRegistrationLinkOption" type="tns:getRegistrationLinkOption"/>
-<xs:element name="getRegistrationLinkOptionResponse" type="tns:getRegistrationLinkOptionResponse"/>
-<xs:element name="getServerFileAccessOption" type="tns:getServerFileAccessOption"/>
-<xs:element name="getServerFileAccessOptionResponse" type="tns:getServerFileAccessOptionResponse"/>
-<xs:element name="getStringSearchPatternById" type="tns:getStringSearchPatternById"/>
-<xs:element name="getStringSearchPatternByIdResponse" type="tns:getStringSearchPatternByIdResponse"/>
-<xs:element name="getStringSearchPatternByName" type="tns:getStringSearchPatternByName"/>
-<xs:element name="getStringSearchPatternByNameResponse" type="tns:getStringSearchPatternByNameResponse"/>
-<xs:element name="getStringSearchPatternsByType" type="tns:getStringSearchPatternsByType"/>
-<xs:element name="getStringSearchPatternsByTypeResponse" type="tns:getStringSearchPatternsByTypeResponse"/>
-<xs:element name="getSystemInformation" type="tns:getSystemInformation"/>
-<xs:element name="getSystemInformationResponse" type="tns:getSystemInformationResponse"/>
-<xs:element name="removeLearnedIdentification" type="tns:removeLearnedIdentification"/>
-<xs:element name="removeLearnedIdentificationResponse" type="tns:removeLearnedIdentificationResponse"/>
-<xs:element name="resetFileDiscoveryPattern" type="tns:resetFileDiscoveryPattern"/>
-<xs:element name="resetFileDiscoveryPatternResponse" type="tns:resetFileDiscoveryPatternResponse"/>
-<xs:element name="setDefaultOpenSourceLicense" type="tns:setDefaultOpenSourceLicense"/>
-<xs:element name="setDefaultOpenSourceLicenseResponse" type="tns:setDefaultOpenSourceLicenseResponse"/>
-<xs:element name="setDefaultProprietaryLicense" type="tns:setDefaultProprietaryLicense"/>
-<xs:element name="setDefaultProprietaryLicenseResponse" type="tns:setDefaultProprietaryLicenseResponse"/>
-<xs:element name="suggestFileDiscoveryPatterns" type="tns:suggestFileDiscoveryPatterns"/>
-<xs:element name="suggestFileDiscoveryPatternsResponse" type="tns:suggestFileDiscoveryPatternsResponse"/>
-<xs:element name="suggestStringSearchPatterns" type="tns:suggestStringSearchPatterns"/>
-<xs:element name="suggestStringSearchPatternsResponse" type="tns:suggestStringSearchPatternsResponse"/>
-<xs:element name="updateAnalysisDatabaseOptions" type="tns:updateAnalysisDatabaseOptions"/>
-<xs:element name="updateAnalysisDatabaseOptionsResponse" type="tns:updateAnalysisDatabaseOptionsResponse"/>
-<xs:element name="updateAnonymousAccessPolicy" type="tns:updateAnonymousAccessPolicy"/>
-<xs:element name="updateAnonymousAccessPolicyResponse" type="tns:updateAnonymousAccessPolicyResponse"/>
-<xs:element name="updateCaptureOptions" type="tns:updateCaptureOptions"/>
-<xs:element name="updateCaptureOptionsResponse" type="tns:updateCaptureOptionsResponse"/>
-<xs:element name="updateCaseInsensitiveLdapPolicy" type="tns:updateCaseInsensitiveLdapPolicy"/>
-<xs:element name="updateCaseInsensitiveLdapPolicyResponse" type="tns:updateCaseInsensitiveLdapPolicyResponse"/>
-<xs:element name="updateCodeLabelOption" type="tns:updateCodeLabelOption"/>
-<xs:element name="updateCodeLabelOptionResponse" type="tns:updateCodeLabelOptionResponse"/>
-<xs:element name="updateFileDiscoveryPattern" type="tns:updateFileDiscoveryPattern"/>
-<xs:element name="updateFileDiscoveryPatternResponse" type="tns:updateFileDiscoveryPatternResponse"/>
-<xs:element name="updateIdentificationOptions" type="tns:updateIdentificationOptions"/>
-<xs:element name="updateIdentificationOptionsResponse" type="tns:updateIdentificationOptionsResponse"/>
-<xs:element name="updateLocalComponentsPermitted" type="tns:updateLocalComponentsPermitted"/>
-<xs:element name="updateLocalComponentsPermittedResponse" type="tns:updateLocalComponentsPermittedResponse"/>
-<xs:element name="updateMinimumComponentRankCaptureOption" type="tns:updateMinimumComponentRankCaptureOption"/>
-<xs:element name="updateMinimumComponentRankCaptureOptionResponse" type="tns:updateMinimumComponentRankCaptureOptionResponse"/>
-<xs:element name="updateProjectSynchronizationOption" type="tns:updateProjectSynchronizationOption"/>
-<xs:element name="updateProjectSynchronizationOptionResponse" type="tns:updateProjectSynchronizationOptionResponse"/>
-<xs:element name="updateRapidIdConfiguration" type="tns:updateRapidIdConfiguration"/>
-<xs:element name="updateRapidIdConfigurationResponse" type="tns:updateRapidIdConfigurationResponse"/>
-<xs:element name="updateRapidIdentificationOption" type="tns:updateRapidIdentificationOption"/>
-<xs:element name="updateRapidIdentificationOptionResponse" type="tns:updateRapidIdentificationOptionResponse"/>
-<xs:element name="updateRegistrationLinkOption" type="tns:updateRegistrationLinkOption"/>
-<xs:element name="updateRegistrationLinkOptionResponse" type="tns:updateRegistrationLinkOptionResponse"/>
-<xs:element name="updateServerFileAccessOption" type="tns:updateServerFileAccessOption"/>
-<xs:element name="updateServerFileAccessOptionResponse" type="tns:updateServerFileAccessOptionResponse"/>
-<xs:element name="updateStringSearchPattern" type="tns:updateStringSearchPattern"/>
-<xs:element name="updateStringSearchPatternResponse" type="tns:updateStringSearchPatternResponse"/>
-<xs:element name="uploadSourceArchive" type="tns:uploadSourceArchive"/>
-<xs:element name="uploadSourceArchiveResponse" type="tns:uploadSourceArchiveResponse"/>
-<xs:complexType name="removeLearnedIdentification">
-<xs:sequence>
-<xs:element minOccurs="0" name="learnedIdentificationId" type="xs:long"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="removeLearnedIdentificationResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="updateServerFileAccessOption">
-<xs:sequence>
-<xs:element minOccurs="0" name="permissionFlag" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateServerFileAccessOptionResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getStringSearchPatternByName">
-<xs:sequence>
-<xs:element minOccurs="0" name="patternName" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getStringSearchPatternByNameResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="common:stringSearchPattern"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="createFileDiscoveryPattern">
-<xs:sequence>
-<xs:element minOccurs="0" name="fileDiscoveryPatternRequest" type="common:fileDiscoveryPatternRequest"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="createFileDiscoveryPatternResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getLearnedIdentifications">
-<xs:sequence>
-<xs:element minOccurs="0" name="pageFilter" type="common:learnedIdentificationPageFilter"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getLearnedIdentificationsResponse">
-<xs:sequence>
-<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="common:learnedIdentification"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getStringSearchPatternById">
-<xs:sequence>
-<xs:element minOccurs="0" name="patternId" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getStringSearchPatternByIdResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="common:stringSearchPattern"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="associateRapidIdConfiguration">
-<xs:sequence>
-<xs:element minOccurs="0" name="fileDiscoveryPatternId" type="xs:string"/>
-<xs:element minOccurs="0" name="rapidIdConfigurationId" type="xs:long"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="associateRapidIdConfigurationResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getRegistrationLinkOption">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getRegistrationLinkOptionResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getCaseInsensitiveLdapPolicy">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getCaseInsensitiveLdapPolicyResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getRapidIdConfigurationAssociations">
-<xs:sequence>
-<xs:element minOccurs="0" name="rapidIdConfigurationId" type="xs:long"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getRapidIdConfigurationAssociationsResponse">
-<xs:sequence>
-<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getStringSearchPatternsByType">
-<xs:sequence>
-<xs:element minOccurs="0" name="patternType" type="common:stringSearchPatternOriginType"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getStringSearchPatternsByTypeResponse">
-<xs:sequence>
-<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="common:stringSearchPattern"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateMinimumComponentRankCaptureOption">
-<xs:sequence>
-<xs:element minOccurs="0" name="minimumRanking" type="common:forcibleIntegerOption"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateMinimumComponentRankCaptureOptionResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getRapidIdConfigurationByName">
-<xs:sequence>
-<xs:element minOccurs="0" name="configurationName" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getRapidIdConfigurationByNameResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="common:rapidIdConfiguration"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="resetFileDiscoveryPattern">
-<xs:sequence>
-<xs:element minOccurs="0" name="pattern" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="resetFileDiscoveryPatternResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="createRapidIdConfiguration">
-<xs:sequence>
-<xs:element minOccurs="0" name="rapidIdConfigurationRequest" type="common:rapidIdConfigurationRequest"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="createRapidIdConfigurationResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="xs:long"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="dissociateRapidIdConfiguration">
-<xs:sequence>
-<xs:element minOccurs="0" name="fileDiscoveryPatternId" type="xs:string"/>
-<xs:element minOccurs="0" name="rapidIdConfigurationId" type="xs:long"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="dissociateRapidIdConfigurationResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getLocalComponentsPermitted">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getLocalComponentsPermittedResponse">
-<xs:sequence>
-<xs:element name="return" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="setDefaultProprietaryLicense">
-<xs:sequence>
-<xs:element minOccurs="0" name="licenseId" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="setDefaultProprietaryLicenseResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="updateRapidIdConfiguration">
-<xs:sequence>
-<xs:element minOccurs="0" name="configurationId" type="xs:long"/>
-<xs:element minOccurs="0" name="rapidIdConfigurationUpdateRequest" type="common:rapidIdConfigurationRequest"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateRapidIdConfigurationResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getAnonymousAccessPolicy">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getAnonymousAccessPolicyResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="suggestStringSearchPatterns">
-<xs:sequence>
-<xs:element minOccurs="0" name="anyWordStartsWith" type="xs:string"/>
-<xs:element minOccurs="0" name="pageFilter" type="common:stringSearchPatternPageFilter"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="suggestStringSearchPatternsResponse">
-<xs:sequence>
-<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="common:stringSearchPattern"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateLocalComponentsPermitted">
-<xs:sequence>
-<xs:element minOccurs="0" name="arg0" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateLocalComponentsPermittedResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getSystemInformation">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getSystemInformationResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="tns:protexSystemInformation"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="protexSystemInformation">
-<xs:sequence>
-<xs:element minOccurs="0" name="bdsBasicDatabaseVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="bdsClientProtcolVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="bdsClientVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="bdsCustomDatabaseVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="bdsEstimationToolProtocolVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="bdsEstimationToolVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="bdsKnowledgebaseUpdateLevel" type="xs:string"/>
-<xs:element minOccurs="0" name="bdsKnowledgebaseUpdateStream" type="xs:string"/>
-<xs:element minOccurs="0" name="bdsProxyProtcolVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="bdsProxyVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="bdsRawFingerprintFilesVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="bdsServerLibraryVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="bdsSoapProtcolVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="bdsSoapVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="bdsToolProtcolVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="bdsToolVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="bdsUpdateProtcolVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="bdsUpdateVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="fingerprintBasicDatabaseVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="fingerprintCustomDatabaseVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="localRegistrationServiceVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="protexSdkVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="registrationServiceVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="serviceVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="soapServiceVersion" type="xs:string"/>
-<xs:element minOccurs="0" name="updateServiceVersion" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateProjectSynchronizationOption">
-<xs:sequence>
-<xs:element minOccurs="0" name="permissionFlag" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateProjectSynchronizationOptionResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="updateRapidIdentificationOption">
-<xs:sequence>
-<xs:element minOccurs="0" name="permissionFlag" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateRapidIdentificationOptionResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="deleteRapidIdConfiguration">
-<xs:sequence>
-<xs:element minOccurs="0" name="rapidIdConfigurationId" type="xs:long"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="deleteRapidIdConfigurationResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getFileDiscoveryPatternById">
-<xs:sequence>
-<xs:element minOccurs="0" name="patternId" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getFileDiscoveryPatternByIdResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="common:fileDiscoveryPattern"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getIdentificationOptions">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getIdentificationOptionsResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="common:identificationOptions"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getRapidIdConfigurations">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getRapidIdConfigurationsResponse">
-<xs:sequence>
-<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="common:rapidIdConfiguration"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getRapidIdentificationOption">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getRapidIdentificationOptionResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getRapidIdConfigurationById">
-<xs:sequence>
-<xs:element minOccurs="0" name="rapidIdConfigurationId" type="xs:long"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getRapidIdConfigurationByIdResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="common:rapidIdConfiguration"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="setDefaultOpenSourceLicense">
-<xs:sequence>
-<xs:element minOccurs="0" name="licenseId" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="setDefaultOpenSourceLicenseResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getMinimumComponentRankCaptureOption">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getMinimumComponentRankCaptureOptionResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="common:forcibleIntegerOption"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateAnonymousAccessPolicy">
-<xs:sequence>
-<xs:element minOccurs="0" name="anonymousAccessAllowed" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateAnonymousAccessPolicyResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="suggestFileDiscoveryPatterns">
-<xs:sequence>
-<xs:element minOccurs="0" name="anyWordStartsWith" type="xs:string"/>
-<xs:element minOccurs="0" name="pageFilter" type="common:fileDiscoveryPatternPageFilter"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="suggestFileDiscoveryPatternsResponse">
-<xs:sequence>
-<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="common:fileDiscoveryPattern"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateAnalysisDatabaseOptions">
-<xs:sequence>
-<xs:element minOccurs="0" name="analysisDatabaseOptions" type="common:analysisDatabaseOptions"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateAnalysisDatabaseOptionsResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="updateFileDiscoveryPattern">
-<xs:sequence>
-<xs:element minOccurs="0" name="patternId" type="xs:string"/>
-<xs:element minOccurs="0" name="fileDiscoveryPattern" type="common:fileDiscoveryPatternRequest"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateFileDiscoveryPatternResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getFileDiscoveryPatterns">
-<xs:sequence>
-<xs:element maxOccurs="unbounded" minOccurs="0" name="fileOriginTypes" type="common:patternOriginType"/>
-<xs:element minOccurs="0" name="pageFilter" type="common:fileDiscoveryPatternPageFilter"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getFileDiscoveryPatternsResponse">
-<xs:sequence>
-<xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="common:fileDiscoveryPattern"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateIdentificationOptions">
-<xs:sequence>
-<xs:element minOccurs="0" name="identificationOptions" type="common:identificationOptions"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateIdentificationOptionsResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="updateCodeLabelOption">
-<xs:sequence>
-<xs:element minOccurs="0" name="codeLabelOption" type="common:codeLabelOption"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateCodeLabelOptionResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="uploadSourceArchive">
-<xs:sequence>
-<xs:element minOccurs="0" name="sourceCodeUploadRequest" type="tns:sourceCodeUploadRequest"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="sourceCodeUploadRequest">
-<xs:sequence>
-<xs:element xmlns:ns4="http://www.w3.org/2005/05/xmlmime" minOccurs="0" name="sourceContent" ns4:expectedContentTypes="application/octet-stream" type="xs:base64Binary"/>
-<xs:element minOccurs="0" name="sourceName" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="uploadSourceArchiveResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="ns3:analysisSourceLocation"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getFileDiscoveryPatternByPattern">
-<xs:sequence>
-<xs:element minOccurs="0" name="pattern" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getFileDiscoveryPatternByPatternResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="common:fileDiscoveryPattern"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="createStringSearchPattern">
-<xs:sequence>
-<xs:element minOccurs="0" name="stringSearchPatternRequest" type="common:stringSearchPatternRequest"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="createStringSearchPatternResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="deleteStringSearchPattern">
-<xs:sequence>
-<xs:element minOccurs="0" name="patternId" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="deleteStringSearchPatternResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getCaptureOptions">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getCaptureOptionsResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="common:captureOptions"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateStringSearchPattern">
-<xs:sequence>
-<xs:element minOccurs="0" name="patternId" type="xs:string"/>
-<xs:element minOccurs="0" name="stringSearchPattern" type="common:stringSearchPatternRequest"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateStringSearchPatternResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getCodeLabelOption">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getCodeLabelOptionResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="common:codeLabelOption"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="deleteFileDiscoveryPattern">
-<xs:sequence>
-<xs:element minOccurs="0" name="patternId" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="deleteFileDiscoveryPatternResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getProjectSynchronizationOption">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getProjectSynchronizationOptionResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateRegistrationLinkOption">
-<xs:sequence>
-<xs:element minOccurs="0" name="permissionFlag" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateRegistrationLinkOptionResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getDefaultOpenSourceLicense">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getDefaultOpenSourceLicenseResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="license:globalLicense"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getDefaultProprietaryLicense">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getDefaultProprietaryLicenseResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="license:globalLicense"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="getAnalysisDatabaseOptions">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getAnalysisDatabaseOptionsResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="common:analysisDatabaseOptions"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateCaseInsensitiveLdapPolicy">
-<xs:sequence>
-<xs:element minOccurs="0" name="caseInsensitiveLdapAllowed" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateCaseInsensitiveLdapPolicyResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="updateCaptureOptions">
-<xs:sequence>
-<xs:element minOccurs="0" name="captureOptions" type="common:captureOptions"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="updateCaptureOptionsResponse">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getServerFileAccessOption">
-<xs:sequence/>
-</xs:complexType>
-<xs:complexType name="getServerFileAccessOptionResponse">
-<xs:sequence>
-<xs:element minOccurs="0" name="return" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
+<xs:schema xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:license="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:discovery" xmlns:ns2="urn:protex.blackducksoftware.com:sdk:v7.0:identification" xmlns:ns3="urn:protex.blackducksoftware.com:sdk:v7.0:project" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:policy" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:policy" version="1.0">
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:common"/>
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:discovery"/>
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:identification"/>
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:license"/>
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:project"/>
+
+  <xs:element name="associateRapidIdConfiguration" type="tns:associateRapidIdConfiguration"/>
+
+  <xs:element name="associateRapidIdConfigurationResponse" type="tns:associateRapidIdConfigurationResponse"/>
+
+  <xs:element name="createFileDiscoveryPattern" type="tns:createFileDiscoveryPattern"/>
+
+  <xs:element name="createFileDiscoveryPatternResponse" type="tns:createFileDiscoveryPatternResponse"/>
+
+  <xs:element name="createRapidIdConfiguration" type="tns:createRapidIdConfiguration"/>
+
+  <xs:element name="createRapidIdConfigurationResponse" type="tns:createRapidIdConfigurationResponse"/>
+
+  <xs:element name="createStringSearchPattern" type="tns:createStringSearchPattern"/>
+
+  <xs:element name="createStringSearchPatternResponse" type="tns:createStringSearchPatternResponse"/>
+
+  <xs:element name="deleteFileDiscoveryPattern" type="tns:deleteFileDiscoveryPattern"/>
+
+  <xs:element name="deleteFileDiscoveryPatternResponse" type="tns:deleteFileDiscoveryPatternResponse"/>
+
+  <xs:element name="deleteRapidIdConfiguration" type="tns:deleteRapidIdConfiguration"/>
+
+  <xs:element name="deleteRapidIdConfigurationResponse" type="tns:deleteRapidIdConfigurationResponse"/>
+
+  <xs:element name="deleteStringSearchPattern" type="tns:deleteStringSearchPattern"/>
+
+  <xs:element name="deleteStringSearchPatternResponse" type="tns:deleteStringSearchPatternResponse"/>
+
+  <xs:element name="dissociateRapidIdConfiguration" type="tns:dissociateRapidIdConfiguration"/>
+
+  <xs:element name="dissociateRapidIdConfigurationResponse" type="tns:dissociateRapidIdConfigurationResponse"/>
+
+  <xs:element name="getAnalysisDatabaseOptions" type="tns:getAnalysisDatabaseOptions"/>
+
+  <xs:element name="getAnalysisDatabaseOptionsResponse" type="tns:getAnalysisDatabaseOptionsResponse"/>
+
+  <xs:element name="getAnonymousAccessPolicy" type="tns:getAnonymousAccessPolicy"/>
+
+  <xs:element name="getAnonymousAccessPolicyResponse" type="tns:getAnonymousAccessPolicyResponse"/>
+
+  <xs:element name="getCaptureOptions" type="tns:getCaptureOptions"/>
+
+  <xs:element name="getCaptureOptionsResponse" type="tns:getCaptureOptionsResponse"/>
+
+  <xs:element name="getCaseInsensitiveLdapPolicy" type="tns:getCaseInsensitiveLdapPolicy"/>
+
+  <xs:element name="getCaseInsensitiveLdapPolicyResponse" type="tns:getCaseInsensitiveLdapPolicyResponse"/>
+
+  <xs:element name="getCodeLabelOption" type="tns:getCodeLabelOption"/>
+
+  <xs:element name="getCodeLabelOptionResponse" type="tns:getCodeLabelOptionResponse"/>
+
+  <xs:element name="getDefaultOpenSourceLicense" type="tns:getDefaultOpenSourceLicense"/>
+
+  <xs:element name="getDefaultOpenSourceLicenseResponse" type="tns:getDefaultOpenSourceLicenseResponse"/>
+
+  <xs:element name="getDefaultProprietaryLicense" type="tns:getDefaultProprietaryLicense"/>
+
+  <xs:element name="getDefaultProprietaryLicenseResponse" type="tns:getDefaultProprietaryLicenseResponse"/>
+
+  <xs:element name="getFileDiscoveryPatternById" type="tns:getFileDiscoveryPatternById"/>
+
+  <xs:element name="getFileDiscoveryPatternByIdResponse" type="tns:getFileDiscoveryPatternByIdResponse"/>
+
+  <xs:element name="getFileDiscoveryPatternByPattern" type="tns:getFileDiscoveryPatternByPattern"/>
+
+  <xs:element name="getFileDiscoveryPatternByPatternResponse" type="tns:getFileDiscoveryPatternByPatternResponse"/>
+
+  <xs:element name="getFileDiscoveryPatterns" type="tns:getFileDiscoveryPatterns"/>
+
+  <xs:element name="getFileDiscoveryPatternsResponse" type="tns:getFileDiscoveryPatternsResponse"/>
+
+  <xs:element name="getIdentificationOptions" type="tns:getIdentificationOptions"/>
+
+  <xs:element name="getIdentificationOptionsResponse" type="tns:getIdentificationOptionsResponse"/>
+
+  <xs:element name="getLearnedIdentifications" type="tns:getLearnedIdentifications"/>
+
+  <xs:element name="getLearnedIdentificationsResponse" type="tns:getLearnedIdentificationsResponse"/>
+
+  <xs:element name="getLocalComponentsPermitted" type="tns:getLocalComponentsPermitted"/>
+
+  <xs:element name="getLocalComponentsPermittedResponse" type="tns:getLocalComponentsPermittedResponse"/>
+
+  <xs:element name="getMinimumComponentRankCaptureOption" type="tns:getMinimumComponentRankCaptureOption"/>
+
+  <xs:element name="getMinimumComponentRankCaptureOptionResponse" type="tns:getMinimumComponentRankCaptureOptionResponse"/>
+
+  <xs:element name="getProjectSynchronizationOption" type="tns:getProjectSynchronizationOption"/>
+
+  <xs:element name="getProjectSynchronizationOptionResponse" type="tns:getProjectSynchronizationOptionResponse"/>
+
+  <xs:element name="getRapidIdConfigurationAssociations" type="tns:getRapidIdConfigurationAssociations"/>
+
+  <xs:element name="getRapidIdConfigurationAssociationsResponse" type="tns:getRapidIdConfigurationAssociationsResponse"/>
+
+  <xs:element name="getRapidIdConfigurationById" type="tns:getRapidIdConfigurationById"/>
+
+  <xs:element name="getRapidIdConfigurationByIdResponse" type="tns:getRapidIdConfigurationByIdResponse"/>
+
+  <xs:element name="getRapidIdConfigurationByName" type="tns:getRapidIdConfigurationByName"/>
+
+  <xs:element name="getRapidIdConfigurationByNameResponse" type="tns:getRapidIdConfigurationByNameResponse"/>
+
+  <xs:element name="getRapidIdConfigurations" type="tns:getRapidIdConfigurations"/>
+
+  <xs:element name="getRapidIdConfigurationsResponse" type="tns:getRapidIdConfigurationsResponse"/>
+
+  <xs:element name="getRapidIdentificationOption" type="tns:getRapidIdentificationOption"/>
+
+  <xs:element name="getRapidIdentificationOptionResponse" type="tns:getRapidIdentificationOptionResponse"/>
+
+  <xs:element name="getRegistrationLinkOption" type="tns:getRegistrationLinkOption"/>
+
+  <xs:element name="getRegistrationLinkOptionResponse" type="tns:getRegistrationLinkOptionResponse"/>
+
+  <xs:element name="getServerFileAccessOption" type="tns:getServerFileAccessOption"/>
+
+  <xs:element name="getServerFileAccessOptionResponse" type="tns:getServerFileAccessOptionResponse"/>
+
+  <xs:element name="getStringSearchPatternById" type="tns:getStringSearchPatternById"/>
+
+  <xs:element name="getStringSearchPatternByIdResponse" type="tns:getStringSearchPatternByIdResponse"/>
+
+  <xs:element name="getStringSearchPatternByName" type="tns:getStringSearchPatternByName"/>
+
+  <xs:element name="getStringSearchPatternByNameResponse" type="tns:getStringSearchPatternByNameResponse"/>
+
+  <xs:element name="getStringSearchPatternsByType" type="tns:getStringSearchPatternsByType"/>
+
+  <xs:element name="getStringSearchPatternsByTypeResponse" type="tns:getStringSearchPatternsByTypeResponse"/>
+
+  <xs:element name="getSystemInformation" type="tns:getSystemInformation"/>
+
+  <xs:element name="getSystemInformationResponse" type="tns:getSystemInformationResponse"/>
+
+  <xs:element name="removeLearnedIdentification" type="tns:removeLearnedIdentification"/>
+
+  <xs:element name="removeLearnedIdentificationResponse" type="tns:removeLearnedIdentificationResponse"/>
+
+  <xs:element name="resetFileDiscoveryPattern" type="tns:resetFileDiscoveryPattern"/>
+
+  <xs:element name="resetFileDiscoveryPatternResponse" type="tns:resetFileDiscoveryPatternResponse"/>
+
+  <xs:element name="setDefaultOpenSourceLicense" type="tns:setDefaultOpenSourceLicense"/>
+
+  <xs:element name="setDefaultOpenSourceLicenseResponse" type="tns:setDefaultOpenSourceLicenseResponse"/>
+
+  <xs:element name="setDefaultProprietaryLicense" type="tns:setDefaultProprietaryLicense"/>
+
+  <xs:element name="setDefaultProprietaryLicenseResponse" type="tns:setDefaultProprietaryLicenseResponse"/>
+
+  <xs:element name="suggestFileDiscoveryPatterns" type="tns:suggestFileDiscoveryPatterns"/>
+
+  <xs:element name="suggestFileDiscoveryPatternsResponse" type="tns:suggestFileDiscoveryPatternsResponse"/>
+
+  <xs:element name="suggestStringSearchPatterns" type="tns:suggestStringSearchPatterns"/>
+
+  <xs:element name="suggestStringSearchPatternsResponse" type="tns:suggestStringSearchPatternsResponse"/>
+
+  <xs:element name="updateAnalysisDatabaseOptions" type="tns:updateAnalysisDatabaseOptions"/>
+
+  <xs:element name="updateAnalysisDatabaseOptionsResponse" type="tns:updateAnalysisDatabaseOptionsResponse"/>
+
+  <xs:element name="updateAnonymousAccessPolicy" type="tns:updateAnonymousAccessPolicy"/>
+
+  <xs:element name="updateAnonymousAccessPolicyResponse" type="tns:updateAnonymousAccessPolicyResponse"/>
+
+  <xs:element name="updateCaptureOptions" type="tns:updateCaptureOptions"/>
+
+  <xs:element name="updateCaptureOptionsResponse" type="tns:updateCaptureOptionsResponse"/>
+
+  <xs:element name="updateCaseInsensitiveLdapPolicy" type="tns:updateCaseInsensitiveLdapPolicy"/>
+
+  <xs:element name="updateCaseInsensitiveLdapPolicyResponse" type="tns:updateCaseInsensitiveLdapPolicyResponse"/>
+
+  <xs:element name="updateCodeLabelOption" type="tns:updateCodeLabelOption"/>
+
+  <xs:element name="updateCodeLabelOptionResponse" type="tns:updateCodeLabelOptionResponse"/>
+
+  <xs:element name="updateFileDiscoveryPattern" type="tns:updateFileDiscoveryPattern"/>
+
+  <xs:element name="updateFileDiscoveryPatternResponse" type="tns:updateFileDiscoveryPatternResponse"/>
+
+  <xs:element name="updateIdentificationOptions" type="tns:updateIdentificationOptions"/>
+
+  <xs:element name="updateIdentificationOptionsResponse" type="tns:updateIdentificationOptionsResponse"/>
+
+  <xs:element name="updateLocalComponentsPermitted" type="tns:updateLocalComponentsPermitted"/>
+
+  <xs:element name="updateLocalComponentsPermittedResponse" type="tns:updateLocalComponentsPermittedResponse"/>
+
+  <xs:element name="updateMinimumComponentRankCaptureOption" type="tns:updateMinimumComponentRankCaptureOption"/>
+
+  <xs:element name="updateMinimumComponentRankCaptureOptionResponse" type="tns:updateMinimumComponentRankCaptureOptionResponse"/>
+
+  <xs:element name="updateProjectSynchronizationOption" type="tns:updateProjectSynchronizationOption"/>
+
+  <xs:element name="updateProjectSynchronizationOptionResponse" type="tns:updateProjectSynchronizationOptionResponse"/>
+
+  <xs:element name="updateRapidIdConfiguration" type="tns:updateRapidIdConfiguration"/>
+
+  <xs:element name="updateRapidIdConfigurationResponse" type="tns:updateRapidIdConfigurationResponse"/>
+
+  <xs:element name="updateRapidIdentificationOption" type="tns:updateRapidIdentificationOption"/>
+
+  <xs:element name="updateRapidIdentificationOptionResponse" type="tns:updateRapidIdentificationOptionResponse"/>
+
+  <xs:element name="updateRegistrationLinkOption" type="tns:updateRegistrationLinkOption"/>
+
+  <xs:element name="updateRegistrationLinkOptionResponse" type="tns:updateRegistrationLinkOptionResponse"/>
+
+  <xs:element name="updateServerFileAccessOption" type="tns:updateServerFileAccessOption"/>
+
+  <xs:element name="updateServerFileAccessOptionResponse" type="tns:updateServerFileAccessOptionResponse"/>
+
+  <xs:element name="updateStringSearchPattern" type="tns:updateStringSearchPattern"/>
+
+  <xs:element name="updateStringSearchPatternResponse" type="tns:updateStringSearchPatternResponse"/>
+
+  <xs:element name="uploadSourceArchive" type="tns:uploadSourceArchive"/>
+
+  <xs:element name="uploadSourceArchiveResponse" type="tns:uploadSourceArchiveResponse"/>
+
+  <xs:complexType name="removeLearnedIdentification">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="learnedIdentificationId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="removeLearnedIdentificationResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="updateServerFileAccessOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="permissionFlag" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateServerFileAccessOptionResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getStringSearchPatternByName">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="patternName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getStringSearchPatternByNameResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="common:stringSearchPattern"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="createFileDiscoveryPattern">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="fileDiscoveryPatternRequest" type="common:fileDiscoveryPatternRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="createFileDiscoveryPatternResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getLearnedIdentifications">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="pageFilter" type="common:learnedIdentificationPageFilter"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getLearnedIdentificationsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="common:learnedIdentification"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getStringSearchPatternById">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="patternId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getStringSearchPatternByIdResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="common:stringSearchPattern"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="associateRapidIdConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="fileDiscoveryPatternId" type="xs:string"/>
+      <xs:element minOccurs="0" name="rapidIdConfigurationId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="associateRapidIdConfigurationResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getRegistrationLinkOption">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getRegistrationLinkOptionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getCaseInsensitiveLdapPolicy">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getCaseInsensitiveLdapPolicyResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getRapidIdConfigurationAssociations">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="rapidIdConfigurationId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getRapidIdConfigurationAssociationsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getStringSearchPatternsByType">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="patternType" type="common:stringSearchPatternOriginType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getStringSearchPatternsByTypeResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="common:stringSearchPattern"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateMinimumComponentRankCaptureOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="minimumRanking" type="common:forcibleIntegerOption"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateMinimumComponentRankCaptureOptionResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getRapidIdConfigurationByName">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="configurationName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getRapidIdConfigurationByNameResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="common:rapidIdConfiguration"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="resetFileDiscoveryPattern">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="pattern" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="resetFileDiscoveryPatternResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="createRapidIdConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="rapidIdConfigurationRequest" type="common:rapidIdConfigurationRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="createRapidIdConfigurationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="dissociateRapidIdConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="fileDiscoveryPatternId" type="xs:string"/>
+      <xs:element minOccurs="0" name="rapidIdConfigurationId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="dissociateRapidIdConfigurationResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getLocalComponentsPermitted">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getLocalComponentsPermittedResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="setDefaultProprietaryLicense">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="setDefaultProprietaryLicenseResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="updateRapidIdConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="configurationId" type="xs:long"/>
+      <xs:element minOccurs="0" name="rapidIdConfigurationUpdateRequest" type="common:rapidIdConfigurationRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateRapidIdConfigurationResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getAnonymousAccessPolicy">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getAnonymousAccessPolicyResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="suggestStringSearchPatterns">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="anyWordStartsWith" type="xs:string"/>
+      <xs:element minOccurs="0" name="pageFilter" type="common:stringSearchPatternPageFilter"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="suggestStringSearchPatternsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="common:stringSearchPattern"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateLocalComponentsPermitted">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="arg0" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateLocalComponentsPermittedResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getSystemInformation">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getSystemInformationResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:protexSystemInformation"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="protexSystemInformation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="bdsBasicDatabaseVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="bdsClientProtcolVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="bdsClientVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="bdsCustomDatabaseVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="bdsEstimationToolProtocolVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="bdsEstimationToolVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="bdsKnowledgebaseUpdateLevel" type="xs:string"/>
+      <xs:element minOccurs="0" name="bdsKnowledgebaseUpdateStream" type="xs:string"/>
+      <xs:element minOccurs="0" name="bdsProxyProtcolVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="bdsProxyVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="bdsRawFingerprintFilesVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="bdsServerLibraryVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="bdsSoapProtcolVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="bdsSoapVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="bdsToolProtcolVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="bdsToolVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="bdsUpdateProtcolVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="bdsUpdateVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="fingerprintBasicDatabaseVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="fingerprintCustomDatabaseVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="localRegistrationServiceVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="protexSdkVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="registrationServiceVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="serviceVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="soapServiceVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="updateServiceVersion" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateProjectSynchronizationOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="permissionFlag" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateProjectSynchronizationOptionResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="updateRapidIdentificationOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="permissionFlag" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateRapidIdentificationOptionResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="deleteRapidIdConfiguration">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="rapidIdConfigurationId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="deleteRapidIdConfigurationResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getFileDiscoveryPatternById">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="patternId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getFileDiscoveryPatternByIdResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="common:fileDiscoveryPattern"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getIdentificationOptions">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getIdentificationOptionsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="common:identificationOptions"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getRapidIdConfigurations">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getRapidIdConfigurationsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="common:rapidIdConfiguration"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getRapidIdentificationOption">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getRapidIdentificationOptionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getRapidIdConfigurationById">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="rapidIdConfigurationId" type="xs:long"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getRapidIdConfigurationByIdResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="common:rapidIdConfiguration"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="setDefaultOpenSourceLicense">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="setDefaultOpenSourceLicenseResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getMinimumComponentRankCaptureOption">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getMinimumComponentRankCaptureOptionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="common:forcibleIntegerOption"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateAnonymousAccessPolicy">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="anonymousAccessAllowed" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateAnonymousAccessPolicyResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="suggestFileDiscoveryPatterns">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="anyWordStartsWith" type="xs:string"/>
+      <xs:element minOccurs="0" name="pageFilter" type="common:fileDiscoveryPatternPageFilter"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="suggestFileDiscoveryPatternsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="common:fileDiscoveryPattern"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateAnalysisDatabaseOptions">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="analysisDatabaseOptions" type="common:analysisDatabaseOptions"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateAnalysisDatabaseOptionsResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="updateFileDiscoveryPattern">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="patternId" type="xs:string"/>
+      <xs:element minOccurs="0" name="fileDiscoveryPattern" type="common:fileDiscoveryPatternRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateFileDiscoveryPatternResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getFileDiscoveryPatterns">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="fileOriginTypes" type="common:patternOriginType"/>
+      <xs:element minOccurs="0" name="pageFilter" type="common:fileDiscoveryPatternPageFilter"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getFileDiscoveryPatternsResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="common:fileDiscoveryPattern"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateIdentificationOptions">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="identificationOptions" type="common:identificationOptions"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateIdentificationOptionsResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="updateCodeLabelOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="codeLabelOption" type="common:codeLabelOption"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateCodeLabelOptionResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="uploadSourceArchive">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="sourceCodeUploadRequest" type="tns:sourceCodeUploadRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="sourceCodeUploadRequest">
+    <xs:sequence>
+      <xs:element xmlns:ns4="http://www.w3.org/2005/05/xmlmime" minOccurs="0" name="sourceContent" ns4:expectedContentTypes="application/octet-stream" type="xs:base64Binary"/>
+      <xs:element minOccurs="0" name="sourceName" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="uploadSourceArchiveResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="ns3:analysisSourceLocation"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getFileDiscoveryPatternByPattern">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="pattern" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getFileDiscoveryPatternByPatternResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="common:fileDiscoveryPattern"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="createStringSearchPattern">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="stringSearchPatternRequest" type="common:stringSearchPatternRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="createStringSearchPatternResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="deleteStringSearchPattern">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="patternId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="deleteStringSearchPatternResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getCaptureOptions">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getCaptureOptionsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="common:captureOptions"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateStringSearchPattern">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="patternId" type="xs:string"/>
+      <xs:element minOccurs="0" name="stringSearchPattern" type="common:stringSearchPatternRequest"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateStringSearchPatternResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getCodeLabelOption">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getCodeLabelOptionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="common:codeLabelOption"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="deleteFileDiscoveryPattern">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="patternId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="deleteFileDiscoveryPatternResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getProjectSynchronizationOption">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getProjectSynchronizationOptionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateRegistrationLinkOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="permissionFlag" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateRegistrationLinkOptionResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getDefaultOpenSourceLicense">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getDefaultOpenSourceLicenseResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="license:globalLicense"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getDefaultProprietaryLicense">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getDefaultProprietaryLicenseResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="license:globalLicense"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getAnalysisDatabaseOptions">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getAnalysisDatabaseOptionsResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="common:analysisDatabaseOptions"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateCaseInsensitiveLdapPolicy">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="caseInsensitiveLdapAllowed" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateCaseInsensitiveLdapPolicyResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="updateCaptureOptions">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="captureOptions" type="common:captureOptions"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateCaptureOptionsResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getServerFileAccessOption">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getServerFileAccessOptionResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
 </xs:schema>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:license" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:localcomponent" version="1.0">
-<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:license"/>
-<xs:complexType name="localLicense">
-<xs:complexContent>
-<xs:extension base="ns1:license">
-<xs:sequence>
-<xs:element minOccurs="0" name="basedOnLicenseId" type="xs:string"/>
-<xs:element minOccurs="0" name="contextProjectId" type="xs:string"/>
-</xs:sequence>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>
+<xs:schema xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:localcomponent" version="1.0">
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:license"/>
+
+  <xs:complexType name="localLicense">
+    <xs:complexContent>
+      <xs:extension base="ns1:license">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="basedOnLicenseId" type="xs:string"/>
+          <xs:element minOccurs="0" name="contextProjectId" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
 </xs:schema>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:license" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:license" version="1.0">
-<xs:complexType name="licenseInfo">
-<xs:sequence>
-<xs:element minOccurs="0" name="licenseId" type="xs:string"/>
-<xs:element minOccurs="0" name="name" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="globalLicense">
-<xs:complexContent>
-<xs:extension base="tns:license">
-<xs:sequence>
-<xs:element minOccurs="0" name="approvalDate" type="xs:dateTime"/>
-<xs:element minOccurs="0" name="approvalState" type="tns:licenseApprovalState"/>
-<xs:element minOccurs="0" name="approvedBy" type="xs:string"/>
-<xs:element minOccurs="0" name="comment" type="xs:string"/>
-<xs:element minOccurs="0" name="explanation" type="xs:string"/>
-<xs:element minOccurs="0" name="licenseCodeSharingRequirement" type="tns:licenseCodeSharingRequirement"/>
-<xs:element minOccurs="0" name="licenseOwnership" type="tns:licenseOwnership"/>
-<xs:element minOccurs="0" name="suffix" type="xs:string"/>
-</xs:sequence>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>
-<xs:complexType name="license">
-<xs:sequence>
-<xs:element minOccurs="0" name="attributes" type="tns:licenseAttributes"/>
-<xs:element minOccurs="0" name="licenseId" type="xs:string"/>
-<xs:element minOccurs="0" name="licenseOriginType" type="tns:licenseOriginType"/>
-<xs:element minOccurs="0" name="name" type="xs:string"/>
-<xs:element minOccurs="0" name="text" type="xs:base64Binary"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="licenseAttributes">
-<xs:sequence>
-<xs:element minOccurs="0" name="antiDrmProvision" type="xs:boolean"/>
-<xs:element minOccurs="0" name="carriesDistributionObligations" type="xs:boolean"/>
-<xs:element minOccurs="0" name="changeNoticeRequired" type="xs:boolean"/>
-<xs:element minOccurs="0" name="chargingFees" type="tns:permittedOrRequired"/>
-<xs:element minOccurs="0" name="discriminatoryRestrictions" type="tns:restrictionType"/>
-<xs:element minOccurs="0" name="expressPatentLicense" type="xs:boolean"/>
-<xs:element minOccurs="0" name="grantRecipientRightToCopy" type="tns:permittedOrRequired"/>
-<xs:element minOccurs="0" name="grantRecipientRightToModify" type="tns:permittedOrRequired"/>
-<xs:element minOccurs="0" name="grantRecipientRightToReverseEngineer" type="tns:permittedOrRequired"/>
-<xs:element minOccurs="0" name="includeLicense" type="xs:boolean"/>
-<xs:element minOccurs="0" name="indemnificationRequired" type="xs:boolean"/>
-<xs:element minOccurs="0" name="integrationLevelForLicenseApplication" type="tns:licenseExtensionLevel"/>
-<xs:element minOccurs="0" name="licenseBackRequired" type="xs:boolean"/>
-<xs:element minOccurs="0" name="limitationOfLiabilityRequired" type="xs:boolean"/>
-<xs:element minOccurs="0" name="notice" type="xs:boolean"/>
-<xs:element minOccurs="0" name="patentRetaliation" type="xs:boolean"/>
-<xs:element minOccurs="0" name="promotionRestriction" type="xs:boolean"/>
-<xs:element minOccurs="0" name="rightToDistributeBinaryForMaximumUsage" type="tns:rightToDistributeBinaryForMaximumUsage"/>
-<xs:element minOccurs="0" name="shareAlikeReciprocity" type="xs:boolean"/>
-<xs:element minOccurs="0" name="sourceCodeDistribution" type="tns:permittedOrRequired"/>
-<xs:element minOccurs="0" name="warrantyDisclaimerRequired" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-<xs:simpleType name="licenseApprovalState">
-<xs:restriction base="xs:string">
-<xs:enumeration value="APPROVED"/>
-<xs:enumeration value="BLANKET_APPROVED"/>
-<xs:enumeration value="DIS_APPROVED"/>
-<xs:enumeration value="NOT_REVIEWED"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="licenseCodeSharingRequirement">
-<xs:restriction base="xs:string">
-<xs:enumeration value="RECIPROCAL"/>
-<xs:enumeration value="WEAK_RECIPROCAL"/>
-<xs:enumeration value="PERMISSIVE"/>
-<xs:enumeration value="UNKNOWN"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="licenseOwnership">
-<xs:restriction base="xs:string">
-<xs:enumeration value="OPEN_SOURCE"/>
-<xs:enumeration value="PROPRIETARY"/>
-<xs:enumeration value="UNKNOWN"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="permittedOrRequired">
-<xs:restriction base="xs:string">
-<xs:enumeration value="NOT_PERMITTED"/>
-<xs:enumeration value="PERMITTED"/>
-<xs:enumeration value="REQUIRED"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="restrictionType">
-<xs:restriction base="xs:string">
-<xs:enumeration value="HAS_RESTRICTIONS"/>
-<xs:enumeration value="HAS_NO_RESTRICTIONS"/>
-<xs:enumeration value="HAS_NO_RESTRICTIONS_AND_CAN_NOT_ADD_ANY"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="licenseExtensionLevel">
-<xs:restriction base="xs:string">
-<xs:enumeration value="NON"/>
-<xs:enumeration value="FILE_PER_MPL"/>
-<xs:enumeration value="MODULE_PER_EPL_CPL"/>
-<xs:enumeration value="DYNAMIC_LIBRARY_PER_LGPL"/>
-<xs:enumeration value="WORK_BASED_ON_PER_GPL"/>
-<xs:enumeration value="ACCOMPANYING_SOFTWARE_USING_PER_SLEEPY_CAT"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="rightToDistributeBinaryForMaximumUsage">
-<xs:restriction base="xs:string">
-<xs:enumeration value="NON_COMMERCIAL_OR_PERSONAL_USE"/>
-<xs:enumeration value="INTERNAL_EVALUATION"/>
-<xs:enumeration value="INTERNAL_PRODUCTION_USE"/>
-<xs:enumeration value="ANY"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="licenseOriginType">
-<xs:restriction base="xs:string">
-<xs:enumeration value="STANDARD"/>
-<xs:enumeration value="MODIFIED_STANDARD"/>
-<xs:enumeration value="TEMPLATE"/>
-<xs:enumeration value="CUSTOM"/>
-<xs:enumeration value="PROJECT_LOCAL"/>
-</xs:restriction>
-</xs:simpleType>
+<xs:schema xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:license" version="1.0">
+
+  <xs:complexType name="licenseInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="globalLicense">
+    <xs:complexContent>
+      <xs:extension base="tns:license">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="approvalDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="approvalState" type="tns:licenseApprovalState"/>
+          <xs:element minOccurs="0" name="approvedBy" type="xs:string"/>
+          <xs:element minOccurs="0" name="comment" type="xs:string"/>
+          <xs:element minOccurs="0" name="explanation" type="xs:string"/>
+          <xs:element minOccurs="0" name="licenseCodeSharingRequirement" type="tns:licenseCodeSharingRequirement"/>
+          <xs:element minOccurs="0" name="licenseOwnership" type="tns:licenseOwnership"/>
+          <xs:element minOccurs="0" name="suffix" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="license">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="attributes" type="tns:licenseAttributes"/>
+      <xs:element minOccurs="0" name="licenseId" type="xs:string"/>
+      <xs:element minOccurs="0" name="licenseOriginType" type="tns:licenseOriginType"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" name="text" type="xs:base64Binary"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="licenseAttributes">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="antiDrmProvision" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="carriesDistributionObligations" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="changeNoticeRequired" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="chargingFees" type="tns:permittedOrRequired"/>
+      <xs:element minOccurs="0" name="discriminatoryRestrictions" type="tns:restrictionType"/>
+      <xs:element minOccurs="0" name="expressPatentLicense" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="grantRecipientRightToCopy" type="tns:permittedOrRequired"/>
+      <xs:element minOccurs="0" name="grantRecipientRightToModify" type="tns:permittedOrRequired"/>
+      <xs:element minOccurs="0" name="grantRecipientRightToReverseEngineer" type="tns:permittedOrRequired"/>
+      <xs:element minOccurs="0" name="includeLicense" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="indemnificationRequired" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="integrationLevelForLicenseApplication" type="tns:licenseExtensionLevel"/>
+      <xs:element minOccurs="0" name="licenseBackRequired" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="limitationOfLiabilityRequired" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="notice" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="patentRetaliation" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="promotionRestriction" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="rightToDistributeBinaryForMaximumUsage" type="tns:rightToDistributeBinaryForMaximumUsage"/>
+      <xs:element minOccurs="0" name="shareAlikeReciprocity" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="sourceCodeDistribution" type="tns:permittedOrRequired"/>
+      <xs:element minOccurs="0" name="warrantyDisclaimerRequired" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="licenseApprovalState">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="APPROVED"/>
+      <xs:enumeration value="BLANKET_APPROVED"/>
+      <xs:enumeration value="DIS_APPROVED"/>
+      <xs:enumeration value="NOT_REVIEWED"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="licenseCodeSharingRequirement">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="RECIPROCAL"/>
+      <xs:enumeration value="WEAK_RECIPROCAL"/>
+      <xs:enumeration value="PERMISSIVE"/>
+      <xs:enumeration value="UNKNOWN"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="licenseOwnership">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="OPEN_SOURCE"/>
+      <xs:enumeration value="PROPRIETARY"/>
+      <xs:enumeration value="UNKNOWN"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="permittedOrRequired">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NOT_PERMITTED"/>
+      <xs:enumeration value="PERMITTED"/>
+      <xs:enumeration value="REQUIRED"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="restrictionType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="HAS_RESTRICTIONS"/>
+      <xs:enumeration value="HAS_NO_RESTRICTIONS"/>
+      <xs:enumeration value="HAS_NO_RESTRICTIONS_AND_CAN_NOT_ADD_ANY"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="licenseExtensionLevel">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NON"/>
+      <xs:enumeration value="FILE_PER_MPL"/>
+      <xs:enumeration value="MODULE_PER_EPL_CPL"/>
+      <xs:enumeration value="DYNAMIC_LIBRARY_PER_LGPL"/>
+      <xs:enumeration value="WORK_BASED_ON_PER_GPL"/>
+      <xs:enumeration value="ACCOMPANYING_SOFTWARE_USING_PER_SLEEPY_CAT"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="rightToDistributeBinaryForMaximumUsage">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="NON_COMMERCIAL_OR_PERSONAL_USE"/>
+      <xs:enumeration value="INTERNAL_EVALUATION"/>
+      <xs:enumeration value="INTERNAL_PRODUCTION_USE"/>
+      <xs:enumeration value="ANY"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="licenseOriginType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="STANDARD"/>
+      <xs:enumeration value="MODIFIED_STANDARD"/>
+      <xs:enumeration value="TEMPLATE"/>
+      <xs:enumeration value="CUSTOM"/>
+      <xs:enumeration value="PROJECT_LOCAL"/>
+    </xs:restriction>
+  </xs:simpleType>
+
 </xs:schema>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:identification" version="1.0">
-<xs:simpleType name="identificationType">
-<xs:restriction base="xs:string">
-<xs:enumeration value="DECLARATION"/>
-<xs:enumeration value="CODE_MATCH"/>
-<xs:enumeration value="STRING_SEARCH"/>
-<xs:enumeration value="DEPENDENCY"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="codeMatchIdentificationDirective">
-<xs:restriction base="xs:string">
-<xs:enumeration value="SNIPPET_AND_FILE"/>
-<xs:enumeration value="FILE"/>
-</xs:restriction>
-</xs:simpleType>
+
+  <xs:simpleType name="identificationType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DECLARATION"/>
+      <xs:enumeration value="CODE_MATCH"/>
+      <xs:enumeration value="STRING_SEARCH"/>
+      <xs:enumeration value="DEPENDENCY"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="codeMatchIdentificationDirective">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SNIPPET_AND_FILE"/>
+      <xs:enumeration value="FILE"/>
+    </xs:restriction>
+  </xs:simpleType>
+
 </xs:schema>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:discovery" version="1.0">
-<xs:simpleType name="discoveryType">
-<xs:restriction base="xs:string">
-<xs:enumeration value="SNIPPET"/>
-<xs:enumeration value="FILE"/>
-<xs:enumeration value="FILE_NAME_IDENTITY"/>
-<xs:enumeration value="STRING_SEARCH"/>
-<xs:enumeration value="STRING_SEARCH_REGULAR_EXPRESSION"/>
-<xs:enumeration value="DEPENDENCY_JAVA_PACKAGE"/>
-<xs:enumeration value="DEPENDENCY_JAVA_IMPORT"/>
-<xs:enumeration value="DEPENDENCY_NON_JAVA_SOURCE"/>
-<xs:enumeration value="DEPENDENCY_NON_JAVA_BINARY"/>
-</xs:restriction>
-</xs:simpleType>
+
+  <xs:simpleType name="discoveryType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SNIPPET"/>
+      <xs:enumeration value="FILE"/>
+      <xs:enumeration value="FILE_NAME_IDENTITY"/>
+      <xs:enumeration value="STRING_SEARCH"/>
+      <xs:enumeration value="STRING_SEARCH_REGULAR_EXPRESSION"/>
+      <xs:enumeration value="DEPENDENCY_JAVA_PACKAGE"/>
+      <xs:enumeration value="DEPENDENCY_JAVA_IMPORT"/>
+      <xs:enumeration value="DEPENDENCY_NON_JAVA_SOURCE"/>
+      <xs:enumeration value="DEPENDENCY_NON_JAVA_BINARY"/>
+    </xs:restriction>
+  </xs:simpleType>
+
 </xs:schema>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:discovery" xmlns:ns2="urn:protex.blackducksoftware.com:sdk:v7.0:identification" xmlns:ns3="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:common" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:common" version="1.0">
-<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:discovery"/>
-<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:identification"/>
-<xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:license"/>
-<xs:complexType name="stringSearchPattern">
-<xs:complexContent>
-<xs:extension base="tns:stringSearchPatternRequest">
-<xs:sequence>
-<xs:element minOccurs="0" name="creationDate" type="xs:dateTime"/>
-<xs:element minOccurs="0" name="lastUpdatedDate" type="xs:dateTime"/>
-<xs:element minOccurs="0" name="stringSearchPatternId" type="xs:string"/>
-<xs:element minOccurs="0" name="type" type="tns:stringSearchPatternOriginType"/>
-</xs:sequence>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>
-<xs:complexType name="stringSearchPatternRequest">
-<xs:sequence>
-<xs:element minOccurs="0" name="advancedPattern" type="xs:string"/>
-<xs:element minOccurs="0" name="associatedLicenseId" type="xs:string"/>
-<xs:element minOccurs="0" name="enabled" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="method" type="tns:stringSearchMethod"/>
-<xs:element minOccurs="0" name="name" type="xs:string"/>
-<xs:element minOccurs="0" name="requireId" type="tns:forcibleBooleanOption"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="forcibleBooleanOption">
-<xs:sequence>
-<xs:element minOccurs="0" name="forced" type="xs:boolean"/>
-<xs:element minOccurs="0" name="option" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="fileDiscoveryPatternRequest">
-<xs:sequence>
-<xs:element minOccurs="0" name="binaryDependenciesOption" type="tns:guardedBooleanOption"/>
-<xs:element minOccurs="0" name="decompressCompressedFilesOption" type="tns:guardedBooleanOption"/>
-<xs:element minOccurs="0" name="defaultUsage" type="tns:usageLevel"/>
-<xs:element minOccurs="0" name="expandArchivesOption" type="tns:guardedBooleanOption"/>
-<xs:element minOccurs="0" name="fileMatchesOption" type="tns:guardedBooleanOption"/>
-<xs:element minOccurs="0" name="fileType" type="tns:fileType"/>
-<xs:element minOccurs="0" name="flagAsPendingIdentificationOption" type="tns:guardedBooleanOption"/>
-<xs:element minOccurs="0" name="javaImportOrCIncludeDependenciesOption" type="tns:guardedBooleanOption"/>
-<xs:element minOccurs="0" name="javaPackageStatementDependenciesOption" type="tns:guardedBooleanOption"/>
-<xs:element minOccurs="0" name="pattern" type="xs:string"/>
-<xs:element minOccurs="0" name="snippetMatchesOption" type="tns:guardedBooleanOption"/>
-<xs:element minOccurs="0" name="stringSearchesOption" type="tns:guardedBooleanOption"/>
-<xs:element minOccurs="0" name="uploadSourceCodeOption" type="tns:guardedBooleanOption"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="guardedBooleanOption">
-<xs:sequence>
-<xs:element minOccurs="0" name="guarded" type="tns:guardedByFileType"/>
-<xs:element minOccurs="0" name="option" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="learnedIdentificationPageFilter">
-<xs:complexContent>
-<xs:extension base="tns:pageFilter">
-<xs:sequence>
-<xs:element minOccurs="0" name="sortedColumn" type="tns:learnedIdentificationColumn"/>
-</xs:sequence>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>
-<xs:complexType abstract="true" name="pageFilter">
-<xs:sequence>
-<xs:element minOccurs="0" name="firstRowIndex" type="xs:int"/>
-<xs:element minOccurs="0" name="lastRowIndex" type="xs:int"/>
-<xs:element minOccurs="0" name="sortAscending" type="xs:boolean"/>
-<xs:element minOccurs="0" name="sortType" type="tns:sortType"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType abstract="true" name="learnedIdentification">
-<xs:sequence>
-<xs:element minOccurs="0" name="comment" type="xs:string"/>
-<xs:element minOccurs="0" name="discoveryType" type="ns1:discoveryType"/>
-<xs:element minOccurs="0" name="identificationType" type="ns2:identificationType"/>
-<xs:element minOccurs="0" name="identificationUpdatedBy" type="xs:string"/>
-<xs:element minOccurs="0" name="identificationUpdatedDate" type="xs:string"/>
-<xs:element minOccurs="0" name="identifiedBy" type="xs:string"/>
-<xs:element minOccurs="0" name="identifiedComponentKey" type="tns:componentKey"/>
-<xs:element minOccurs="0" name="identifiedDate" type="xs:string"/>
-<xs:element minOccurs="0" name="identifiedLicenseInfo" type="ns3:licenseInfo"/>
-<xs:element minOccurs="0" name="identifiedUsageLevel" type="tns:usageLevel"/>
-<xs:element minOccurs="0" name="learnedBy" type="xs:string"/>
-<xs:element minOccurs="0" name="learnedChecksum" type="xs:string"/>
-<xs:element minOccurs="0" name="learnedDate" type="xs:string"/>
-<xs:element minOccurs="0" name="learnedFromProjectId" type="xs:string"/>
-<xs:element minOccurs="0" name="learnedIdentificationId" type="xs:long"/>
-<xs:element minOccurs="0" name="learningUpdatedBy" type="xs:string"/>
-<xs:element minOccurs="0" name="learningUpdatedDate" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="componentKey">
-<xs:sequence>
-<xs:element minOccurs="0" name="componentId" type="xs:string"/>
-<xs:element minOccurs="0" name="versionId" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="learnedCodeMatchIdentification">
-<xs:complexContent>
-<xs:extension base="tns:learnedIdentification">
-<xs:sequence>
-<xs:element minOccurs="0" name="codeMatchIdentificationDirective" type="ns2:codeMatchIdentificationDirective"/>
-<xs:element minOccurs="0" name="discoveredComponentKey" type="tns:componentKey"/>
-<xs:element minOccurs="0" name="firstLine" type="xs:int"/>
-<xs:element minOccurs="0" name="lastLine" type="xs:int"/>
-<xs:element minOccurs="0" name="path" type="xs:string"/>
-<xs:element minOccurs="0" name="type" type="ns2:identificationType"/>
-</xs:sequence>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>
-<xs:complexType name="learnedStringSearchIdentification">
-<xs:complexContent>
-<xs:extension base="tns:learnedIdentification">
-<xs:sequence>
-<xs:element minOccurs="0" name="hint" type="xs:string"/>
-<xs:element maxOccurs="unbounded" minOccurs="0" name="learnedHitLocations" nillable="true" type="tns:learnedStringSearchHitLocation"/>
-<xs:element minOccurs="0" name="path" type="xs:string"/>
-</xs:sequence>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>
-<xs:complexType name="learnedStringSearchHitLocation">
-<xs:sequence>
-<xs:element minOccurs="0" name="comment" type="xs:string"/>
-<xs:element minOccurs="0" name="createdBy" type="xs:string"/>
-<xs:element minOccurs="0" name="createdDate" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="forcibleIntegerOption">
-<xs:sequence>
-<xs:element minOccurs="0" name="forced" type="xs:boolean"/>
-<xs:element minOccurs="0" name="option" type="xs:int"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="rapidIdConfiguration">
-<xs:complexContent>
-<xs:extension base="tns:rapidIdConfigurationRequest">
-<xs:sequence>
-<xs:element minOccurs="0" name="configurationId" type="xs:long"/>
-<xs:element minOccurs="0" name="originType" type="tns:rapidIdConfigurationOriginType"/>
-</xs:sequence>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>
-<xs:complexType name="rapidIdConfigurationRequest">
-<xs:sequence>
-<xs:element minOccurs="0" name="description" type="xs:string"/>
-<xs:element minOccurs="0" name="name" type="xs:string"/>
-<xs:element maxOccurs="unbounded" minOccurs="0" name="operations" nillable="true" type="tns:rapidIdOperation"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType abstract="true" name="rapidIdOperation">
-<xs:sequence>
-<xs:element minOccurs="0" name="type" type="tns:rapidIdOperationType"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="primaryMatchOperation">
-<xs:complexContent>
-<xs:extension base="tns:rapidIdOperation">
-<xs:sequence/>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>
-<xs:complexType name="singleComponentCodeMatchOperation">
-<xs:complexContent>
-<xs:extension base="tns:rapidIdOperation">
-<xs:sequence>
-<xs:element minOccurs="0" name="componentVersionPreference" type="tns:componentVersionPreference"/>
-<xs:element minOccurs="0" name="minimumMatchPercentage" type="xs:int"/>
-</xs:sequence>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>
-<xs:complexType name="learnedIdentificationOperation">
-<xs:complexContent>
-<xs:extension base="tns:rapidIdOperation">
-<xs:sequence/>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>
-<xs:complexType name="stringSearchPatternPageFilter">
-<xs:complexContent>
-<xs:extension base="tns:pageFilter">
-<xs:sequence>
-<xs:element minOccurs="0" name="sortedColumn" type="tns:stringSearchPatternColumn"/>
-</xs:sequence>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>
-<xs:complexType name="fileDiscoveryPattern">
-<xs:complexContent>
-<xs:extension base="tns:fileDiscoveryPatternRequest">
-<xs:sequence>
-<xs:element minOccurs="0" name="originType" type="tns:patternOriginType"/>
-<xs:element minOccurs="0" name="patternId" type="xs:string"/>
-</xs:sequence>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>
-<xs:complexType name="identificationOptions">
-<xs:sequence>
-<xs:element minOccurs="0" name="auditTrailOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="requireIdOfCodeMatchesOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="requireIdOfDependenciesOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="requireIdOfFileDiscoveryPatternMatchesOption" type="tns:forcibleBooleanOption"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="fileDiscoveryPatternPageFilter">
-<xs:complexContent>
-<xs:extension base="tns:pageFilter">
-<xs:sequence>
-<xs:element minOccurs="0" name="sortedColumn" type="tns:fileDiscoveryPatternColumn"/>
-</xs:sequence>
-</xs:extension>
-</xs:complexContent>
-</xs:complexType>
-<xs:complexType name="analysisDatabaseOptions">
-<xs:sequence>
-<xs:element minOccurs="0" name="customCodeMatchesOption" type="xs:boolean"/>
-<xs:element minOccurs="0" name="customStringSearchesOption" type="xs:boolean"/>
-<xs:element minOccurs="0" name="forceCodeMatchOptions" type="xs:boolean"/>
-<xs:element minOccurs="0" name="forceStringSearchOptions" type="xs:boolean"/>
-<xs:element minOccurs="0" name="standardCodeMatchesOption" type="xs:boolean"/>
-<xs:element minOccurs="0" name="standardStringSearchesOption" type="xs:boolean"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="codeLabelOption">
-<xs:sequence>
-<xs:element minOccurs="0" name="furnishedBy" type="xs:string"/>
-<xs:element minOccurs="0" name="openSourceReferenceLocation" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="captureOptions">
-<xs:sequence>
-<xs:element minOccurs="0" name="binaryDependenciesOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="blockCountThresholdOption" type="tns:forcibleIntegerOption"/>
-<xs:element minOccurs="0" name="decompressCompressedFilesOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="detectFileChangesOption" type="tns:forcibleDetectFileChangesOption"/>
-<xs:element minOccurs="0" name="discardRejectedCodeMatchesOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="expandArchivesOption" type="tns:forcibleExpandArchivesOption"/>
-<xs:element minOccurs="0" name="fileMatchesOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="javaImportOrCIncludeDependenciesOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="javaPackageStatementDependenciesOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="keepOnlyDiscoveriesToBestMatchingComponentSourcePathOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="keepOnlyDiscoveriesToCodeprintedComponentsOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="keepOnlyDiscoveriesToComponentsReleasedOnOrAfterOption" type="tns:forcibleComponentsReleasedOnOrAfterOption"/>
-<xs:element minOccurs="0" name="keepOnlyDiscoveriesToMavenArtifactsOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="keepOnlyDiscoveriesToTopComponentMatchesOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="manualBomRefreshOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="multiUserFileComparisonOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="snippetMatchesOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="storeNonPrecisionDiscoveriesOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="stringSearchRegularExpressionOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="stringSearchWildcardsOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="stringSearchesOption" type="tns:forcibleBooleanOption"/>
-<xs:element minOccurs="0" name="uploadSourceCodeOption" type="tns:forcibleUploadSourceCodeOption"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="forcibleDetectFileChangesOption">
-<xs:sequence>
-<xs:element minOccurs="0" name="forced" type="xs:boolean"/>
-<xs:element minOccurs="0" name="value" type="tns:detectFileChangesOption"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="forcibleExpandArchivesOption">
-<xs:sequence>
-<xs:element minOccurs="0" name="forced" type="xs:boolean"/>
-<xs:element minOccurs="0" name="value" type="tns:expandArchivesOption"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="forcibleComponentsReleasedOnOrAfterOption">
-<xs:sequence>
-<xs:element minOccurs="0" name="forced" type="xs:boolean"/>
-<xs:element minOccurs="0" name="option" type="tns:componentsReleasedOnOrAfterOption"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="componentsReleasedOnOrAfterOption">
-<xs:sequence>
-<xs:element minOccurs="0" name="enabled" type="xs:boolean"/>
-<xs:element minOccurs="0" name="releaseDate" type="xs:dateTime"/>
-</xs:sequence>
-</xs:complexType>
-<xs:complexType name="forcibleUploadSourceCodeOption">
-<xs:sequence>
-<xs:element minOccurs="0" name="forced" type="xs:boolean"/>
-<xs:element minOccurs="0" name="value" type="tns:uploadSourceCodeOption"/>
-</xs:sequence>
-</xs:complexType>
-<xs:simpleType name="stringSearchPatternOriginType">
-<xs:restriction base="xs:string">
-<xs:enumeration value="STANDARD"/>
-<xs:enumeration value="CUSTOM"/>
-<xs:enumeration value="PROJECT_LOCAL"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="stringSearchMethod">
-<xs:restriction base="xs:string">
-<xs:enumeration value="LUCENE"/>
-<xs:enumeration value="REGULAR_EXPRESSION"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="guardedByFileType">
-<xs:restriction base="xs:string">
-<xs:enumeration value="DISABLED"/>
-<xs:enumeration value="FORCED"/>
-<xs:enumeration value="EDITABLE"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="usageLevel">
-<xs:restriction base="xs:string">
-<xs:enumeration value="FILE"/>
-<xs:enumeration value="SNIPPET"/>
-<xs:enumeration value="COMPONENT_MERELY_AGGREGATED"/>
-<xs:enumeration value="COMPONENT_DYNAMIC_LIBRARY"/>
-<xs:enumeration value="COMPONENT_SEPARATE_WORK"/>
-<xs:enumeration value="COMPONENT_MODULE"/>
-<xs:enumeration value="COMPONENT"/>
-<xs:enumeration value="PREREQUISITE"/>
-<xs:enumeration value="PREREQUISITE_SERVICE"/>
-<xs:enumeration value="PREREQUISITE_MERLY_AGGREGATED"/>
-<xs:enumeration value="PREREQUISITE_SEPARATE_WORK"/>
-<xs:enumeration value="PREREQUISITE_DYNAMIC_LIBRARY"/>
-<xs:enumeration value="PREREQUISITE_MODULE"/>
-<xs:enumeration value="IMPLEMENTATION_OF_STANDARD"/>
-<xs:enumeration value="DEVELOPMENT_TOOL"/>
-<xs:enumeration value="ORIGINAL_CODE"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="fileType">
-<xs:restriction base="xs:string">
-<xs:enumeration value="TEXT"/>
-<xs:enumeration value="BINARY"/>
-<xs:enumeration value="BINARY_JAVA_CLASS"/>
-<xs:enumeration value="BINARY_ELF"/>
-<xs:enumeration value="BINARY_MICROSOFT_DLL"/>
-<xs:enumeration value="BINARY_MICROSOFT_PORTABLE_EXECUTABLE"/>
-<xs:enumeration value="BINARY_GENERIC_OBJECT_FILE"/>
-<xs:enumeration value="JAVA_SOURCE"/>
-<xs:enumeration value="C_SOURCE"/>
-<xs:enumeration value="ARCHIVE"/>
-<xs:enumeration value="ARCHIVE_TAR"/>
-<xs:enumeration value="ARCHIVE_JAR_WAR"/>
-<xs:enumeration value="ARCHIVE_ZIP"/>
-<xs:enumeration value="COMPRESSED_GZIP"/>
-<xs:enumeration value="COMPRESSED_BZIP2"/>
-<xs:enumeration value="OTHER"/>
-<xs:enumeration value="IGNORED"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="learnedIdentificationColumn">
-<xs:restriction base="xs:string">
-<xs:enumeration value="PROJECT_ID"/>
-<xs:enumeration value="COMPONENT_ID"/>
-<xs:enumeration value="COMPONENT_VERSION_ID"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="sortType">
-<xs:restriction base="xs:string">
-<xs:enumeration value="ALPHABETICAL_CASE_INSENSITIVE"/>
-<xs:enumeration value="NUMERIC"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="rapidIdConfigurationOriginType">
-<xs:restriction base="xs:string">
-<xs:enumeration value="GLOBAL"/>
-<xs:enumeration value="GLOBAL_MODIFIED"/>
-<xs:enumeration value="PROJECT_LOCAL"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="rapidIdOperationType">
-<xs:restriction base="xs:string">
-<xs:enumeration value="PRIMARY_MATCH"/>
-<xs:enumeration value="SINGLE_COMPONENT_CODE_MATCH"/>
-<xs:enumeration value="LEARNED_ID"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="componentVersionPreference">
-<xs:restriction base="xs:string">
-<xs:enumeration value="EARLIEST_RELEASE"/>
-<xs:enumeration value="LATEST_RELEASE"/>
-<xs:enumeration value="HIGHEST_COVERAGE"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="stringSearchPatternColumn">
-<xs:restriction base="xs:string">
-<xs:enumeration value="PATTERN_ID"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="patternOriginType">
-<xs:restriction base="xs:string">
-<xs:enumeration value="STANDARD"/>
-<xs:enumeration value="GLOBAL_CUSTOM"/>
-<xs:enumeration value="MODIFIED"/>
-<xs:enumeration value="LOCAL_CUSTOM"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="fileDiscoveryPatternColumn">
-<xs:restriction base="xs:string">
-<xs:enumeration value="PATTERN"/>
-<xs:enumeration value="FILE_TYPE"/>
-<xs:enumeration value="SNIPPET_MATCHES_OPTION"/>
-<xs:enumeration value="FILE_MATCHES_OPTION"/>
-<xs:enumeration value="STRING_SEARCHES_OPTION"/>
-<xs:enumeration value="JAVA_IMPORTS_OR_C_INCLUDE_DEPENDENCIES_OPTION"/>
-<xs:enumeration value="BINARY_DEPENDENCIES_OPTION"/>
-<xs:enumeration value="DECOMPRESS_COMPRESSED_FILES_OPTION"/>
-<xs:enumeration value="EXPAND_ARCHIVES_OPTION"/>
-<xs:enumeration value="FLAG_AS_PENDING_ID_OPTION"/>
-<xs:enumeration value="UPLOAD_SOURCE_CODE_OPTION"/>
-<xs:enumeration value="PACKAGE_STATEMENT_DEPENDENCIES_OPTION"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="detectFileChangesOption">
-<xs:restriction base="xs:string">
-<xs:enumeration value="MODIFICATION_TIME"/>
-<xs:enumeration value="CHECKSUM"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="expandArchivesOption">
-<xs:restriction base="xs:string">
-<xs:enumeration value="EXPAND_NONE"/>
-<xs:enumeration value="EXPAND_ALL"/>
-<xs:enumeration value="EXPAND_UNMATCHED"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:simpleType name="uploadSourceCodeOption">
-<xs:restriction base="xs:string">
-<xs:enumeration value="ENABLED_ENCRYPTED"/>
-<xs:enumeration value="ENABLED_NOT_ENCRYPTED"/>
-<xs:enumeration value="DISABLED"/>
-</xs:restriction>
-</xs:simpleType>
+<xs:schema xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:discovery" xmlns:ns2="urn:protex.blackducksoftware.com:sdk:v7.0:identification" xmlns:ns3="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:common" version="1.0">
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:discovery"/>
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:identification"/>
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:license"/>
+
+  <xs:complexType name="stringSearchPattern">
+    <xs:complexContent>
+      <xs:extension base="tns:stringSearchPatternRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="creationDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="lastUpdatedDate" type="xs:dateTime"/>
+          <xs:element minOccurs="0" name="stringSearchPatternId" type="xs:string"/>
+          <xs:element minOccurs="0" name="type" type="tns:stringSearchPatternOriginType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="stringSearchPatternRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="advancedPattern" type="xs:string"/>
+      <xs:element minOccurs="0" name="associatedLicenseId" type="xs:string"/>
+      <xs:element minOccurs="0" name="enabled" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="method" type="tns:stringSearchMethod"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element minOccurs="0" name="requireId" type="tns:forcibleBooleanOption"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="forcibleBooleanOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="forced" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="option" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="fileDiscoveryPatternRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="binaryDependenciesOption" type="tns:guardedBooleanOption"/>
+      <xs:element minOccurs="0" name="decompressCompressedFilesOption" type="tns:guardedBooleanOption"/>
+      <xs:element minOccurs="0" name="defaultUsage" type="tns:usageLevel"/>
+      <xs:element minOccurs="0" name="expandArchivesOption" type="tns:guardedBooleanOption"/>
+      <xs:element minOccurs="0" name="fileMatchesOption" type="tns:guardedBooleanOption"/>
+      <xs:element minOccurs="0" name="fileType" type="tns:fileType"/>
+      <xs:element minOccurs="0" name="flagAsPendingIdentificationOption" type="tns:guardedBooleanOption"/>
+      <xs:element minOccurs="0" name="javaImportOrCIncludeDependenciesOption" type="tns:guardedBooleanOption"/>
+      <xs:element minOccurs="0" name="javaPackageStatementDependenciesOption" type="tns:guardedBooleanOption"/>
+      <xs:element minOccurs="0" name="pattern" type="xs:string"/>
+      <xs:element minOccurs="0" name="snippetMatchesOption" type="tns:guardedBooleanOption"/>
+      <xs:element minOccurs="0" name="stringSearchesOption" type="tns:guardedBooleanOption"/>
+      <xs:element minOccurs="0" name="uploadSourceCodeOption" type="tns:guardedBooleanOption"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="guardedBooleanOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="guarded" type="tns:guardedByFileType"/>
+      <xs:element minOccurs="0" name="option" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="learnedIdentificationPageFilter">
+    <xs:complexContent>
+      <xs:extension base="tns:pageFilter">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sortedColumn" type="tns:learnedIdentificationColumn"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="pageFilter">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="firstRowIndex" type="xs:int"/>
+      <xs:element minOccurs="0" name="lastRowIndex" type="xs:int"/>
+      <xs:element minOccurs="0" name="sortAscending" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="sortType" type="tns:sortType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="learnedIdentification">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="comment" type="xs:string"/>
+      <xs:element minOccurs="0" name="discoveryType" type="ns1:discoveryType"/>
+      <xs:element minOccurs="0" name="identificationType" type="ns2:identificationType"/>
+      <xs:element minOccurs="0" name="identificationUpdatedBy" type="xs:string"/>
+      <xs:element minOccurs="0" name="identificationUpdatedDate" type="xs:string"/>
+      <xs:element minOccurs="0" name="identifiedBy" type="xs:string"/>
+      <xs:element minOccurs="0" name="identifiedComponentKey" type="tns:componentKey"/>
+      <xs:element minOccurs="0" name="identifiedDate" type="xs:string"/>
+      <xs:element minOccurs="0" name="identifiedLicenseInfo" type="ns3:licenseInfo"/>
+      <xs:element minOccurs="0" name="identifiedUsageLevel" type="tns:usageLevel"/>
+      <xs:element minOccurs="0" name="learnedBy" type="xs:string"/>
+      <xs:element minOccurs="0" name="learnedChecksum" type="xs:string"/>
+      <xs:element minOccurs="0" name="learnedDate" type="xs:string"/>
+      <xs:element minOccurs="0" name="learnedFromProjectId" type="xs:string"/>
+      <xs:element minOccurs="0" name="learnedIdentificationId" type="xs:long"/>
+      <xs:element minOccurs="0" name="learningUpdatedBy" type="xs:string"/>
+      <xs:element minOccurs="0" name="learningUpdatedDate" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="componentKey">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentId" type="xs:string"/>
+      <xs:element minOccurs="0" name="versionId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="learnedCodeMatchIdentification">
+    <xs:complexContent>
+      <xs:extension base="tns:learnedIdentification">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="codeMatchIdentificationDirective" type="ns2:codeMatchIdentificationDirective"/>
+          <xs:element minOccurs="0" name="discoveredComponentKey" type="tns:componentKey"/>
+          <xs:element minOccurs="0" name="firstLine" type="xs:int"/>
+          <xs:element minOccurs="0" name="lastLine" type="xs:int"/>
+          <xs:element minOccurs="0" name="path" type="xs:string"/>
+          <xs:element minOccurs="0" name="type" type="ns2:identificationType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="learnedStringSearchIdentification">
+    <xs:complexContent>
+      <xs:extension base="tns:learnedIdentification">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="hint" type="xs:string"/>
+          <xs:element maxOccurs="unbounded" minOccurs="0" name="learnedHitLocations" nillable="true" type="tns:learnedStringSearchHitLocation"/>
+          <xs:element minOccurs="0" name="path" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="learnedStringSearchHitLocation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="comment" type="xs:string"/>
+      <xs:element minOccurs="0" name="createdBy" type="xs:string"/>
+      <xs:element minOccurs="0" name="createdDate" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="forcibleIntegerOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="forced" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="option" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="rapidIdConfiguration">
+    <xs:complexContent>
+      <xs:extension base="tns:rapidIdConfigurationRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="configurationId" type="xs:long"/>
+          <xs:element minOccurs="0" name="originType" type="tns:rapidIdConfigurationOriginType"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="rapidIdConfigurationRequest">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="description" type="xs:string"/>
+      <xs:element minOccurs="0" name="name" type="xs:string"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="operations" nillable="true" type="tns:rapidIdOperation"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType abstract="true" name="rapidIdOperation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="type" type="tns:rapidIdOperationType"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="primaryMatchOperation">
+    <xs:complexContent>
+      <xs:extension base="tns:rapidIdOperation">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="singleComponentCodeMatchOperation">
+    <xs:complexContent>
+      <xs:extension base="tns:rapidIdOperation">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="componentVersionPreference" type="tns:componentVersionPreference"/>
+          <xs:element minOccurs="0" name="minimumMatchPercentage" type="xs:int"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="learnedIdentificationOperation">
+    <xs:complexContent>
+      <xs:extension base="tns:rapidIdOperation">
+        <xs:sequence/>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="stringSearchPatternPageFilter">
+    <xs:complexContent>
+      <xs:extension base="tns:pageFilter">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sortedColumn" type="tns:stringSearchPatternColumn"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="fileDiscoveryPattern">
+    <xs:complexContent>
+      <xs:extension base="tns:fileDiscoveryPatternRequest">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="originType" type="tns:patternOriginType"/>
+          <xs:element minOccurs="0" name="patternId" type="xs:string"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="identificationOptions">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="auditTrailOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="requireIdOfCodeMatchesOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="requireIdOfDependenciesOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="requireIdOfFileDiscoveryPatternMatchesOption" type="tns:forcibleBooleanOption"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="fileDiscoveryPatternPageFilter">
+    <xs:complexContent>
+      <xs:extension base="tns:pageFilter">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="sortedColumn" type="tns:fileDiscoveryPatternColumn"/>
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+
+  <xs:complexType name="analysisDatabaseOptions">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="customCodeMatchesOption" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="customStringSearchesOption" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="forceCodeMatchOptions" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="forceStringSearchOptions" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="standardCodeMatchesOption" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="standardStringSearchesOption" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="codeLabelOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="furnishedBy" type="xs:string"/>
+      <xs:element minOccurs="0" name="openSourceReferenceLocation" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="captureOptions">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="binaryDependenciesOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="blockCountThresholdOption" type="tns:forcibleIntegerOption"/>
+      <xs:element minOccurs="0" name="decompressCompressedFilesOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="detectFileChangesOption" type="tns:forcibleDetectFileChangesOption"/>
+      <xs:element minOccurs="0" name="discardRejectedCodeMatchesOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="expandArchivesOption" type="tns:forcibleExpandArchivesOption"/>
+      <xs:element minOccurs="0" name="fileMatchesOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="javaImportOrCIncludeDependenciesOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="javaPackageStatementDependenciesOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="keepOnlyDiscoveriesToBestMatchingComponentSourcePathOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="keepOnlyDiscoveriesToCodeprintedComponentsOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="keepOnlyDiscoveriesToComponentsReleasedOnOrAfterOption" type="tns:forcibleComponentsReleasedOnOrAfterOption"/>
+      <xs:element minOccurs="0" name="keepOnlyDiscoveriesToMavenArtifactsOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="keepOnlyDiscoveriesToTopComponentMatchesOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="manualBomRefreshOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="multiUserFileComparisonOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="snippetMatchesOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="storeNonPrecisionDiscoveriesOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="stringSearchRegularExpressionOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="stringSearchWildcardsOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="stringSearchesOption" type="tns:forcibleBooleanOption"/>
+      <xs:element minOccurs="0" name="uploadSourceCodeOption" type="tns:forcibleUploadSourceCodeOption"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="forcibleDetectFileChangesOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="forced" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="value" type="tns:detectFileChangesOption"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="forcibleExpandArchivesOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="forced" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="value" type="tns:expandArchivesOption"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="forcibleComponentsReleasedOnOrAfterOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="forced" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="option" type="tns:componentsReleasedOnOrAfterOption"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="componentsReleasedOnOrAfterOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="enabled" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="releaseDate" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="forcibleUploadSourceCodeOption">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="forced" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="value" type="tns:uploadSourceCodeOption"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:simpleType name="stringSearchPatternOriginType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="STANDARD"/>
+      <xs:enumeration value="CUSTOM"/>
+      <xs:enumeration value="PROJECT_LOCAL"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="stringSearchMethod">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="LUCENE"/>
+      <xs:enumeration value="REGULAR_EXPRESSION"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="guardedByFileType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="DISABLED"/>
+      <xs:enumeration value="FORCED"/>
+      <xs:enumeration value="EDITABLE"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="usageLevel">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="FILE"/>
+      <xs:enumeration value="SNIPPET"/>
+      <xs:enumeration value="COMPONENT_MERELY_AGGREGATED"/>
+      <xs:enumeration value="COMPONENT_DYNAMIC_LIBRARY"/>
+      <xs:enumeration value="COMPONENT_SEPARATE_WORK"/>
+      <xs:enumeration value="COMPONENT_MODULE"/>
+      <xs:enumeration value="COMPONENT"/>
+      <xs:enumeration value="PREREQUISITE"/>
+      <xs:enumeration value="PREREQUISITE_SERVICE"/>
+      <xs:enumeration value="PREREQUISITE_MERLY_AGGREGATED"/>
+      <xs:enumeration value="PREREQUISITE_SEPARATE_WORK"/>
+      <xs:enumeration value="PREREQUISITE_DYNAMIC_LIBRARY"/>
+      <xs:enumeration value="PREREQUISITE_MODULE"/>
+      <xs:enumeration value="IMPLEMENTATION_OF_STANDARD"/>
+      <xs:enumeration value="DEVELOPMENT_TOOL"/>
+      <xs:enumeration value="ORIGINAL_CODE"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="fileType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="TEXT"/>
+      <xs:enumeration value="BINARY"/>
+      <xs:enumeration value="BINARY_JAVA_CLASS"/>
+      <xs:enumeration value="BINARY_ELF"/>
+      <xs:enumeration value="BINARY_MICROSOFT_DLL"/>
+      <xs:enumeration value="BINARY_MICROSOFT_PORTABLE_EXECUTABLE"/>
+      <xs:enumeration value="BINARY_GENERIC_OBJECT_FILE"/>
+      <xs:enumeration value="JAVA_SOURCE"/>
+      <xs:enumeration value="C_SOURCE"/>
+      <xs:enumeration value="ARCHIVE"/>
+      <xs:enumeration value="ARCHIVE_TAR"/>
+      <xs:enumeration value="ARCHIVE_JAR_WAR"/>
+      <xs:enumeration value="ARCHIVE_ZIP"/>
+      <xs:enumeration value="COMPRESSED_GZIP"/>
+      <xs:enumeration value="COMPRESSED_BZIP2"/>
+      <xs:enumeration value="OTHER"/>
+      <xs:enumeration value="IGNORED"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="learnedIdentificationColumn">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PROJECT_ID"/>
+      <xs:enumeration value="COMPONENT_ID"/>
+      <xs:enumeration value="COMPONENT_VERSION_ID"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="sortType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ALPHABETICAL_CASE_INSENSITIVE"/>
+      <xs:enumeration value="NUMERIC"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="rapidIdConfigurationOriginType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="GLOBAL"/>
+      <xs:enumeration value="GLOBAL_MODIFIED"/>
+      <xs:enumeration value="PROJECT_LOCAL"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="rapidIdOperationType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PRIMARY_MATCH"/>
+      <xs:enumeration value="SINGLE_COMPONENT_CODE_MATCH"/>
+      <xs:enumeration value="LEARNED_ID"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="componentVersionPreference">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="EARLIEST_RELEASE"/>
+      <xs:enumeration value="LATEST_RELEASE"/>
+      <xs:enumeration value="HIGHEST_COVERAGE"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="stringSearchPatternColumn">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PATTERN_ID"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="patternOriginType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="STANDARD"/>
+      <xs:enumeration value="GLOBAL_CUSTOM"/>
+      <xs:enumeration value="MODIFIED"/>
+      <xs:enumeration value="LOCAL_CUSTOM"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="fileDiscoveryPatternColumn">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="PATTERN"/>
+      <xs:enumeration value="FILE_TYPE"/>
+      <xs:enumeration value="SNIPPET_MATCHES_OPTION"/>
+      <xs:enumeration value="FILE_MATCHES_OPTION"/>
+      <xs:enumeration value="STRING_SEARCHES_OPTION"/>
+      <xs:enumeration value="JAVA_IMPORTS_OR_C_INCLUDE_DEPENDENCIES_OPTION"/>
+      <xs:enumeration value="BINARY_DEPENDENCIES_OPTION"/>
+      <xs:enumeration value="DECOMPRESS_COMPRESSED_FILES_OPTION"/>
+      <xs:enumeration value="EXPAND_ARCHIVES_OPTION"/>
+      <xs:enumeration value="FLAG_AS_PENDING_ID_OPTION"/>
+      <xs:enumeration value="UPLOAD_SOURCE_CODE_OPTION"/>
+      <xs:enumeration value="PACKAGE_STATEMENT_DEPENDENCIES_OPTION"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="detectFileChangesOption">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="MODIFICATION_TIME"/>
+      <xs:enumeration value="CHECKSUM"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="expandArchivesOption">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="EXPAND_NONE"/>
+      <xs:enumeration value="EXPAND_ALL"/>
+      <xs:enumeration value="EXPAND_UNMATCHED"/>
+    </xs:restriction>
+  </xs:simpleType>
+
+  <xs:simpleType name="uploadSourceCodeOption">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ENABLED_ENCRYPTED"/>
+      <xs:enumeration value="ENABLED_NOT_ENCRYPTED"/>
+      <xs:enumeration value="DISABLED"/>
+    </xs:restriction>
+  </xs:simpleType>
+
 </xs:schema>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:blackducksoftware.com:sdk:v7.0:fault" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="urn:blackducksoftware.com:sdk:v7.0:fault">
-<xs:element name="sdkFaultDetails" type="tns:sdkFaultDetails"/>
-<xs:complexType name="sdkFaultDetails">
-<xs:sequence>
-<xs:element minOccurs="0" name="errorCode" type="tns:errorCode"/>
-<xs:element minOccurs="0" name="message" type="xs:string"/>
-</xs:sequence>
-</xs:complexType>
-<xs:simpleType name="errorCode">
-<xs:restriction base="xs:string">
-<xs:enumeration value="SERVER_REGISTRATION_ERROR"/>
-<xs:enumeration value="SERVER_PERFORMING_UPDATE"/>
-<xs:enumeration value="NO_ANALYSIS_RUNNING"/>
-<xs:enumeration value="ANALYSIS_ALREADY_RUNNING"/>
-<xs:enumeration value="NO_ARCHIVING_JOB"/>
-<xs:enumeration value="ARCHIVING_JOB_ALREADY_RUNNING"/>
-<xs:enumeration value="ARCHIVING_JOB_ALREADY_COMPLETED"/>
-<xs:enumeration value="ARCHIVING_UNABLE_TO_IMPORT"/>
-<xs:enumeration value="ARCHIVING_UNABLE_TO_WRITE_TO_TARGET"/>
-<xs:enumeration value="INVALID_SOURCE_LOCATION_FOR_SCAN"/>
-<xs:enumeration value="PROJECT_COULD_NOT_BE_LOCKED"/>
-<xs:enumeration value="LICENSE_NAME_TOO_LONG"/>
-<xs:enumeration value="LICENSE_TYPE_STANDARD_CANT_CHANGE_NAME"/>
-<xs:enumeration value="TAG_NOT_FOUND"/>
-<xs:enumeration value="OBLIGATION_IS_REFERENCED"/>
-<xs:enumeration value="OBLIGATION_NOT_ASSIGNED"/>
-<xs:enumeration value="DUPLICATE_LICENSE_NAME"/>
-<xs:enumeration value="LICENSE_NOT_FOUND"/>
-<xs:enumeration value="LICENSE_IN_USE"/>
-<xs:enumeration value="CAN_NOT_RESET_CUSTOM_LICENSE"/>
-<xs:enumeration value="DUPLICATE_OBLIGATION_CATEGORY"/>
-<xs:enumeration value="OBLIGATION_CATEGORY_NOT_FOUND"/>
-<xs:enumeration value="OBLIGATION_CATEGORY_IN_USE"/>
-<xs:enumeration value="OBLIGATION_CATEGORY_CAN_NOT_BE_DELETED"/>
-<xs:enumeration value="DUPLICATE_OBLIGATION_NAME"/>
-<xs:enumeration value="DUPLICATE_OBLIGATION_ASSIGNMENT"/>
-<xs:enumeration value="INVALID_OBLIGATION_NAME"/>
-<xs:enumeration value="OBLIGATION_NOT_FOUND"/>
-<xs:enumeration value="OBLIGATION_IN_USE_BY_PROJECTS"/>
-<xs:enumeration value="OBLIGATION_IN_USE_BY_LICENSES"/>
-<xs:enumeration value="RAPID_ID_CONFIGURATION_NOT_FOUND"/>
-<xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_NAME"/>
-<xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_ASSOCIATION"/>
-<xs:enumeration value="RAPID_ID_OPERATION_TYPE_DUPLICATE"/>
-<xs:enumeration value="LEARNED_IDENTIFICATION_NOT_FOUND"/>
-<xs:enumeration value="USER_NOT_ASSIGNED_TO_PROJECT"/>
-<xs:enumeration value="UNKNOWN_ANALYSIS_DATABASE_OPTION"/>
-<xs:enumeration value="STRING_SEARCH_PATTERN_UPDATE_OF_STANDARD_PATTERN_NOT_ALLOWED"/>
-<xs:enumeration value="CUSTOM_COMPONENT_IN_USE"/>
-<xs:enumeration value="CUSTOM_COMPONENT_HAS_NO_SOURCE"/>
-<xs:enumeration value="DUPLICATE_TEMPLATE_TITLE"/>
-<xs:enumeration value="REPORT_TEMPLATE_NOT_FOUND"/>
-<xs:enumeration value="DEFAULT_REPORT_TEMPLATE_NOT_SET"/>
-<xs:enumeration value="DUPLICATE_PROJECT_NAME"/>
-<xs:enumeration value="PROJECT_ANALYSIS_LOCAL_SOURCE_NOT_SUPPORTED"/>
-<xs:enumeration value="OPTIONS_SETTING_NOT_ALLOWED"/>
-<xs:enumeration value="OPTIONS_CANNOT_BE_FORCED_FOR_LOCAL_SEARCH_SETTINGS"/>
-<xs:enumeration value="DUPLICATE_STRING_SEARCH_PATTERN_NAME"/>
-<xs:enumeration value="DUPLICATE_FILE_DISCOVERY_PATTERN_NAME"/>
-<xs:enumeration value="LINKING_PROJECTS_FORCES_CLONING_OF_WORK_RESULTS"/>
-<xs:enumeration value="PROJECT_NOT_YET_ANALYZED"/>
-<xs:enumeration value="DUPLICATE_USER_ASSIGNMENT"/>
-<xs:enumeration value="PROJECT_NAME_TOO_LONG"/>
-<xs:enumeration value="INVALID_PROJECT_NAME"/>
-<xs:enumeration value="PROJECT_NOT_FOUND"/>
-<xs:enumeration value="PROJECT_SYNCID_INVALID"/>
-<xs:enumeration value="LINKING_GLOBALLY_DISABLED"/>
-<xs:enumeration value="PROJECT_IN_USE"/>
-<xs:enumeration value="STRING_SEARCH_PATTERN_NAME_TOO_LONG"/>
-<xs:enumeration value="ROLE_NOT_FOUND"/>
-<xs:enumeration value="MINIMUM_ONE_ADMIN_USER"/>
-<xs:enumeration value="REMOVE_SELF_AS_ADMIN_USER"/>
-<xs:enumeration value="DUPLICATE_EMAIL_ADDRESS"/>
-<xs:enumeration value="EMAIL_TOO_LONG"/>
-<xs:enumeration value="FIRST_NAME_TOO_LONG"/>
-<xs:enumeration value="LAST_NAME_TOO_LONG"/>
-<xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_TOO_LONG"/>
-<xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_DUPLICATE"/>
-<xs:enumeration value="INVALID_EMAIL_ADDRESS"/>
-<xs:enumeration value="USER_NOT_FOUND"/>
-<xs:enumeration value="PASSWORD_TOO_SHORT"/>
-<xs:enumeration value="PASSWORD_TOO_LONG"/>
-<xs:enumeration value="STRING_SEARCH_DISCOVERY_NOT_FOUND"/>
-<xs:enumeration value="STRING_SEARCH_REQUIRES_UPLOADED_SOURCE"/>
-<xs:enumeration value="USAGE_LEVEL_INVALID_FOR_GIVEN_ID"/>
-<xs:enumeration value="CANNOT_COPY_ID_PROJECT_SYNCHRONIZED"/>
-<xs:enumeration value="CODE_TREE_PATH_NOT_FOUND"/>
-<xs:enumeration value="CODE_TREE_GUARANTEED_EMPTY_RESULT"/>
-<xs:enumeration value="NO_FILE_CONTENT"/>
-<xs:enumeration value="CODE_TREE_PARENT_PATH_NOT_FOUND"/>
-<xs:enumeration value="DUPLICATE_COMPONENT_NAME"/>
-<xs:enumeration value="COMPONENT_NAME_TOO_LONG"/>
-<xs:enumeration value="INVALID_COMPONENT_NAME"/>
-<xs:enumeration value="COMPONENT_NOT_FOUND"/>
-<xs:enumeration value="COMPONENT_VERSION_NOT_FOUND"/>
-<xs:enumeration value="OPTION_IS_FORCED"/>
-<xs:enumeration value="FILE_DISCOVERY_PATTERN_NOT_FOUND"/>
-<xs:enumeration value="STRING_SEARCH_PATTERN_NOT_FOUND"/>
-<xs:enumeration value="UNEXPECTED_EXCEPTION_ERROR"/>
-<xs:enumeration value="UNKNOWN_REPORT_SECTION_ERROR"/>
-<xs:enumeration value="PROTEX_FILE_SOURCE_NOT_AVAILABLE"/>
-<xs:enumeration value="NOT_A_FILE_PATH"/>
-<xs:enumeration value="ARGUMENT_VALUE_INVALID"/>
-<xs:enumeration value="METHOD_NOT_YET_IMPLEMENTED"/>
-<xs:enumeration value="ARGUMENT_NOT_YET_IMPLEMENTED"/>
-<xs:enumeration value="ARGUMENT_VALUE_NOT_YET_IMPLEMENTED"/>
-<xs:enumeration value="INVALID_CREDENTIALS"/>
-<xs:enumeration value="INSUFFICIENT_PERMISSION"/>
-<xs:enumeration value="UNKNOWN_ERROR"/>
-<xs:enumeration value="BOM_REFRESH_NOT_FINISHED"/>
-<xs:enumeration value="BOM_COMPONENT_PROJECT_CANT_UPDATE"/>
-<xs:enumeration value="UPDATE_BOM_COMPONENT_VERSION_NAME_OF_COMPONENT_VERSION_PROHIBITED"/>
-<xs:enumeration value="TODO_CONVERT_EXCEPTION"/>
-<xs:enumeration value="UNEXPECTED_RETURN_VALUE_ERROR"/>
-<xs:enumeration value="OUT_OF_MEMORY_ERROR"/>
-<xs:enumeration value="NO_SESSION_ID"/>
-<xs:enumeration value="INVALID_SORT_KEY"/>
-<xs:enumeration value="CAN_NOT_OPEN_TEMP_FILE"/>
-<xs:enumeration value="CODEMATCH_SELF_IDENTIFICATION_MUST_MATCH_DECLARED_LICENSE"/>
-<xs:enumeration value="IDENTIFICATION_NOT_FOUND"/>
-<xs:enumeration value="IDENTIFICATION_LEARNING_CONFLICT"/>
-<xs:enumeration value="EXTERNAL_NAMESPACE_NAME_TOO_LONG"/>
-<xs:enumeration value="DUPLICATE_EXTERNAL_NAMESPACE_KEY"/>
-<xs:enumeration value="EXTERNAL_NAMESPACE_NOT_FOUND"/>
-<xs:enumeration value="EXTERNAL_ID_MAPPING_NOT_FOUND"/>
-<xs:enumeration value="DUPLICATE_EXTERNAL_ID_MAPPING"/>
-<xs:enumeration value="TEMPLATE_NOT_FOUND"/>
-<xs:enumeration value="DUPLICATE_VERSION_NAME"/>
-<xs:enumeration value="OPERATION_DISABLED"/>
-</xs:restriction>
-</xs:simpleType>
-<xs:element name="SdkFault" nillable="true" type="tns:sdkFaultDetails"/>
+<xs:schema xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:xs="http://www.w3.org/2001/XMLSchema" attributeFormDefault="unqualified" elementFormDefault="unqualified" targetNamespace="urn:blackducksoftware.com:sdk:v7.0:fault">
+  <xs:element name="sdkFaultDetails" type="tns:sdkFaultDetails"/>
+  <xs:complexType name="sdkFaultDetails">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="errorCode" type="tns:errorCode"/>
+      <xs:element minOccurs="0" name="message" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:simpleType name="errorCode">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="SERVER_REGISTRATION_ERROR"/>
+      <xs:enumeration value="SERVER_PERFORMING_UPDATE"/>
+      <xs:enumeration value="NO_ANALYSIS_RUNNING"/>
+      <xs:enumeration value="ANALYSIS_ALREADY_RUNNING"/>
+      <xs:enumeration value="NO_ARCHIVING_JOB"/>
+      <xs:enumeration value="ARCHIVING_JOB_ALREADY_RUNNING"/>
+      <xs:enumeration value="ARCHIVING_JOB_ALREADY_COMPLETED"/>
+      <xs:enumeration value="ARCHIVING_UNABLE_TO_IMPORT"/>
+      <xs:enumeration value="ARCHIVING_UNABLE_TO_WRITE_TO_TARGET"/>
+      <xs:enumeration value="INVALID_SOURCE_LOCATION_FOR_SCAN"/>
+      <xs:enumeration value="PROJECT_COULD_NOT_BE_LOCKED"/>
+      <xs:enumeration value="LICENSE_NAME_TOO_LONG"/>
+      <xs:enumeration value="LICENSE_TYPE_STANDARD_CANT_CHANGE_NAME"/>
+      <xs:enumeration value="TAG_NOT_FOUND"/>
+      <xs:enumeration value="OBLIGATION_IS_REFERENCED"/>
+      <xs:enumeration value="OBLIGATION_NOT_ASSIGNED"/>
+      <xs:enumeration value="DUPLICATE_LICENSE_NAME"/>
+      <xs:enumeration value="LICENSE_NOT_FOUND"/>
+      <xs:enumeration value="LICENSE_IN_USE"/>
+      <xs:enumeration value="CAN_NOT_RESET_CUSTOM_LICENSE"/>
+      <xs:enumeration value="DUPLICATE_OBLIGATION_CATEGORY"/>
+      <xs:enumeration value="OBLIGATION_CATEGORY_NOT_FOUND"/>
+      <xs:enumeration value="OBLIGATION_CATEGORY_IN_USE"/>
+      <xs:enumeration value="OBLIGATION_CATEGORY_CAN_NOT_BE_DELETED"/>
+      <xs:enumeration value="DUPLICATE_OBLIGATION_NAME"/>
+      <xs:enumeration value="DUPLICATE_OBLIGATION_ASSIGNMENT"/>
+      <xs:enumeration value="INVALID_OBLIGATION_NAME"/>
+      <xs:enumeration value="OBLIGATION_NOT_FOUND"/>
+      <xs:enumeration value="OBLIGATION_IN_USE_BY_PROJECTS"/>
+      <xs:enumeration value="OBLIGATION_IN_USE_BY_LICENSES"/>
+      <xs:enumeration value="RAPID_ID_CONFIGURATION_NOT_FOUND"/>
+      <xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_NAME"/>
+      <xs:enumeration value="RAPID_ID_CONFIGURATION_DUPLICATE_ASSOCIATION"/>
+      <xs:enumeration value="RAPID_ID_OPERATION_TYPE_DUPLICATE"/>
+      <xs:enumeration value="LEARNED_IDENTIFICATION_NOT_FOUND"/>
+      <xs:enumeration value="USER_NOT_ASSIGNED_TO_PROJECT"/>
+      <xs:enumeration value="UNKNOWN_ANALYSIS_DATABASE_OPTION"/>
+      <xs:enumeration value="STRING_SEARCH_PATTERN_UPDATE_OF_STANDARD_PATTERN_NOT_ALLOWED"/>
+      <xs:enumeration value="CUSTOM_COMPONENT_IN_USE"/>
+      <xs:enumeration value="CUSTOM_COMPONENT_HAS_NO_SOURCE"/>
+      <xs:enumeration value="DUPLICATE_TEMPLATE_TITLE"/>
+      <xs:enumeration value="REPORT_TEMPLATE_NOT_FOUND"/>
+      <xs:enumeration value="DEFAULT_REPORT_TEMPLATE_NOT_SET"/>
+      <xs:enumeration value="DUPLICATE_PROJECT_NAME"/>
+      <xs:enumeration value="PROJECT_ANALYSIS_LOCAL_SOURCE_NOT_SUPPORTED"/>
+      <xs:enumeration value="OPTIONS_SETTING_NOT_ALLOWED"/>
+      <xs:enumeration value="OPTIONS_CANNOT_BE_FORCED_FOR_LOCAL_SEARCH_SETTINGS"/>
+      <xs:enumeration value="DUPLICATE_STRING_SEARCH_PATTERN_NAME"/>
+      <xs:enumeration value="DUPLICATE_FILE_DISCOVERY_PATTERN_NAME"/>
+      <xs:enumeration value="LINKING_PROJECTS_FORCES_CLONING_OF_WORK_RESULTS"/>
+      <xs:enumeration value="PROJECT_NOT_YET_ANALYZED"/>
+      <xs:enumeration value="DUPLICATE_USER_ASSIGNMENT"/>
+      <xs:enumeration value="PROJECT_NAME_TOO_LONG"/>
+      <xs:enumeration value="INVALID_PROJECT_NAME"/>
+      <xs:enumeration value="PROJECT_NOT_FOUND"/>
+      <xs:enumeration value="PROJECT_SYNCID_INVALID"/>
+      <xs:enumeration value="LINKING_GLOBALLY_DISABLED"/>
+      <xs:enumeration value="PROJECT_IN_USE"/>
+      <xs:enumeration value="STRING_SEARCH_PATTERN_NAME_TOO_LONG"/>
+      <xs:enumeration value="ROLE_NOT_FOUND"/>
+      <xs:enumeration value="MINIMUM_ONE_ADMIN_USER"/>
+      <xs:enumeration value="REMOVE_SELF_AS_ADMIN_USER"/>
+      <xs:enumeration value="DUPLICATE_EMAIL_ADDRESS"/>
+      <xs:enumeration value="EMAIL_TOO_LONG"/>
+      <xs:enumeration value="FIRST_NAME_TOO_LONG"/>
+      <xs:enumeration value="LAST_NAME_TOO_LONG"/>
+      <xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_TOO_LONG"/>
+      <xs:enumeration value="EXTERNAL_AUTHENTICATION_ID_DUPLICATE"/>
+      <xs:enumeration value="INVALID_EMAIL_ADDRESS"/>
+      <xs:enumeration value="USER_NOT_FOUND"/>
+      <xs:enumeration value="PASSWORD_TOO_SHORT"/>
+      <xs:enumeration value="PASSWORD_TOO_LONG"/>
+      <xs:enumeration value="STRING_SEARCH_DISCOVERY_NOT_FOUND"/>
+      <xs:enumeration value="STRING_SEARCH_REQUIRES_UPLOADED_SOURCE"/>
+      <xs:enumeration value="USAGE_LEVEL_INVALID_FOR_GIVEN_ID"/>
+      <xs:enumeration value="CANNOT_COPY_ID_PROJECT_SYNCHRONIZED"/>
+      <xs:enumeration value="CODE_TREE_PATH_NOT_FOUND"/>
+      <xs:enumeration value="CODE_TREE_GUARANTEED_EMPTY_RESULT"/>
+      <xs:enumeration value="NO_FILE_CONTENT"/>
+      <xs:enumeration value="CODE_TREE_PARENT_PATH_NOT_FOUND"/>
+      <xs:enumeration value="DUPLICATE_COMPONENT_NAME"/>
+      <xs:enumeration value="COMPONENT_NAME_TOO_LONG"/>
+      <xs:enumeration value="INVALID_COMPONENT_NAME"/>
+      <xs:enumeration value="COMPONENT_NOT_FOUND"/>
+      <xs:enumeration value="COMPONENT_VERSION_NOT_FOUND"/>
+      <xs:enumeration value="OPTION_IS_FORCED"/>
+      <xs:enumeration value="FILE_DISCOVERY_PATTERN_NOT_FOUND"/>
+      <xs:enumeration value="STRING_SEARCH_PATTERN_NOT_FOUND"/>
+      <xs:enumeration value="UNEXPECTED_EXCEPTION_ERROR"/>
+      <xs:enumeration value="UNKNOWN_REPORT_SECTION_ERROR"/>
+      <xs:enumeration value="PROTEX_FILE_SOURCE_NOT_AVAILABLE"/>
+      <xs:enumeration value="NOT_A_FILE_PATH"/>
+      <xs:enumeration value="ARGUMENT_VALUE_INVALID"/>
+      <xs:enumeration value="METHOD_NOT_YET_IMPLEMENTED"/>
+      <xs:enumeration value="ARGUMENT_NOT_YET_IMPLEMENTED"/>
+      <xs:enumeration value="ARGUMENT_VALUE_NOT_YET_IMPLEMENTED"/>
+      <xs:enumeration value="INVALID_CREDENTIALS"/>
+      <xs:enumeration value="INSUFFICIENT_PERMISSION"/>
+      <xs:enumeration value="UNKNOWN_ERROR"/>
+      <xs:enumeration value="BOM_REFRESH_NOT_FINISHED"/>
+      <xs:enumeration value="BOM_COMPONENT_PROJECT_CANT_UPDATE"/>
+      <xs:enumeration value="UPDATE_BOM_COMPONENT_VERSION_NAME_OF_COMPONENT_VERSION_PROHIBITED"/>
+      <xs:enumeration value="TODO_CONVERT_EXCEPTION"/>
+      <xs:enumeration value="UNEXPECTED_RETURN_VALUE_ERROR"/>
+      <xs:enumeration value="OUT_OF_MEMORY_ERROR"/>
+      <xs:enumeration value="NO_SESSION_ID"/>
+      <xs:enumeration value="INVALID_SORT_KEY"/>
+      <xs:enumeration value="CAN_NOT_OPEN_TEMP_FILE"/>
+      <xs:enumeration value="CODEMATCH_SELF_IDENTIFICATION_MUST_MATCH_DECLARED_LICENSE"/>
+      <xs:enumeration value="IDENTIFICATION_NOT_FOUND"/>
+      <xs:enumeration value="IDENTIFICATION_LEARNING_CONFLICT"/>
+      <xs:enumeration value="EXTERNAL_NAMESPACE_NAME_TOO_LONG"/>
+      <xs:enumeration value="DUPLICATE_EXTERNAL_NAMESPACE_KEY"/>
+      <xs:enumeration value="EXTERNAL_NAMESPACE_NOT_FOUND"/>
+      <xs:enumeration value="EXTERNAL_ID_MAPPING_NOT_FOUND"/>
+      <xs:enumeration value="DUPLICATE_EXTERNAL_ID_MAPPING"/>
+      <xs:enumeration value="TEMPLATE_NOT_FOUND"/>
+      <xs:enumeration value="DUPLICATE_VERSION_NAME"/>
+      <xs:enumeration value="OPERATION_DISABLED"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="SdkFault" nillable="true" type="tns:sdkFaultDetails"/>
 </xs:schema>
   </wsdl:types>
   <wsdl:message name="removeLearnedIdentification">
