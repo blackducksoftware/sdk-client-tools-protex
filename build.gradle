@@ -21,7 +21,7 @@ subprojects {
 	apply from: "$rootDir/dependencies/core.gradle"
 
 	repositories {
-		maven { url "http://jcenter.bintray.com" }
+		maven { url "https://jcenter.bintray.com" }
 		maven { url "https://maven.repository.redhat.com/ga/" }
 	}
 
