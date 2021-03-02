@@ -123,7 +123,7 @@ public class SampleReportDataObligations extends BDProtexSample {
 
                         if (!LicenseOriginType.PROJECT_LOCAL.equals(license.getLicenseOriginType())) {
                             try {
-                                obligations = licenseApi.getLicenseObligations(bomComponent.getLicenseInfo().getLicenseId());
+                                obligations = bomApi.getBomComponentObligations(projectId, bomComponent.getComponentKey());
                             } catch (SdkFault e) {
                                 System.err.println("getLicenseObligations() failed: " + e.getMessage());
                                 throw new RuntimeException(e);
