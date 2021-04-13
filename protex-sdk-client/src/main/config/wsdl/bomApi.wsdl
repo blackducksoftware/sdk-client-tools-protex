@@ -1,6 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions name="BomApiService" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:bom" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:bom" xmlns:ns1="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
   <wsdl:types>
+<xs:schema xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:project" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:report" version="1.0">
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:project"/>
+
+  <xs:complexType name="licenseConflictReport">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="attribute" type="ns1:obligationBean"/>
+      <xs:element minOccurs="0" name="componentName" type="xs:string"/>
+      <xs:element minOccurs="0" name="componentVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="conflictingAttribute" type="ns1:obligationBean"/>
+      <xs:element minOccurs="0" name="conflictingComponentName" type="xs:string"/>
+      <xs:element minOccurs="0" name="conflictingComponentVersion" type="xs:string"/>
+      <xs:element minOccurs="0" name="conflictingLicenseLabel" type="xs:string"/>
+      <xs:element minOccurs="0" name="licenseLabel" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
+<xs:schema xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:license="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:obligation="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" xmlns:user="urn:protex.blackducksoftware.com:sdk:v7.0:user" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:project" version="1.0">
+
+  <xs:complexType name="obligationBean">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="conflictingLabel" type="xs:string"/>
+      <xs:element minOccurs="0" name="conflictingObligationId" type="xs:string"/>
+      <xs:element minOccurs="0" name="label" type="xs:string"/>
+      <xs:element minOccurs="0" name="obligationId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
 <xs:schema xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" version="1.0">
 
   <xs:complexType name="assignedObligation">
@@ -257,13 +287,17 @@
   </xs:simpleType>
 
 </xs:schema>
-<xs:schema xmlns:bom="urn:protex.blackducksoftware.com:sdk:v7.0:bom" xmlns:codetree="urn:protex.blackducksoftware.com:sdk:v7.0:codetree" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:license="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:identification" xmlns:obligation="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:bom" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:bom" version="1.0">
+<xs:schema xmlns:bom="urn:protex.blackducksoftware.com:sdk:v7.0:bom" xmlns:codetree="urn:protex.blackducksoftware.com:sdk:v7.0:codetree" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:license="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:project" xmlns:ns2="urn:protex.blackducksoftware.com:sdk:v7.0:report" xmlns:ns3="urn:protex.blackducksoftware.com:sdk:v7.0:identification" xmlns:obligation="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:bom" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:bom" version="1.0">
 
   <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:common"/>
 
   <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:license"/>
 
   <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:obligation"/>
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:project"/>
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:report"/>
 
   <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:identification"/>
 
@@ -280,6 +314,10 @@
   <xs:element name="getBomComponentCount" type="tns:getBomComponentCount"/>
 
   <xs:element name="getBomComponentCountResponse" type="tns:getBomComponentCountResponse"/>
+
+  <xs:element name="getBomComponentLicenseConflictData" type="tns:getBomComponentLicenseConflictData"/>
+
+  <xs:element name="getBomComponentLicenseConflictDataResponse" type="tns:getBomComponentLicenseConflictDataResponse"/>
 
   <xs:element name="getBomComponentLicenseViolatingAttributes" type="tns:getBomComponentLicenseViolatingAttributes"/>
 
@@ -422,51 +460,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="refreshBom">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
-      <xs:element minOccurs="0" name="refreshAllFiles" type="xs:boolean"/>
-      <xs:element minOccurs="0" name="asynchronousRefresh" type="xs:boolean"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="refreshBomResponse">
-    <xs:sequence/>
-  </xs:complexType>
-
-  <xs:complexType name="getBomComponentLicenseViolatingAttributes">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
-      <xs:element minOccurs="0" name="componentKey" type="common:componentKey"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="getBomComponentLicenseViolatingAttributesResponse">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:licenseViolation"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="licenseViolation">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="componentKey" type="common:componentKey"/>
-      <xs:element minOccurs="0" name="licenseInfo" type="license:licenseInfo"/>
-      <xs:element minOccurs="0" name="violatingAttributes" type="license:licenseAttributes"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="getBomComponentCount">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="getBomComponentCountResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:int"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="setComponentComment">
     <xs:sequence>
       <xs:element minOccurs="0" name="projectId" type="xs:string"/>
@@ -556,38 +549,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="getLastBomRefreshFinishDate">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="getLastBomRefreshFinishDateResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:dateTime"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="getRefreshBomProgress">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="getRefreshBomProgressResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="tns:bomProgressStatus"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="bomProgressStatus">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="currentPath" type="xs:string"/>
-      <xs:element minOccurs="0" name="percentComplete" type="xs:int"/>
-      <xs:element minOccurs="0" name="refreshStage" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="getBomLicenseInfo">
     <xs:sequence>
       <xs:element minOccurs="0" name="projectId" type="xs:string"/>
@@ -632,19 +593,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="getBomComponentsForPath">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
-      <xs:element minOccurs="0" name="path" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="getBomComponentsForPathResponse">
-    <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:bomComponent"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="setBomComponentObligationsStatus">
     <xs:sequence>
       <xs:element minOccurs="0" name="projectId" type="xs:string"/>
@@ -657,6 +605,133 @@
 
   <xs:complexType name="setBomComponentObligationsStatusResponse">
     <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="updateBomComponent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
+      <xs:element minOccurs="0" name="bomComponentUpdateRequest" type="tns:bomComponentRequest"/>
+      <xs:element minOccurs="0" name="bomRefreshMode" type="common:bomRefreshMode"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="updateBomComponentResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getBomLicenseCount">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getBomLicenseCountResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="refreshBom">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
+      <xs:element minOccurs="0" name="refreshAllFiles" type="xs:boolean"/>
+      <xs:element minOccurs="0" name="asynchronousRefresh" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="refreshBomResponse">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getBomComponentLicenseViolatingAttributes">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
+      <xs:element minOccurs="0" name="componentKey" type="common:componentKey"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getBomComponentLicenseViolatingAttributesResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:licenseViolation"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="licenseViolation">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="componentKey" type="common:componentKey"/>
+      <xs:element minOccurs="0" name="licenseInfo" type="license:licenseInfo"/>
+      <xs:element minOccurs="0" name="violatingAttributes" type="license:licenseAttributes"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getBomComponentCount">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getBomComponentCountResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:int"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getBomComponentLicenseConflictData">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
+      <xs:element minOccurs="0" name="componentKey" type="common:componentKey"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getBomComponentLicenseConflictDataResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="ns2:licenseConflictReport"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getLastBomRefreshFinishDate">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getLastBomRefreshFinishDateResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="xs:dateTime"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getRefreshBomProgress">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getRefreshBomProgressResponse">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="return" type="tns:bomProgressStatus"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="bomProgressStatus">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="currentPath" type="xs:string"/>
+      <xs:element minOccurs="0" name="percentComplete" type="xs:int"/>
+      <xs:element minOccurs="0" name="refreshStage" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getBomComponentsForPath">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
+      <xs:element minOccurs="0" name="path" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getBomComponentsForPathResponse">
+    <xs:sequence>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:bomComponent"/>
+    </xs:sequence>
   </xs:complexType>
 
   <xs:complexType name="getComponentComment">
@@ -685,18 +760,6 @@
     <xs:sequence/>
   </xs:complexType>
 
-  <xs:complexType name="updateBomComponent">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
-      <xs:element minOccurs="0" name="bomComponentUpdateRequest" type="tns:bomComponentRequest"/>
-      <xs:element minOccurs="0" name="bomRefreshMode" type="common:bomRefreshMode"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="updateBomComponentResponse">
-    <xs:sequence/>
-  </xs:complexType>
-
   <xs:complexType name="addBomComponent">
     <xs:sequence>
       <xs:element minOccurs="0" name="projectId" type="xs:string"/>
@@ -713,8 +776,8 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="projectId" type="xs:string"/>
       <xs:element minOccurs="0" name="componentKey" type="common:componentKey"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="includedIdentificationTypes" type="ns1:identificationType"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="includedIdentificationModes" type="ns1:identificationMode"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="includedIdentificationTypes" type="ns3:identificationType"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="includedIdentificationModes" type="ns3:identificationMode"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -734,18 +797,6 @@
   <xs:complexType name="getBomComponentChildrenResponse">
     <xs:sequence>
       <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="tns:bomComponentRelationship"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="getBomLicenseCount">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="projectId" type="xs:string"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="getBomLicenseCountResponse">
-    <xs:sequence>
-      <xs:element minOccurs="0" name="return" type="xs:int"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -916,24 +967,8 @@
     <wsdl:part name="parameters" element="tns:getIdentifyBomUrlResponse">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="setBomComponentObligationsStatusResponse">
-    <wsdl:part name="parameters" element="tns:setBomComponentObligationsStatusResponse">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="getBomComponents">
     <wsdl:part name="parameters" element="tns:getBomComponents">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="addBomComponentResponse">
-    <wsdl:part name="parameters" element="tns:addBomComponentResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="setComponentComment">
-    <wsdl:part name="parameters" element="tns:setComponentComment">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getComponentCommentResponse">
-    <wsdl:part name="parameters" element="tns:getComponentCommentResponse">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="getBomComponentLicenseViolatingAttributesResponse">
@@ -944,56 +979,20 @@
     <wsdl:part name="parameters" element="tns:updateBomComponentIdentification">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="refreshBomResponse">
-    <wsdl:part name="parameters" element="tns:refreshBomResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getBomComponentObligations">
-    <wsdl:part name="parameters" element="tns:getBomComponentObligations">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="getBomShippingCodeInfo">
     <wsdl:part name="parameters" element="tns:getBomShippingCodeInfo">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getBomComponentsForPathResponse">
-    <wsdl:part name="parameters" element="tns:getBomComponentsForPathResponse">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="getIdentifyBomUrl">
     <wsdl:part name="parameters" element="tns:getIdentifyBomUrl">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="getBomLicenseInfo">
-    <wsdl:part name="parameters" element="tns:getBomLicenseInfo">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="getBomComponentParents">
     <wsdl:part name="parameters" element="tns:getBomComponentParents">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="getLastBomRefreshFinishDateResponse">
-    <wsdl:part name="parameters" element="tns:getLastBomRefreshFinishDateResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="setBomComponentObligationsStatus">
-    <wsdl:part name="parameters" element="tns:setBomComponentObligationsStatus">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getBomComponentCountResponse">
-    <wsdl:part name="parameters" element="tns:getBomComponentCountResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="updateBomComponent">
-    <wsdl:part name="parameters" element="tns:updateBomComponent">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="getBomComponentParentsResponse">
     <wsdl:part name="parameters" element="tns:getBomComponentParentsResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getBomShippingCodeInfoResponse">
-    <wsdl:part name="parameters" element="tns:getBomShippingCodeInfoResponse">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="updateBomComponentResponse">
@@ -1006,14 +1005,6 @@
   </wsdl:message>
   <wsdl:message name="getRefreshBomProgressResponse">
     <wsdl:part name="parameters" element="tns:getRefreshBomProgressResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="updateBomComponentIdentificationResponse">
-    <wsdl:part name="parameters" element="tns:updateBomComponentIdentificationResponse">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="refreshBom">
-    <wsdl:part name="parameters" element="tns:refreshBom">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="getBomLicenseCountResponse">
@@ -1032,8 +1023,8 @@
     <wsdl:part name="parameters" element="tns:repairBomAfterCrashResponse">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="setComponentCommentResponse">
-    <wsdl:part name="parameters" element="tns:setComponentCommentResponse">
+  <wsdl:message name="getBomComponentLicenseConflictData">
+    <wsdl:part name="parameters" element="tns:getBomComponentLicenseConflictData">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="removeBomComponentResponse">
@@ -1052,24 +1043,12 @@
     <wsdl:part name="parameters" element="tns:getRefreshBomProgress">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="getFilesIdentifiedToResponse">
-    <wsdl:part name="parameters" element="tns:getFilesIdentifiedToResponse">
-    </wsdl:part>
-  </wsdl:message>
   <wsdl:message name="getBomComponentsForPath">
     <wsdl:part name="parameters" element="tns:getBomComponentsForPath">
     </wsdl:part>
   </wsdl:message>
-  <wsdl:message name="SdkFault">
-    <wsdl:part name="SdkFault" element="ns1:SdkFault">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getComponentComment">
-    <wsdl:part name="parameters" element="tns:getComponentComment">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="removeBomComponent">
-    <wsdl:part name="parameters" element="tns:removeBomComponent">
+  <wsdl:message name="getBomComponentLicenseConflictDataResponse">
+    <wsdl:part name="parameters" element="tns:getBomComponentLicenseConflictDataResponse">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="getBomLicenseInfoResponse">
@@ -1084,16 +1063,96 @@
     <wsdl:part name="parameters" element="tns:getBomComponentsResponse">
     </wsdl:part>
   </wsdl:message>
+  <wsdl:message name="getBomComponentChildrenResponse">
+    <wsdl:part name="parameters" element="tns:getBomComponentChildrenResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setBomComponentObligationsStatusResponse">
+    <wsdl:part name="parameters" element="tns:setBomComponentObligationsStatusResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="addBomComponentResponse">
+    <wsdl:part name="parameters" element="tns:addBomComponentResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setComponentComment">
+    <wsdl:part name="parameters" element="tns:setComponentComment">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentCommentResponse">
+    <wsdl:part name="parameters" element="tns:getComponentCommentResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBomComponentObligations">
+    <wsdl:part name="parameters" element="tns:getBomComponentObligations">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="refreshBomResponse">
+    <wsdl:part name="parameters" element="tns:refreshBomResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBomComponentsForPathResponse">
+    <wsdl:part name="parameters" element="tns:getBomComponentsForPathResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBomLicenseInfo">
+    <wsdl:part name="parameters" element="tns:getBomLicenseInfo">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setBomComponentObligationsStatus">
+    <wsdl:part name="parameters" element="tns:setBomComponentObligationsStatus">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getLastBomRefreshFinishDateResponse">
+    <wsdl:part name="parameters" element="tns:getLastBomRefreshFinishDateResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBomComponentCountResponse">
+    <wsdl:part name="parameters" element="tns:getBomComponentCountResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateBomComponent">
+    <wsdl:part name="parameters" element="tns:updateBomComponent">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getBomShippingCodeInfoResponse">
+    <wsdl:part name="parameters" element="tns:getBomShippingCodeInfoResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="updateBomComponentIdentificationResponse">
+    <wsdl:part name="parameters" element="tns:updateBomComponentIdentificationResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="refreshBom">
+    <wsdl:part name="parameters" element="tns:refreshBom">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="setComponentCommentResponse">
+    <wsdl:part name="parameters" element="tns:setComponentCommentResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getFilesIdentifiedToResponse">
+    <wsdl:part name="parameters" element="tns:getFilesIdentifiedToResponse">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="SdkFault">
+    <wsdl:part name="SdkFault" element="ns1:SdkFault">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="getComponentComment">
+    <wsdl:part name="parameters" element="tns:getComponentComment">
+    </wsdl:part>
+  </wsdl:message>
+  <wsdl:message name="removeBomComponent">
+    <wsdl:part name="parameters" element="tns:removeBomComponent">
+    </wsdl:part>
+  </wsdl:message>
   <wsdl:message name="getFilesIdentifiedTo">
     <wsdl:part name="parameters" element="tns:getFilesIdentifiedTo">
     </wsdl:part>
   </wsdl:message>
   <wsdl:message name="getBomComponentChildren">
     <wsdl:part name="parameters" element="tns:getBomComponentChildren">
-    </wsdl:part>
-  </wsdl:message>
-  <wsdl:message name="getBomComponentChildrenResponse">
-    <wsdl:part name="parameters" element="tns:getBomComponentChildrenResponse">
     </wsdl:part>
   </wsdl:message>
   <wsdl:portType name="BomApi">
@@ -1109,30 +1168,6 @@
       <wsdl:input name="getBomComponents" message="tns:getBomComponents">
     </wsdl:input>
       <wsdl:output name="getBomComponentsResponse" message="tns:getBomComponentsResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="refreshBom">
-      <wsdl:input name="refreshBom" message="tns:refreshBom">
-    </wsdl:input>
-      <wsdl:output name="refreshBomResponse" message="tns:refreshBomResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getBomComponentLicenseViolatingAttributes">
-      <wsdl:input name="getBomComponentLicenseViolatingAttributes" message="tns:getBomComponentLicenseViolatingAttributes">
-    </wsdl:input>
-      <wsdl:output name="getBomComponentLicenseViolatingAttributesResponse" message="tns:getBomComponentLicenseViolatingAttributesResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getBomComponentCount">
-      <wsdl:input name="getBomComponentCount" message="tns:getBomComponentCount">
-    </wsdl:input>
-      <wsdl:output name="getBomComponentCountResponse" message="tns:getBomComponentCountResponse">
     </wsdl:output>
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
@@ -1177,22 +1212,6 @@
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="getLastBomRefreshFinishDate">
-      <wsdl:input name="getLastBomRefreshFinishDate" message="tns:getLastBomRefreshFinishDate">
-    </wsdl:input>
-      <wsdl:output name="getLastBomRefreshFinishDateResponse" message="tns:getLastBomRefreshFinishDateResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getRefreshBomProgress">
-      <wsdl:input name="getRefreshBomProgress" message="tns:getRefreshBomProgress">
-    </wsdl:input>
-      <wsdl:output name="getRefreshBomProgressResponse" message="tns:getRefreshBomProgressResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
     <wsdl:operation name="getBomLicenseInfo">
       <wsdl:input name="getBomLicenseInfo" message="tns:getBomLicenseInfo">
     </wsdl:input>
@@ -1209,18 +1228,82 @@
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="getBomComponentsForPath">
-      <wsdl:input name="getBomComponentsForPath" message="tns:getBomComponentsForPath">
-    </wsdl:input>
-      <wsdl:output name="getBomComponentsForPathResponse" message="tns:getBomComponentsForPathResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
     <wsdl:operation name="setBomComponentObligationsStatus">
       <wsdl:input name="setBomComponentObligationsStatus" message="tns:setBomComponentObligationsStatus">
     </wsdl:input>
       <wsdl:output name="setBomComponentObligationsStatusResponse" message="tns:setBomComponentObligationsStatusResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateBomComponent">
+      <wsdl:input name="updateBomComponent" message="tns:updateBomComponent">
+    </wsdl:input>
+      <wsdl:output name="updateBomComponentResponse" message="tns:updateBomComponentResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBomLicenseCount">
+      <wsdl:input name="getBomLicenseCount" message="tns:getBomLicenseCount">
+    </wsdl:input>
+      <wsdl:output name="getBomLicenseCountResponse" message="tns:getBomLicenseCountResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="refreshBom">
+      <wsdl:input name="refreshBom" message="tns:refreshBom">
+    </wsdl:input>
+      <wsdl:output name="refreshBomResponse" message="tns:refreshBomResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBomComponentLicenseViolatingAttributes">
+      <wsdl:input name="getBomComponentLicenseViolatingAttributes" message="tns:getBomComponentLicenseViolatingAttributes">
+    </wsdl:input>
+      <wsdl:output name="getBomComponentLicenseViolatingAttributesResponse" message="tns:getBomComponentLicenseViolatingAttributesResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBomComponentCount">
+      <wsdl:input name="getBomComponentCount" message="tns:getBomComponentCount">
+    </wsdl:input>
+      <wsdl:output name="getBomComponentCountResponse" message="tns:getBomComponentCountResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBomComponentLicenseConflictData">
+      <wsdl:input name="getBomComponentLicenseConflictData" message="tns:getBomComponentLicenseConflictData">
+    </wsdl:input>
+      <wsdl:output name="getBomComponentLicenseConflictDataResponse" message="tns:getBomComponentLicenseConflictDataResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLastBomRefreshFinishDate">
+      <wsdl:input name="getLastBomRefreshFinishDate" message="tns:getLastBomRefreshFinishDate">
+    </wsdl:input>
+      <wsdl:output name="getLastBomRefreshFinishDateResponse" message="tns:getLastBomRefreshFinishDateResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRefreshBomProgress">
+      <wsdl:input name="getRefreshBomProgress" message="tns:getRefreshBomProgress">
+    </wsdl:input>
+      <wsdl:output name="getRefreshBomProgressResponse" message="tns:getRefreshBomProgressResponse">
+    </wsdl:output>
+      <wsdl:fault name="SdkFault" message="tns:SdkFault">
+    </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBomComponentsForPath">
+      <wsdl:input name="getBomComponentsForPath" message="tns:getBomComponentsForPath">
+    </wsdl:input>
+      <wsdl:output name="getBomComponentsForPathResponse" message="tns:getBomComponentsForPathResponse">
     </wsdl:output>
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
@@ -1237,14 +1320,6 @@
       <wsdl:input name="removeBomComponent" message="tns:removeBomComponent">
     </wsdl:input>
       <wsdl:output name="removeBomComponentResponse" message="tns:removeBomComponentResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="updateBomComponent">
-      <wsdl:input name="updateBomComponent" message="tns:updateBomComponent">
-    </wsdl:input>
-      <wsdl:output name="updateBomComponentResponse" message="tns:updateBomComponentResponse">
     </wsdl:output>
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
@@ -1273,14 +1348,6 @@
       <wsdl:fault name="SdkFault" message="tns:SdkFault">
     </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="getBomLicenseCount">
-      <wsdl:input name="getBomLicenseCount" message="tns:getBomLicenseCount">
-    </wsdl:input>
-      <wsdl:output name="getBomLicenseCountResponse" message="tns:getBomLicenseCountResponse">
-    </wsdl:output>
-      <wsdl:fault name="SdkFault" message="tns:SdkFault">
-    </wsdl:fault>
-    </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BomApiServiceSoapBinding" type="tns:BomApi">
     <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
@@ -1302,42 +1369,6 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="getBomComponentsResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="refreshBom">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="refreshBom">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="refreshBomResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getBomComponentLicenseViolatingAttributes">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getBomComponentLicenseViolatingAttributes">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getBomComponentLicenseViolatingAttributesResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getBomComponentCount">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getBomComponentCount">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getBomComponentCountResponse">
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="SdkFault">
@@ -1404,30 +1435,6 @@
         <soap:fault name="SdkFault" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="getLastBomRefreshFinishDate">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getLastBomRefreshFinishDate">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getLastBomRefreshFinishDateResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getRefreshBomProgress">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getRefreshBomProgress">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getRefreshBomProgressResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
     <wsdl:operation name="getBomLicenseInfo">
       <soap:operation soapAction="" style="document"/>
       <wsdl:input name="getBomLicenseInfo">
@@ -1452,24 +1459,120 @@
         <soap:fault name="SdkFault" use="literal"/>
       </wsdl:fault>
     </wsdl:operation>
-    <wsdl:operation name="getBomComponentsForPath">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getBomComponentsForPath">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getBomComponentsForPathResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
     <wsdl:operation name="setBomComponentObligationsStatus">
       <soap:operation soapAction="" style="document"/>
       <wsdl:input name="setBomComponentObligationsStatus">
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="setBomComponentObligationsStatusResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="updateBomComponent">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="updateBomComponent">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="updateBomComponentResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBomLicenseCount">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getBomLicenseCount">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getBomLicenseCountResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="refreshBom">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="refreshBom">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="refreshBomResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBomComponentLicenseViolatingAttributes">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getBomComponentLicenseViolatingAttributes">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getBomComponentLicenseViolatingAttributesResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBomComponentCount">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getBomComponentCount">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getBomComponentCountResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBomComponentLicenseConflictData">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getBomComponentLicenseConflictData">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getBomComponentLicenseConflictDataResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getLastBomRefreshFinishDate">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getLastBomRefreshFinishDate">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getLastBomRefreshFinishDateResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getRefreshBomProgress">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getRefreshBomProgress">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getRefreshBomProgressResponse">
+        <soap:body use="literal"/>
+      </wsdl:output>
+      <wsdl:fault name="SdkFault">
+        <soap:fault name="SdkFault" use="literal"/>
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="getBomComponentsForPath">
+      <soap:operation soapAction="" style="document"/>
+      <wsdl:input name="getBomComponentsForPath">
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="getBomComponentsForPathResponse">
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="SdkFault">
@@ -1494,18 +1597,6 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="removeBomComponentResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="updateBomComponent">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="updateBomComponent">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="updateBomComponentResponse">
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="SdkFault">
@@ -1542,18 +1633,6 @@
         <soap:body use="literal"/>
       </wsdl:input>
       <wsdl:output name="getBomComponentChildrenResponse">
-        <soap:body use="literal"/>
-      </wsdl:output>
-      <wsdl:fault name="SdkFault">
-        <soap:fault name="SdkFault" use="literal"/>
-      </wsdl:fault>
-    </wsdl:operation>
-    <wsdl:operation name="getBomLicenseCount">
-      <soap:operation soapAction="" style="document"/>
-      <wsdl:input name="getBomLicenseCount">
-        <soap:body use="literal"/>
-      </wsdl:input>
-      <wsdl:output name="getBomLicenseCountResponse">
         <soap:body use="literal"/>
       </wsdl:output>
       <wsdl:fault name="SdkFault">

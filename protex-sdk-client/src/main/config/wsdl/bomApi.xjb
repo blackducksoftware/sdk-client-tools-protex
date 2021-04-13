@@ -16,6 +16,20 @@
           xmlns:xs="http://www.w3.org/2001/XMLSchema"
           xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
           xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <jaxws:bindings  node="wsdl:definitions/wsdl:types/xs:schema[@targetNamespace='urn:protex.blackducksoftware.com:sdk:v7.0:report']">
+      <jxb:globalBindings xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+        <jxb:javaType name="java.util.Date" xmlType="xs:dateTime"
+                      parseMethod="org.apache.cxf.xjc.runtime.DataTypeAdapter.parseDateTime"
+                      printMethod="org.apache.cxf.xjc.runtime.DataTypeAdapter.printDateTime"/>
+      </jxb:globalBindings>
+  </jaxws:bindings>
+  <jaxws:bindings  node="wsdl:definitions/wsdl:types/xs:schema[@targetNamespace='urn:protex.blackducksoftware.com:sdk:v7.0:project']">
+      <jxb:globalBindings xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+        <jxb:javaType name="java.util.Date" xmlType="xs:dateTime"
+                      parseMethod="org.apache.cxf.xjc.runtime.DataTypeAdapter.parseDateTime"
+                      printMethod="org.apache.cxf.xjc.runtime.DataTypeAdapter.printDateTime"/>
+      </jxb:globalBindings>
+  </jaxws:bindings>
   <jaxws:bindings  node="wsdl:definitions/wsdl:types/xs:schema[@targetNamespace='urn:protex.blackducksoftware.com:sdk:v7.0:obligation']">
       <jxb:globalBindings xmlns:jxb="http://java.sun.com/xml/ns/jaxb" xmlns:xs="http://www.w3.org/2001/XMLSchema">
         <jxb:javaType name="java.util.Date" xmlType="xs:dateTime"
