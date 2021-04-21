@@ -106,10 +106,11 @@ public class SampleReportLicenseConflictsData extends BDProtexSample {
                         for (LicenseConflictReport lViolation : licenseViolations) {
                             foundAny = true;
 
-                            reportViolatingAttribute(rowFormat, lViolation.getComponentName(), lViolation.getComponentVersion(), lViolation.getLicenseLabel(),
-                                    lViolation.getConflictingComponentName(), lViolation.getConflictingComponentVersion(),
-                                    lViolation.getConflictingLicenseLabel(), lViolation.getAttribute(),
-                                    lViolation.getConflictingAttribute());
+                            reportViolatingAttribute(rowFormat, lViolation.getComponent().getBomComponentName(), lViolation.getComponent().getBomVersionName(),
+                                    lViolation.getComponent().getLicenseInfo().getName(),
+                                    lViolation.getConflictingComponent().getBomComponentName(), lViolation.getConflictingComponent().getBomVersionName(),
+                                    lViolation.getConflictingComponent().getLicenseInfo().getName(), lViolation.getComponent().getObligationBean(),
+                                    lViolation.getConflictingComponent().getObligationBean());
                         }
                     }
                 } catch (SdkFault e) {

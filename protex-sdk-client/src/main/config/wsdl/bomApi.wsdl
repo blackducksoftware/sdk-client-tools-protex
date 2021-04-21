@@ -1,20 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <wsdl:definitions name="BomApiService" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:bom" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:bom" xmlns:ns1="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/">
   <wsdl:types>
-<xs:schema xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:project" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:report" version="1.0">
+<xs:schema xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:bom" xmlns:ns2="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:ns3="urn:protex.blackducksoftware.com:sdk:v7.0:project" xmlns:ns4="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:report" version="1.0">
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:bom"/>
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:common"/>
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:license"/>
 
   <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:project"/>
 
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:obligation"/>
+
   <xs:complexType name="licenseConflictReport">
     <xs:sequence>
-      <xs:element minOccurs="0" name="attribute" type="ns1:obligationBean"/>
-      <xs:element minOccurs="0" name="componentName" type="xs:string"/>
-      <xs:element minOccurs="0" name="componentVersion" type="xs:string"/>
-      <xs:element minOccurs="0" name="conflictingAttribute" type="ns1:obligationBean"/>
-      <xs:element minOccurs="0" name="conflictingComponentName" type="xs:string"/>
-      <xs:element minOccurs="0" name="conflictingComponentVersion" type="xs:string"/>
-      <xs:element minOccurs="0" name="conflictingLicenseLabel" type="xs:string"/>
-      <xs:element minOccurs="0" name="licenseLabel" type="xs:string"/>
+      <xs:element minOccurs="0" name="component" type="ns4:bomLicenseConflictComponent"/>
+      <xs:element minOccurs="0" name="conflictingComponent" type="ns4:bomLicenseConflictComponent"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -31,7 +33,15 @@
   </xs:complexType>
 
 </xs:schema>
-<xs:schema xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" version="1.0">
+<xs:schema xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:bom" xmlns:ns2="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:ns3="urn:protex.blackducksoftware.com:sdk:v7.0:project" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" version="1.0">
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:bom"/>
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:common"/>
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:license"/>
+
+  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:project"/>
 
   <xs:complexType name="assignedObligation">
     <xs:complexContent>
@@ -63,6 +73,17 @@
       <xs:element minOccurs="0" name="description" type="xs:string"/>
       <xs:element minOccurs="0" name="name" type="xs:string"/>
       <xs:element minOccurs="0" name="obligationCategoryId" type="xs:string"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="bomLicenseConflictComponent">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="bomComponentName" type="xs:string"/>
+      <xs:element minOccurs="0" name="bomComponentType" type="ns1:bomComponentType"/>
+      <xs:element minOccurs="0" name="bomVersionName" type="xs:string"/>
+      <xs:element minOccurs="0" name="componentKey" type="common:componentKey"/>
+      <xs:element minOccurs="0" name="licenseInfo" type="ns2:licenseInfo"/>
+      <xs:element minOccurs="0" name="obligationBean" type="ns3:obligationBean"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -287,15 +308,13 @@
   </xs:simpleType>
 
 </xs:schema>
-<xs:schema xmlns:bom="urn:protex.blackducksoftware.com:sdk:v7.0:bom" xmlns:codetree="urn:protex.blackducksoftware.com:sdk:v7.0:codetree" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:license="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:project" xmlns:ns2="urn:protex.blackducksoftware.com:sdk:v7.0:report" xmlns:ns3="urn:protex.blackducksoftware.com:sdk:v7.0:identification" xmlns:obligation="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:bom" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:bom" version="1.0">
+<xs:schema xmlns:bom="urn:protex.blackducksoftware.com:sdk:v7.0:bom" xmlns:codetree="urn:protex.blackducksoftware.com:sdk:v7.0:codetree" xmlns:common="urn:protex.blackducksoftware.com:sdk:v7.0:common" xmlns:fault="urn:blackducksoftware.com:sdk:v7.0:fault" xmlns:license="urn:protex.blackducksoftware.com:sdk:v7.0:license" xmlns:ns1="urn:protex.blackducksoftware.com:sdk:v7.0:report" xmlns:ns2="urn:protex.blackducksoftware.com:sdk:v7.0:identification" xmlns:obligation="urn:protex.blackducksoftware.com:sdk:v7.0:obligation" xmlns:tns="urn:protex.blackducksoftware.com:sdk:v7.0:bom" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="unqualified" targetNamespace="urn:protex.blackducksoftware.com:sdk:v7.0:bom" version="1.0">
 
   <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:common"/>
 
   <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:license"/>
 
   <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:obligation"/>
-
-  <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:project"/>
 
   <xs:import namespace="urn:protex.blackducksoftware.com:sdk:v7.0:report"/>
 
@@ -685,7 +704,7 @@
 
   <xs:complexType name="getBomComponentLicenseConflictDataResponse">
     <xs:sequence>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="ns2:licenseConflictReport"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="return" type="ns1:licenseConflictReport"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -776,8 +795,8 @@
     <xs:sequence>
       <xs:element minOccurs="0" name="projectId" type="xs:string"/>
       <xs:element minOccurs="0" name="componentKey" type="common:componentKey"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="includedIdentificationTypes" type="ns3:identificationType"/>
-      <xs:element maxOccurs="unbounded" minOccurs="0" name="includedIdentificationModes" type="ns3:identificationMode"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="includedIdentificationTypes" type="ns2:identificationType"/>
+      <xs:element maxOccurs="unbounded" minOccurs="0" name="includedIdentificationModes" type="ns2:identificationMode"/>
     </xs:sequence>
   </xs:complexType>
 
